@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect } from "react";
 
+import Router from "./components/Router";
+
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 function App() {
@@ -14,7 +16,11 @@ function App() {
   useEffect(() => {
     getData();
   });
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <Router />
+    </div>
+  );
 }
 
 export default App;
