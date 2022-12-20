@@ -6,3 +6,15 @@
 2. 메인페이지 UI 만들기 (스타일드 컴포넌트 사용해서 스타일링하기)
 3. 인기동영상 데이터 가져와서 출력하기
 4. 검색 기능 만들기
+
+### Main Page
+
+#### Header
+
+- Logo, Search (검색창), icon으로 이루어진 컴포넌트
+
+#### 기타
+
+react-icons : https://react-icons.github.io/react-icons/icons?name=fa
+
+### snippet : categoryId // channelId // thumbnail : 디폴트, 하이, 미디엄, 표준 // 타이틀
