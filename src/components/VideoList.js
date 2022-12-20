@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 
@@ -31,7 +32,7 @@ const ListContainer = styled.div`
 const Title = styled.h4`
   display: -webkit-box;
   padding: 0;
-  margin: 0;
+  margin: 8px 0;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;

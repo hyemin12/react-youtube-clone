@@ -18,3 +18,6 @@
 react-icons : https://react-icons.github.io/react-icons/icons?name=fa
 
 ### snippet : categoryId // channelId // thumbnail : 디폴트, 하이, 미디엄, 표준 // 타이틀
+
+채널 id로 채널 정보 가져오기
+`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
