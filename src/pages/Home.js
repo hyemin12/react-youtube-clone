@@ -8,7 +8,6 @@ const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Home = () => {
   const [popular, setPopular] = useState([]);
-  const [thumbnails, setThumbnails] = useState();
 
   const getData = async () => {
     const res = await axios.get(

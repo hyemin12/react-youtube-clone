@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
+import ChannelThumbnail from "./ChannelThumbnail";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -29,7 +30,7 @@ const VideoItem = (item) => {
       <Link to="" style={{ width: `${thumbnails.medium.width}px` }}>
         <Thumbnail size={thumbnails.medium.url} title={title} />
         <VideoRow>
-          <ChannelThumbnail src={channelImg} alt={channelTitle} />
+          <ChannelThumbnail url={channelImg} title={channelTitle} size={34} />
 
           <div>
             <Title>{title}</Title>
@@ -57,10 +58,5 @@ const VideoRow = styled.div`
   gap: 14px;
   padding: 8px 4px;
 `;
-const ChannelThumbnail = styled.img`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
+
 export default VideoItem;
