@@ -15,12 +15,6 @@ const Home = () => {
       `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=kr&maxResults=24&key=${KEY}`
     );
     setPopular(res.data.items);
-
-    const res2 = await axios.get(
-      `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=UC3IZKseVpdzPSBaWxBxundA&key=${KEY}`
-    );
-    console.log(res2);
-    //"UC3IZKseVpdzPSBaWxBxundA"
   };
   useEffect(() => {
     getData();
