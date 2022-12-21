@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
+import Aside from "../components/Aside";
 import Header from "../components/Header";
 import VideoList from "../components/VideoList";
 
@@ -21,9 +23,16 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <div>콘텐츠</div>
-      <VideoList videos={popular} />
+      <MainContent>
+        <Aside />
+        <VideoList videos={popular} />
+      </MainContent>
     </div>
   );
 };
+const MainContent = styled.div`
+  display: flex;
+  gap: 20px;
+  padding: 20px 10px;
+`;
 export default Home;

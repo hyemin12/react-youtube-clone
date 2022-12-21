@@ -17,6 +17,8 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   width: calc(100vw - 150px);
+  max-width: 1500px;
+  margin: 0 auto;
 `;
 
 export default VideoList;
