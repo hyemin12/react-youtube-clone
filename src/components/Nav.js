@@ -8,22 +8,22 @@ const Nav = () => {
   return (
     <div>
       {navs.map((nav) => (
-        <NavLink to={nav.path}>
-          <NavItem isAc>
-            {nav.icon}
-            <span>{nav.text}</span>
-          </NavItem>
-        </NavLink>
+        <NavItem to={nav.path}>
+          {nav.icon}
+          <span>{nav.text}</span>
+        </NavItem>
       ))}
     </div>
   );
 };
-const NavItem = styled.div`
+
+const NavItem = styled(NavLink)`
   display: flex;
   gap: 14px;
-  width: 100px;
-  padding: 0 10px;
-  &: .active {
+  width: 64px;
+  padding: 10px;
+  border-radius: 30px;
+  &.active {
     background-color: #ccc;
   }
 `;
