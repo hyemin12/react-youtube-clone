@@ -10,6 +10,7 @@ import ChannelThumbnail from "./ChannelThumbnail";
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const VideoItem = (item) => {
+  const [loading, setLoading] = useState(true);
   const { thumbnails, title, channelTitle, channelId, publishedAt } =
     item.snippet;
 
@@ -19,16 +20,17 @@ const VideoItem = (item) => {
     const res = await axios.get(
       `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
     );
-    console.log(res.data.items[0].snippet.thumbnails.default.url);
+
     setChannelImg(res.data.items[0].snippet.thumbnails.default.url);
+    setLoading(false);
   };
   useEffect(() => {
     getThumbnail();
   }, []);
   return (
     <>
-      <Link to="" style={{ width: `${thumbnails.medium.width}px` }}>
-        <Thumbnail size={thumbnails.medium.url} title={title} />
+      <Link to={item.id} style={{ width: `${thumbnails.medium.width}px` }}>
+        <Thumbnail size={thumbnails.medium} title={title} loading={loading} />
         <VideoRow>
           <ChannelThumbnail url={channelImg} title={channelTitle} size={34} />
 

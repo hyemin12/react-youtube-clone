@@ -19,12 +19,13 @@ const Nav = () => {
 
 const NavItem = styled(NavLink)`
   display: flex;
+  align-items: center;
   gap: 14px;
-  width: 64px;
-  padding: 10px;
+  width: 84px;
+  padding: 10px 20px;
   border-radius: 30px;
   &.active {
-    background-color: #ccc;
+    background-color: #eee;
   }
 `;
 export default Nav;
