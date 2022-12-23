@@ -3,7 +3,6 @@ import styled from "styled-components";
 import VideoItem from "./VideoItem";
 
 const VideoList = ({ videos }) => {
-  console.log(videos);
   return (
     <ListContainer>
       {videos.map((item) => {
@@ -17,7 +16,6 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   width: calc(100vw - 150px);
-  max-width: 1500px;
   margin: 0 auto;
 `;
 

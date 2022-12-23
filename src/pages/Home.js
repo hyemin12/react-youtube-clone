@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 
-import Aside from "../components/Aside";
-import Header from "../components/Header";
+import Layout from "../components/Layout";
 import VideoList from "../components/VideoList";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
@@ -21,18 +19,10 @@ const Home = () => {
     getData();
   }, []);
   return (
-    <div>
-      <Header />
-      <MainContent>
-        <Aside />
-        <VideoList videos={popular} />
-      </MainContent>
-    </div>
+    <Layout>
+      <VideoList videos={popular} />
+    </Layout>
   );
 };
-const MainContent = styled.div`
-  display: flex;
-  gap: 20px;
-  padding: 20px 10px;
-`;
+
 export default Home;
