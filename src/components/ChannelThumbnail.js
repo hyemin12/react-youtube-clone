@@ -13,6 +13,7 @@ const ChannelThumbnail = ({ title, url, size }) => {
 const Thumbnail = styled.img`
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 2px 3px 3px #f1f1f1, 0 -2px 3px 3px #f1f1f1;
 `;
 
 export default ChannelThumbnail;

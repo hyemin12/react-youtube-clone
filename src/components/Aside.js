@@ -2,9 +2,9 @@ import Nav from "./Nav";
 
 const Aside = () => {
   return (
-    <div>
+    <aside>
       <Nav />
-    </div>
+    </aside>
   );
 };
 export default Aside;

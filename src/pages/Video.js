@@ -6,6 +6,7 @@ import ChannelThumbnail from "../components/ChannelThumbnail";
 
 import Layout from "../components/Layout";
 import styled from "styled-components";
+import Header from "../components/Header";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -37,37 +38,46 @@ const Video = () => {
   return (
     <Layout>
       {data && (
-        <>
-          <div>
-            <iframe
-              id="ytplayer"
-              type="text/html"
-              width="920"
-              height="517.5"
-              src={`https://www.youtube.com/embed/${id}`}
-              frameborder="0"
-              title={id}
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div>
-            <h4>{data.title}</h4>
-            <div>
+        <Content>
+          <iframe
+            id="ytplayer"
+            type="text/html"
+            width="920"
+            height="517.5"
+            src={`https://www.youtube.com/embed/${id}`}
+            frameborder="0"
+            title={id}
+            allowfullscreen
+          ></iframe>
+
+          <ContentText>
+            <h3>{data.title}</h3>
+            <Row>
               <ChannelThumbnail
                 size={50}
                 url={channelImg}
                 title={data.channelTitle}
               />
               <ChannelTitle>{data.channelTitle}</ChannelTitle>
-            </div>
+            </Row>
 
             <p>{data.description}</p>
-          </div>
-        </>
+          </ContentText>
+        </Content>
       )}
     </Layout>
   );
 };
+const Content = styled.div`
+  padding: 0 84px;
+`;
+const Row = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+const ContentText = styled.div`
+  width: 920px;
+`;
 
 const ChannelTitle = styled.p`
   font-weight: bold;
