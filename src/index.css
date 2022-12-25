@@ -8,6 +8,7 @@
 * {
   font-family: "Pretendard-Regular", "Noto Sans KR", sans-serif;
   box-sizing: border-box;
+  margin: 0;
 }
 a {
   color: #333;

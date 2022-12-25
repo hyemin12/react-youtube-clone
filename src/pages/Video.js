@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 
 import ChannelThumbnail from "../components/ChannelThumbnail";
-
 import Layout from "../components/Layout";
-import styled from "styled-components";
-import Header from "../components/Header";
+import Title from "../components/Title";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -25,15 +24,12 @@ const Video = () => {
     );
 
     setData(res.data.items[0].snippet);
-    console.log(res.data.items[0].snippet);
     setChannelImg(channelRes.data.items[0].snippet.thumbnails.default.url);
   };
 
   useEffect(() => {
     getData();
   }, []);
-  // console.log(data);
-  // const { title, publishedAt, channelTitle, description } = data;
 
   return (
     <Layout>
@@ -51,17 +47,32 @@ const Video = () => {
           ></iframe>
 
           <ContentText>
-            <h3>{data.title}</h3>
-            <Row>
+            <VideoTitle>{data.title}</VideoTitle>
+            <ChannelRow>
               <ChannelThumbnail
-                size={50}
+                size={40}
                 url={channelImg}
                 title={data.channelTitle}
               />
               <ChannelTitle>{data.channelTitle}</ChannelTitle>
-            </Row>
-
-            <p>{data.description}</p>
+            </ChannelRow>
+            <Descriptions>
+              <p>업로드 날짜: {data.publishedAt.slice(0, 10)}</p>
+              {data.description.split("\n").map((sentence) =>
+                sentence === "" ? (
+                  <br />
+                ) : (
+                  <p
+                    style={{
+                      color: sentence.includes("#") ? "blue" : "#333",
+                    }}
+                    key={sentence}
+                  >
+                    {sentence}
+                  </p>
+                )
+              )}
+            </Descriptions>
           </ContentText>
         </Content>
       )}
@@ -71,14 +82,23 @@ const Video = () => {
 const Content = styled.div`
   padding: 0 84px;
 `;
-const Row = styled.div`
-  display: flex;
-  gap: 20px;
+const VideoTitle = styled.h3`
+  padding: 10px 0;
+  margin-bottom: 10px;
 `;
 const ContentText = styled.div`
   width: 920px;
 `;
-
+const ChannelRow = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+`;
+const Descriptions = styled.div`
+  background-color: #eee;
+  border-radius: 10px;
+  padding: 16px;
+`;
 const ChannelTitle = styled.p`
   font-weight: bold;
 `;
