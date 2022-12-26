@@ -6,6 +6,7 @@ import styled from "styled-components";
 import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 import ChannelThumbnail from "./ChannelThumbnail";
+import Title from "./Title";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -35,7 +36,7 @@ const VideoItem = (item) => {
           <ChannelThumbnail url={channelImg} title={channelTitle} size={34} />
 
           <div>
-            <Title>{title}</Title>
+            <Title size={16} text={title} mode={true} />
             <SubTitle text={channelTitle} />
             <SubTitle text={publishedAt.slice(0, 10)} />
           </div>
@@ -45,16 +46,6 @@ const VideoItem = (item) => {
   );
 };
 
-const Title = styled.h4`
-  display: -webkit-box;
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-`;
 const VideoRow = styled.div`
   display: flex;
   gap: 14px;
