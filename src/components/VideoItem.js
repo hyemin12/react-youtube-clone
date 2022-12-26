@@ -36,8 +36,8 @@ const VideoItem = (item) => {
 
           <div>
             <Title>{title}</Title>
-            <SubTitle text={channelTitle} color={"#777"} />
-            <SubTitle text={publishedAt.slice(0, 10)} color={"#777"} />
+            <SubTitle text={channelTitle} />
+            <SubTitle text={publishedAt.slice(0, 10)} />
           </div>
         </VideoRow>
       </Link>
