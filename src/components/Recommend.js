@@ -7,7 +7,25 @@ import Title from "./Title";
 
 const Recommend = ({ item, loading, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
-  // console.log(item);
+
+  const updateDate = (uploadDate) => {
+    const today = new Date();
+    const upload = new Date(uploadDate);
+
+    const year = today.getFullYear() - upload.getFullYear();
+    const month = today.getMonth() - upload.getMonth();
+    const date = today.getDate() - upload.getDate();
+    const hours = today.getHours() - upload.getHours();
+    const minutes = today.getMinutes() - upload.getMinutes();
+    const sec = today.getSeconds() - upload.getSeconds();
+    if (0 < year) return `${month}달전`;
+    if (0 < month && month < 12) return `${month}달전`;
+    if (8 <= date && date <= 31) return `${Math.floor(date / 7)}주전`;
+    if (0 < date && date < 8) return `${date}일전`;
+    if (0 < hours) return `${hours}시간전`;
+    if (0 < minutes) return `${minutes}분전`;
+    if (0 < sec) return `${sec}초전`;
+  };
 
   return (
     <Link to={`../${item.id}`}>
@@ -22,7 +40,7 @@ const Recommend = ({ item, loading, channelTitle }) => {
         <ContentText>
           <Title size={16} text={title} mode={true} />
           <SubTitle text={channelTitle} />
-          <SubTitle text={publishedAt.slice(0, 10)} />
+          <SubTitle text={updateDate(publishedAt)} />
         </ContentText>
       </Row>
     </Link>

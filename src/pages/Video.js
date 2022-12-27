@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -8,6 +8,7 @@ import Layout from "../components/Layout";
 import Title from "../components/Title";
 import Recommend from "../components/Recommend";
 import Loading from "../components/Loading";
+import Iframe from "../components/Iframe";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -49,7 +50,7 @@ const Video = () => {
       console.log(err);
     }
   };
-  console.log(recommend);
+  console.log(data);
   useEffect(() => {
     getData();
   }, []);
@@ -62,17 +63,7 @@ const Video = () => {
         data && (
           <Content>
             <div>
-              <iframe
-                id="ytplayer"
-                type="text/html"
-                width="920"
-                height="517.5"
-                src={`https://www.youtube.com/embed/${id}`}
-                frameborder="0"
-                title={id}
-                allowfullscreen
-                style={{ marginBottom: "10px" }}
-              ></iframe>
+              <Iframe id={id} width={"920"} height={"517.5"} />
 
               <ContentText>
                 <Title size={20} text={data.title} mode={false} />
@@ -86,21 +77,20 @@ const Video = () => {
                   <p>{data.channelTitle}</p>
                 </ChannelRow>
                 <Descriptions>
-                  <p>업로드 날짜: {data.publishedAt.slice(0, 10)}</p>
-                  {data.description.split("\n").map((sentence) =>
-                    sentence === "" ? (
-                      <br />
-                    ) : (
-                      <p
-                        style={{
-                          color: sentence.includes("#") ? "blue" : "#333",
-                        }}
-                        key={sentence}
-                      >
-                        {sentence}
-                      </p>
-                    )
-                  )}
+                  <p>업로드: {data.publishedAt.slice(0, 10)}</p>
+                  {data.description
+                    .split("\n")
+                    .map((sentence) =>
+                      sentence === "" ? (
+                        <br />
+                      ) : (
+                        <p key={sentence}>{sentence}</p>
+                      )
+                    )}
+                  <br />
+                  {data.tags.map((tag) => (
+                    <Hashtag key={tag}>#{tag}</Hashtag>
+                  ))}
                 </Descriptions>
               </ContentText>
             </div>
@@ -150,6 +140,10 @@ const Descriptions = styled.div`
   background-color: #eee;
   border-radius: 10px;
   padding: 16px;
+`;
+const Hashtag = styled(Link)`
+  margin-right: 6px;
+  color: blue;
 `;
 
 export default Video;
