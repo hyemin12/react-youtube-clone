@@ -8,6 +8,8 @@ import Title from "./Title";
 const Recommend = ({ item, loading, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
 
+  console.log(item);
+
   const updateDate = (uploadDate) => {
     const today = new Date();
     const upload = new Date(uploadDate);
@@ -28,7 +30,7 @@ const Recommend = ({ item, loading, channelTitle }) => {
   };
 
   return (
-    <Link to={`../${item.id}`}>
+    <Link to={`../${item.contentDetails.upload.videoId}`}>
       <Row>
         <Thumbnail
           width={200}
