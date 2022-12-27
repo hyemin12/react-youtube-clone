@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 import Thumbnail from "./Thumbnail";
 import SubTitle from "./SubTitle";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Title from "./Title";
+
 const Recommend = ({ item, loading, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
+  // console.log(item);
 
   return (
     <Link to={`../${item.id}`}>

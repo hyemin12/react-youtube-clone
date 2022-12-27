@@ -38,7 +38,7 @@ const Video = () => {
       );
       const recommendRes = await axiosGet(
         "activities",
-        `channelId=${dataRes.data.items[0].snippet.channelId}`
+        `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
       );
 
       setData(dataRes.data.items[0].snippet);
@@ -49,7 +49,7 @@ const Video = () => {
       console.log(err);
     }
   };
-  console.log(data);
+  console.log(recommend);
   useEffect(() => {
     getData();
   }, []);
@@ -105,14 +105,17 @@ const Video = () => {
               </ContentText>
             </div>
             <div>
+              <RecomTitle>같은 채널 다른 영상</RecomTitle>
               {recommend &&
-                recommend.map((item) => (
-                  <Recommend
-                    item={item}
-                    loading={loading}
-                    channelTitle={data.channelTitle}
-                  />
-                ))}
+                recommend
+                  .filter((a) => a.contentDetails.upload.videoId !== id)
+                  .map((item) => (
+                    <Recommend
+                      item={item}
+                      loading={loading}
+                      channelTitle={data.channelTitle}
+                    />
+                  ))}
             </div>
           </Content>
         )
@@ -124,6 +127,13 @@ const Content = styled.div`
   display: flex;
   gap: 20px;
   padding: 0 84px;
+`;
+const RecomTitle = styled.p`
+  display: inline-block;
+  background-color: #ddd;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 `;
 
 const ContentText = styled.div`

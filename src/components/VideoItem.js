@@ -31,7 +31,12 @@ const VideoItem = (item) => {
   return (
     <>
       <Link to={item.id} style={{ width: `${thumbnails.medium.width}px` }}>
-        <Thumbnail size={thumbnails.medium} title={title} loading={loading} />
+        <Thumbnail
+          width={thumbnails.medium.width}
+          height={thumbnails.medium.height}
+          url={thumbnails.medium.url}
+          title={title}
+        />
         <VideoRow>
           <ChannelThumbnail url={channelImg} title={channelTitle} size={34} />
 
