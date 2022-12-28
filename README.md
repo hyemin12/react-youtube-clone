@@ -21,3 +21,6 @@ react-icons : https://react-icons.github.io/react-icons/icons?name=fa
 
 채널 id로 채널 정보 가져오기
 `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
+
+useContext API
+https://beta.reactjs.org/reference/react/useContext

@@ -1,9 +1,13 @@
+import { createContext, useState } from "react";
 import Router from "./components/Router";
+import { ContextProvier } from "./hooks/searchContext";
 
 function App() {
   return (
     <div className="App">
-      <Router />
+      <ContextProvier>
+        <Router />
+      </ContextProvier>
     </div>
   );
 }
