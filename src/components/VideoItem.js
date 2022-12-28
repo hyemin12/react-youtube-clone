@@ -7,6 +7,7 @@ import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 import ChannelThumbnail from "./ChannelThumbnail";
 import Title from "./Title";
+import UploadDate from "./UploadDate";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -43,7 +44,7 @@ const VideoItem = (item) => {
           <div>
             <Title size={16} text={title} mode={true} />
             <SubTitle text={channelTitle} />
-            <SubTitle text={publishedAt.slice(0, 10)} />
+            <UploadDate date={publishedAt.slice(0, 19)} />
           </div>
         </VideoRow>
       </Link>

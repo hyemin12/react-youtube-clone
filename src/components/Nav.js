@@ -8,7 +8,7 @@ const Nav = () => {
   return (
     <div>
       {navs.map((nav) => (
-        <NavItem to={nav.path}>
+        <NavItem to={nav.path} key={nav.path}>
           {nav.icon}
           <span>{nav.text}</span>
         </NavItem>

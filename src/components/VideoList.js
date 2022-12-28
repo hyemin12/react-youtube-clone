@@ -5,9 +5,9 @@ import VideoItem from "./VideoItem";
 const VideoList = ({ videos }) => {
   return (
     <ListContainer>
-      {videos.map((item) => {
-        return <VideoItem {...item} />;
-      })}
+      {videos.map((item) => (
+        <VideoItem {...item} key={item.id} />
+      ))}
     </ListContainer>
   );
 };

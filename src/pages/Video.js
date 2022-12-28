@@ -41,7 +41,6 @@ const Video = () => {
         "activities",
         `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
       );
-
       setData(dataRes.data.items[0].snippet);
       setChannelImg(channelRes.data.items[0].snippet.thumbnails.default.url);
       setRecommend(recommendRes.data.items);
@@ -50,7 +49,7 @@ const Video = () => {
       console.log(err);
     }
   };
-  console.log(data);
+  console.log(recommend);
   useEffect(() => {
     getData();
   }, []);
@@ -88,9 +87,9 @@ const Video = () => {
                       )
                     )}
                   <br />
-                  {data.tags.map((tag) => (
+                  {/* {data.tags.map((tag) => (
                     <Hashtag key={tag}>#{tag}</Hashtag>
-                  ))}
+                  ))} */}
                 </Descriptions>
               </ContentText>
             </div>
