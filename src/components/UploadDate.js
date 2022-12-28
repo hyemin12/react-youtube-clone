@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const UploadDate = ({ date }) => {
-  console.log(date);
   const calcDate = () => {
     const today = new Date();
     const upload = new Date(date);

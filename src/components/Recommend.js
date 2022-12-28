@@ -6,10 +6,9 @@ import SubTitle from "./SubTitle";
 import Title from "./Title";
 import UploadDate from "./UploadDate";
 
-const Recommend = ({ item, loading, channelTitle }) => {
+const Recommend = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
 
-  console.log(publishedAt);
   return (
     <Link to={`../${item.contentDetails.upload.videoId}`}>
       <Row>
@@ -17,7 +16,6 @@ const Recommend = ({ item, loading, channelTitle }) => {
           width={200}
           height={200 * (9 / 16)}
           title={title}
-          loading={loading}
           url={thumbnails.medium.url}
         />
         <ContentText>

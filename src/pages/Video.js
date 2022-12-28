@@ -99,11 +99,7 @@ const Video = () => {
                 recommend
                   .filter((a) => a.contentDetails.upload.videoId !== id)
                   .map((item) => (
-                    <Recommend
-                      item={item}
-                      loading={loading}
-                      channelTitle={data.channelTitle}
-                    />
+                    <Recommend item={item} channelTitle={data.channelTitle} />
                   ))}
             </div>
           </Content>

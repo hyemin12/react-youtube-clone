@@ -12,7 +12,6 @@ import UploadDate from "./UploadDate";
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const VideoItem = (item) => {
-  const [loading, setLoading] = useState(true);
   const { thumbnails, title, channelTitle, channelId, publishedAt } =
     item.snippet;
 
@@ -24,7 +23,6 @@ const VideoItem = (item) => {
     );
 
     setChannelImg(res.data.items[0].snippet.thumbnails.default.url);
-    setLoading(false);
   };
   useEffect(() => {
     getThumbnail();

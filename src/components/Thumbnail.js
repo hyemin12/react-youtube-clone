@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const Thumbnail = ({ width, height, url, title }) => {
