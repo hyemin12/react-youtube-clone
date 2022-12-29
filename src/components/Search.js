@@ -3,12 +3,15 @@ import { FaSearch } from "react-icons/fa";
 import { useCallback, useMemo, useState } from "react";
 import axios from "axios";
 import { useSearchContext } from "../hooks/searchContext";
+import { useNavigate } from "react-router-dom";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Search = () => {
   const [query, setQuery] = useState("");
   const { setSearchQuery } = useSearchContext();
+
+  const navigate = useNavigate();
   const onChange = useCallback(
     (e) => {
       setQuery(e.target.value);
@@ -22,12 +25,14 @@ const Search = () => {
         alert("검색어를 입력하세요");
       } else {
         const res =
-          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&key=${KEY}
+          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&maxResults=20&key=${KEY}
       `);
-        console.log(res);
-      }
 
-      // setSearchQuery()
+        console.log(res);
+        setSearchQuery({ q: query, result: res.data.items });
+        navigate(`/results/search=${query}`);
+        // `/results/:search=${searchQuery.q}`
+      }
     } catch (err) {
       console.log(err);
     }

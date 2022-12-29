@@ -4,8 +4,9 @@ const MyContext = createContext();
 
 // Provider
 export const ContextProvier = ({ children }) => {
-  const [searchQuery, setSearchQuery] = useState();
+  const [searchQuery, setSearchQuery] = useState({ q: "", result: [] });
   const value = { searchQuery, setSearchQuery };
+
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
 };
 // custom hook

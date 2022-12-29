@@ -14,7 +14,9 @@ const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Video = () => {
   const { id } = useParams();
+
   const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState();
   const [channelImg, setChannelImg] = useState();
   const [recommend, setRecommend] = useState();

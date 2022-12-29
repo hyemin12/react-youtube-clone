@@ -7,12 +7,15 @@ import Search from "../pages/Search";
 import { useSearchContext } from "../hooks/searchContext";
 
 const Router = () => {
-  const { query } = useSearchContext();
-  console.log(query);
+  const { searchQuery } = useSearchContext();
+  console.log(searchQuery);
   return (
     <>
       <Routes>
-        <Route path={`/results?search=${query}`} element={<Search />}></Route>
+        <Route
+          path={`/results/:search=${searchQuery.q}`}
+          element={<Search />}
+        ></Route>
         <Route path="/:id" element={<Video />}></Route>
         <Route path="/" element={<Home />}></Route>
       </Routes>
