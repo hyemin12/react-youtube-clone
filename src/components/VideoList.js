@@ -17,6 +17,7 @@ const ListContainer = styled.div`
   gap: 20px;
   width: calc(100vw - 150px);
   margin: 0 auto;
+  padding: 20px 0;
 `;
 
 export default VideoList;

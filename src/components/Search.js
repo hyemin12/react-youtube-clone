@@ -28,10 +28,8 @@ const Search = () => {
           await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&maxResults=20&key=${KEY}
       `);
 
-        console.log(res);
         setSearchQuery({ q: query, result: res.data.items });
         navigate(`/results/search=${query}`);
-        // `/results/:search=${searchQuery.q}`
       }
     } catch (err) {
       console.log(err);
@@ -79,6 +77,7 @@ const SearchBtn = styled.button`
   border-left: none;
   border-radius: 0 20px 20px 0;
   box-sizing: border-box;
+  cursor: pointer;
   &:hover {
     border: 2px solid #999;
   }

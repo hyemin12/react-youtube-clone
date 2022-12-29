@@ -1,10 +1,21 @@
+import Layout from "../components/Layout";
+import Title from "../components/Title";
+import VideoList from "../components/VideoList";
 import { useSearchContext } from "../hooks/searchContext";
 
 const Search = () => {
-  console.log("서치컴포넌트");
   const { searchQuery } = useSearchContext();
   console.log(searchQuery);
-  return <div>검색결과창</div>;
+  const { q, result } = searchQuery;
+  return (
+    <Layout>
+      <div>
+        <Title size={24} text={`"${q}" 검색 결과`} mode={false} />
+
+        <VideoList videos={result} />
+      </div>
+    </Layout>
+  );
 };
 
 export default Search;

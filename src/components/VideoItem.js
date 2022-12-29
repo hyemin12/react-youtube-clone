@@ -27,12 +27,13 @@ const VideoItem = (item) => {
   useEffect(() => {
     getThumbnail();
   }, []);
+  console.log(thumbnails.medium);
   return (
     <>
       <Link to={item.id} style={{ width: `${thumbnails.medium.width}px` }}>
         <Thumbnail
-          width={thumbnails.medium.width}
-          height={thumbnails.medium.height}
+          width={thumbnails.medium.width ? thumbnails.medium.width : 320}
+          height={thumbnails.medium.height ? thumbnails.medium.height : 180}
           url={thumbnails.medium.url}
           title={title}
         />
