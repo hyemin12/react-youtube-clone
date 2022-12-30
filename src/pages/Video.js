@@ -57,7 +57,7 @@ const Video = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout aside={false}>
       {loading ? (
         <Loading />
       ) : (

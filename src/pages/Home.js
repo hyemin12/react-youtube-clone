@@ -22,7 +22,9 @@ const Home = () => {
     getData();
   }, []);
   return (
-    <Layout>{loading ? <Loading /> : <VideoList videos={popular} />}</Layout>
+    <Layout aside={true}>
+      {loading ? <Loading /> : <VideoList videos={popular} />}
+    </Layout>
   );
 };
 

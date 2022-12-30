@@ -8,9 +8,13 @@ const Search = () => {
   console.log(searchQuery);
   const { q, result } = searchQuery;
   return (
-    <Layout>
+    <Layout aside={true}>
       <div>
-        <Title size={24} text={`"${q}" 검색 결과`} mode={false} />
+        <Title
+          size={24}
+          text={q.length === 0 ? "검색 결과가 없습니다." : `"${q}" 검색 결과`}
+          mode={false}
+        />
 
         <VideoList videos={result} />
       </div>

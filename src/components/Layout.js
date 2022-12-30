@@ -5,15 +5,15 @@ import Aside from "./Aside";
 import Footer from "./Footer";
 import Header from "./Header";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, aside }) => {
   const location = useLocation();
 
   return (
     <div>
       <Header />
       <MainContent>
-        {location.pathname === "/" ||
-          (location.pathname.includes("/results/search=") && <Aside />)}
+        {aside ? <Aside /> : null}
+
         {children}
       </MainContent>
       <Footer />
