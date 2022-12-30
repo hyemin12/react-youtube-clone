@@ -9,6 +9,7 @@ import Title from "../components/Title";
 import Recommend from "../components/Recommend";
 import Loading from "../components/Loading";
 import Iframe from "../components/Iframe";
+import Button from "../components/Button";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -57,57 +58,64 @@ const Video = () => {
   }, []);
 
   return (
-    <Layout aside={false}>
+    <>
       {loading ? (
         <Loading />
       ) : (
         data && (
-          <Content>
-            <div>
-              <Iframe id={id} width={"920"} height={"517.5"} />
+          <Layout Layout aside={false}>
+            <Content>
+              <div>
+                <Iframe id={id} width={"920"} height={"517.5"} />
 
-              <ContentText>
-                <Title size={20} text={data.title} mode={false} />
-
-                <ChannelRow>
-                  <ChannelThumbnail
-                    size={40}
-                    url={channelImg}
-                    title={data.channelTitle}
-                  />
-                  <p>{data.channelTitle}</p>
-                </ChannelRow>
-                <Descriptions>
-                  <p>업로드: {data.publishedAt.slice(0, 10)}</p>
-                  {data.description
-                    .split("\n")
-                    .map((sentence) =>
-                      sentence === "" ? (
-                        <br />
-                      ) : (
-                        <p key={sentence}>{sentence}</p>
-                      )
-                    )}
-                  <br />
-                  {/* {data.tags.map((tag) => (
+                <ContentText>
+                  <Title size={20} text={data.title} mode={false} />
+                  <Row>
+                    <ChannelRow>
+                      <ChannelThumbnail
+                        size={40}
+                        url={channelImg}
+                        title={data.channelTitle}
+                      />
+                      <p>{data.channelTitle}</p>
+                    </ChannelRow>
+                    <div>
+                      <Button type={"link"} text={"Youtube에서 보기"} id={id} />
+                      <Button type={"copy"} text={"공유하기"} id={id} />
+                    </div>
+                  </Row>
+                  <Descriptions>
+                    <p>업로드: {data.publishedAt.slice(0, 10)}</p>
+                    {data.description
+                      .split("\n")
+                      .map((sentence, idx) =>
+                        sentence === "" ? (
+                          <br />
+                        ) : (
+                          <p key={`${sentence}${idx}`}>{sentence}</p>
+                        )
+                      )}
+                    <br />
+                    {/* {data.tags.map((tag) => (
                     <Hashtag key={tag}>#{tag}</Hashtag>
                   ))} */}
-                </Descriptions>
-              </ContentText>
-            </div>
-            <div>
-              <RecomTitle>같은 채널 다른 영상</RecomTitle>
-              {recommend &&
-                recommend
-                  .filter((a) => a.contentDetails.upload.videoId !== id)
-                  .map((item) => (
-                    <Recommend item={item} channelTitle={data.channelTitle} />
-                  ))}
-            </div>
-          </Content>
+                  </Descriptions>
+                </ContentText>
+              </div>
+              <div>
+                <RecomTitle>같은 채널 다른 영상</RecomTitle>
+                {recommend &&
+                  recommend
+                    .filter((a) => a.contentDetails.upload.videoId !== id)
+                    .map((item) => (
+                      <Recommend item={item} channelTitle={data.channelTitle} />
+                    ))}
+              </div>
+            </Content>
+          </Layout>
         )
       )}
-    </Layout>
+    </>
   );
 };
 const Content = styled.div`
@@ -124,7 +132,7 @@ const RecomTitle = styled.p`
 `;
 
 const ContentText = styled.div`
-  width: 920px;
+  width: 100%;
 `;
 const ChannelRow = styled.div`
   display: flex;
@@ -137,6 +145,16 @@ const Descriptions = styled.div`
   background-color: #eee;
   border-radius: 10px;
   padding: 16px;
+  line-height: 1.4;
+  @media screen and (min-width: 1541px) {
+    width: 67 vw;
+  }
+`;
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 `;
 const Hashtag = styled(Link)`
   margin-right: 6px;

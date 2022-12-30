@@ -10,6 +10,9 @@
 6. 키워드 클릭 시 해당 키워드 관련 영상 데이터 가져오기
 7. 컴포넌트 정리하기...
 
+- 유튜브로 이동하는 버튼
+- 공유하기 버튼 만들기 (https://www.delftstack.com/ko/howto/react/react-copy-to-clipboard/)
+
 ### Main Page
 
 #### Header
