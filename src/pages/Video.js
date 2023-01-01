@@ -57,6 +57,8 @@ const Video = () => {
     getData();
   }, []);
 
+  console.log(data);
+
   return (
     <>
       {loading ? (
@@ -96,14 +98,14 @@ const Video = () => {
                         )
                       )}
                     <br />
-                    {/* {data.tags.map((tag) => (
-                    <Hashtag key={tag}>#{tag}</Hashtag>
-                  ))} */}
                   </Descriptions>
                 </ContentText>
               </div>
               <div>
-                <RecomTitle>같은 채널 다른 영상</RecomTitle>
+                <div>
+                  <RecomTitle>같은 채널 다른 영상</RecomTitle>
+                </div>
+
                 {recommend &&
                   recommend
                     .filter((a) => a.contentDetails.upload.videoId !== id)

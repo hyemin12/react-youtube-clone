@@ -8,7 +8,7 @@ const Title = ({ size, text, mode }) => {
   );
 };
 const H4 = styled.h4`
-  padding-top: 12px;
+  padding-top: 2px;
   font-size: ${(props) => props.size}px;
   &.overflow {
     display: -webkit-box;

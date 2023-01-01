@@ -14,7 +14,6 @@ const Iframe = ({ id, width, height }) => {
         frameborder="0"
         title={id}
         allowfullscreen
-        style={{ marginBottom: "30px" }}
       ></iframe>
     </IframeContainer>
   );
@@ -22,9 +21,10 @@ const Iframe = ({ id, width, height }) => {
 const IframeContainer = styled.div`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
+  margin-bottom: 14px;
   @media screen and (min-width: 1541px) {
     width: 67vw;
-    height: 70vh;
+    height: 78vh;
   }
 `;
 export default Iframe;
