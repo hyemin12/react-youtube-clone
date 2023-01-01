@@ -19,7 +19,7 @@ const Search = () => {
     [query]
   );
 
-  const handleSearch = async () => {
+  const handleSearch = useCallback(async () => {
     try {
       if (query.length === 0) {
         alert("검색어를 입력하세요");
@@ -34,7 +34,7 @@ const Search = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
   return (
     <SearchContainer>
       <SearchInput

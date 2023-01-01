@@ -30,3 +30,9 @@ react-icons : https://react-icons.github.io/react-icons/icons?name=fa
 
 useContext API
 https://beta.reactjs.org/reference/react/useContext
+
+## 무한 스크롤
+
+(https://tech.kakaoenterprise.com/149)
+
+페이지 하단에 도달했을 때 API가 호출되며 콘텐츠가 끊기지 않고 계속 로드되는 사용자 경험 방식.
