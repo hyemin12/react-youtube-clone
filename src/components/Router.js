@@ -13,10 +13,10 @@ const Router = () => {
     <>
       <Routes>
         <Route
-          path={`results/:search=${searchQuery.q}`}
+          path={`/results/:search=${searchQuery.q}`}
           element={<Search />}
         ></Route>
-        <Route path="view/:id" element={<Video />}></Route>
+        <Route path="/watch?/:id" element={<Video />}></Route>
         <Route path="/" element={<Home />}></Route>
       </Routes>
     </>

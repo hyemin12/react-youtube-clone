@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -14,7 +14,8 @@ import Button from "../components/Button";
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Video = () => {
-  const { id } = useParams();
+  const location = useLocation();
+  const id = location.search.replace("?", "");
 
   const [loading, setLoading] = useState(true);
 
@@ -32,8 +33,7 @@ const Video = () => {
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
    * channelRes: 채널 정보 (채널 썸네일, 채널 이름)
    * recommendRes: 채널에서 업로드한 다른 영상 리스트
-   */
-  const getData = async () => {
+   */ const getData = async () => {
     try {
       const dataRes = await axiosGet("videos", `id=${id}`);
       const channelRes = await axiosGet(
@@ -44,6 +44,7 @@ const Video = () => {
         "activities",
         `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
       );
+
       setData(dataRes.data.items[0].snippet);
       setChannelImg(channelRes.data.items[0].snippet.thumbnails.default.url);
       setRecommend(recommendRes.data.items);

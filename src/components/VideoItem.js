@@ -31,7 +31,10 @@ const VideoItem = (item) => {
   }, []);
   return (
     <>
-      <Link to={`view${id}`} style={{ width: `${thumbnails.medium.width}px` }}>
+      <Link
+        to={{ pathname: "/watch", search: `${id}` }}
+        style={{ width: `${thumbnails.medium.width}px` }}
+      >
         <Thumbnail
           width={thumbnails.medium.width ? thumbnails.medium.width : 320}
           height={thumbnails.medium.height ? thumbnails.medium.height : 180}
