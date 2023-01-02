@@ -16,7 +16,7 @@ const Search = () => {
           mode={false}
         />
 
-        <VideoList videos={result} />
+        {result && <VideoList videos={result} />}
       </div>
     </Layout>
   );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -19,13 +19,13 @@ const VideoItem = (item) => {
 
   const [channelImg, setChannelImg] = useState();
 
-  const getThumbnail = async () => {
+  const getThumbnail = useCallback(async () => {
     const res = await axios.get(
       `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
     );
-
     setChannelImg(res.data.items[0].snippet.thumbnails.default.url);
-  };
+  }, [channelImg]);
+
   useEffect(() => {
     getThumbnail();
   }, []);

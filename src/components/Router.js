@@ -8,7 +8,7 @@ import { useSearchContext } from "../hooks/searchContext";
 
 const Router = () => {
   const { searchQuery } = useSearchContext();
-
+  console.log(searchQuery);
   return (
     <>
       <Routes>
