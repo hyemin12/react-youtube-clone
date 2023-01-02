@@ -12,13 +12,10 @@ const Search = () => {
   const { setSearchQuery } = useSearchContext();
 
   const navigate = useNavigate();
-  const onChange = useCallback(
-    (e) => {
-      setQuery(e.target.value);
-    },
-    [query]
-  );
-
+  const onChange = (e) => {
+    setQuery(e.target.value);
+  };
+  console.log(query, query.length);
   const handleSearch = useCallback(async () => {
     try {
       if (query.length === 0) {
@@ -34,7 +31,7 @@ const Search = () => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [query]);
   return (
     <SearchContainer>
       <SearchInput

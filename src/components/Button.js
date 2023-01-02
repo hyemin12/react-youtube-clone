@@ -7,9 +7,7 @@ import useAlert from "../hooks/useAlert";
 const Button = ({ id, type, text }) => {
   const urlRef = useRef(null);
   const { isAlert, setIsAlert } = useAlert();
-  console.log(isAlert);
   const onCopy = (e) => {
-    console.log(urlRef, urlRef.current.value);
     e.preventDefault();
     navigator.clipboard.writeText(urlRef.current.value);
     setIsAlert(true);

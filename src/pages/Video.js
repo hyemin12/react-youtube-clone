@@ -52,12 +52,10 @@ const Video = () => {
       console.log(err);
     }
   };
-  console.log(recommend);
+
   useEffect(() => {
     getData();
   }, []);
-
-  console.log(data);
 
   return (
     <>

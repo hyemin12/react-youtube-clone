@@ -13,7 +13,7 @@ const Home = () => {
 
   const getData = useCallback(async () => {
     const res = await axios.get(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=kr&maxResults=24&key=${KEY}`
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
     );
     setPopular(res.data.items);
     setLoading(false);

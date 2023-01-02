@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 const Iframe = ({ id, width, height }) => {
-  console.log(id);
-
   return (
     <IframeContainer width={width} height={height}>
       <iframe

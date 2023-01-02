@@ -5,7 +5,7 @@ import { useSearchContext } from "../hooks/searchContext";
 
 const Search = () => {
   const { searchQuery } = useSearchContext();
-  console.log(searchQuery);
+
   const { q, result } = searchQuery;
   return (
     <Layout aside={true}>

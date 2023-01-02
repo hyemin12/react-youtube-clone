@@ -12,6 +12,8 @@ import UploadDate from "./UploadDate";
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const VideoItem = (item) => {
+  const id = typeof item.id === "object" ? item.id.videoId : item.id;
+
   const { thumbnails, title, channelTitle, channelId, publishedAt } =
     item.snippet;
 
@@ -27,10 +29,9 @@ const VideoItem = (item) => {
   useEffect(() => {
     getThumbnail();
   }, []);
-  console.log(thumbnails.medium);
   return (
     <>
-      <Link to={item.id} style={{ width: `${thumbnails.medium.width}px` }}>
+      <Link to={`view${id}`} style={{ width: `${thumbnails.medium.width}px` }}>
         <Thumbnail
           width={thumbnails.medium.width ? thumbnails.medium.width : 320}
           height={thumbnails.medium.height ? thumbnails.medium.height : 180}

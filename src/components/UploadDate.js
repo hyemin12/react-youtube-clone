@@ -11,6 +11,9 @@ const UploadDate = ({ date }) => {
     const hoursGap = today.getHours() - upload.getHours();
     const minutesGap = today.getMinutes() - upload.getMinutes();
     const secGap = today.getSeconds() - upload.getSeconds();
+    console.log(today.getDate(), upload.getDate(), dateGap);
+    if (yearGap === 1 && dateGap < 7)
+      return `${today.getDate() + 31 - upload.getDate()}일전`;
     if (0 < yearGap) return `${yearGap}년전`;
     if (0 < monthGap && monthGap < 12) return `${monthGap}달전`;
     if (8 <= dateGap && dateGap <= 31) return `${Math.floor(dateGap / 7)}주전`;
