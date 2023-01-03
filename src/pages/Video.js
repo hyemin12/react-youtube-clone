@@ -35,16 +35,16 @@ const Video = () => {
    * recommendRes: 채널에서 업로드한 다른 영상 리스트
    */ const getData = async () => {
     try {
-      const dataRes = await axiosGet("videos", `id=${id}`);
+      const dataRes = await axiosGet("videos", `id=${id}&part=statistics`);
       const channelRes = await axiosGet(
         "channels",
-        `id=${dataRes.data.items[0].snippet.channelId}`
+        `id=${dataRes.data.items[0].snippet.channelId}&part=statistics`
       );
       const recommendRes = await axiosGet(
         "activities",
         `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
       );
-
+      console.log(dataRes, recommendRes, channelRes);
       setData(dataRes.data.items[0].snippet);
       setChannelImg(channelRes.data.items[0].snippet.thumbnails.default.url);
       setRecommend(recommendRes.data.items);

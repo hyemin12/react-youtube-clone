@@ -30,5 +30,16 @@ const P = styled.p`
   padding: 2px 0;
   color: #777;
   font-size: 0.9em;
+  position: relative;
+  &::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    background-color: #777;
+    border-radius: 50%;
+    position: absolute;
+    top: 9px;
+    left: -7px;
+  }
 `;
 export default UploadDate;

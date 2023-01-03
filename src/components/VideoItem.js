@@ -8,6 +8,7 @@ import Thumbnail from "./Thumbnail";
 import ChannelThumbnail from "./ChannelThumbnail";
 import Title from "./Title";
 import UploadDate from "./UploadDate";
+import ViewCount from "./ViewCount";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -47,7 +48,10 @@ const VideoItem = (item) => {
           <div>
             <Title size={16} text={title} mode={true} />
             <SubTitle text={channelTitle} />
-            <UploadDate date={publishedAt.slice(0, 19)} />
+            <Row>
+              <ViewCount viewNum={item.statistics.viewCount} />
+              <UploadDate date={publishedAt.slice(0, 19)} />
+            </Row>
           </div>
         </VideoRow>
       </Link>
@@ -59,6 +63,11 @@ const VideoRow = styled.div`
   display: flex;
   gap: 14px;
   padding: 8px 4px;
+`;
+const Row = styled.div`
+  display: flex;
+  gap: 14px;
+  position: relative;
 `;
 
 export default VideoItem;
