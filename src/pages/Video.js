@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+
+import { converCount } from "../hooks/converCount";
 
 import ChannelThumbnail from "../components/ChannelThumbnail";
 import Layout from "../components/Layout";
@@ -11,9 +13,7 @@ import Loading from "../components/Loading";
 import Iframe from "../components/Iframe";
 import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
-import { converCount } from "../hooks/converCount";
 import SubTitle from "../components/SubTitle";
-import ViewUpload from "../components/ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 

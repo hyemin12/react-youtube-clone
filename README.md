@@ -1,5 +1,26 @@
 # youtube 클론 프로젝트
 
+## 1. Main Page
+
+- 인기동영상와 여러가지 키워드의 영상 목록을 확인할 수 있음
+- 키워드를 클릭하면 해당 키워드와 관련한 영상 목록을 서버에서 받아와 출력함(클릭 시 새로운 데이터 요청)
+- 인기동영상 => videos?chart=mostPopular 사용
+- 다른 키워드 => search?q=${keywords} 사용
+
+- Layout, VideoList
+
+## 2. Video Page
+
+- url 주소를 바탕으로 해당 영상 id값을 통해 상세 정보를 확인할 수 있는 페이지
+- url 주소의 값을 바탕으로 id 추출
+- iframe을 사용하여 유튜브 영상을 삽입
+- data => 영화 상세 정보{result:타이틀, 채널이름,설명, 업로드 날짜 등 ,statistic: 좋아요개수, 조회수 }
+- channel => 영상을 업로드한 채널 관련 정보 {subscribe: 구독자 수 등 ,thumbnail: 채널 썸네일 정보}
+- recommend => 추천 영상 목록
+  {channel: 채널에서 업로드한 다른 영상 목록들, category: 해당 영상의 카테고리id가 같은 영상 목록들}
+
+## 3. Search Page
+
 ### 할일
 
 1. api 연결하기 https://developers.google.com/youtube/v3/getting-started?hl=ko
@@ -13,11 +34,11 @@
 - 유튜브로 이동하는 버튼
 - 공유하기 버튼 만들기 (https://www.delftstack.com/ko/howto/react/react-copy-to-clipboard/)
 
-### Main Page
+## 컴포넌트
 
 #### Header
 
-- Logo, Search (검색창), icon으로 이루어진 컴포넌트
+- Logo, Search (검색창)으로 이루어진 컴포넌트
 
 #### 기타
 

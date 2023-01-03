@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
@@ -8,7 +8,6 @@ import Layout from "../components/Layout";
 import Loading from "../components/Loading";
 import VideoList from "../components/VideoList";
 import Nav from "../components/Nav";
-import Keywords from "../components/Keyword";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
