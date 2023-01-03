@@ -1,7 +1,10 @@
+import styled from "styled-components";
+
+import { useSearchContext } from "../hooks/searchContext";
+
 import Layout from "../components/Layout";
 import Title from "../components/Title";
 import VideoList from "../components/VideoList";
-import { useSearchContext } from "../hooks/searchContext";
 
 const Search = () => {
   const { searchQuery } = useSearchContext();
@@ -9,7 +12,7 @@ const Search = () => {
   const { q, result } = searchQuery;
   return (
     <Layout aside={true}>
-      <div>
+      <SearchContainer>
         <Title
           size={24}
           text={q.length === 0 ? "검색 결과가 없습니다." : `"${q}" 검색 결과`}
@@ -17,9 +20,13 @@ const Search = () => {
         />
 
         {result && <VideoList videos={result} />}
-      </div>
+      </SearchContainer>
     </Layout>
   );
 };
+
+const SearchContainer = styled.div`
+  margin: 0 auto;
+`;
 
 export default Search;

@@ -5,10 +5,10 @@ import Video from "../pages/Video";
 import Search from "../pages/Search";
 
 import { useSearchContext } from "../hooks/searchContext";
+import NotFound from "../pages/NotFound";
 
 const Router = () => {
   const { searchQuery } = useSearchContext();
-  console.log(searchQuery);
   return (
     <>
       <Routes>
@@ -17,7 +17,8 @@ const Router = () => {
           element={<Search />}
         ></Route>
         <Route path="/watch?/:id" element={<Video />}></Route>
-        <Route path="/" element={<Home />}></Route>
+        <Route exact path="/" element={<Home />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </>
   );

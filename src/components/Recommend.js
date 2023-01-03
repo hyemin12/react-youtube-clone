@@ -1,18 +1,19 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
+
+import { converCount } from "../hooks/converCount";
 
 import Thumbnail from "./Thumbnail";
 import SubTitle from "./SubTitle";
 import Title from "./Title";
-import UploadDate from "./UploadDate";
-import ViewCount from "./ViewCount";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import ViewUpload from "./ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 const Recommend = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
-  const id = item.contentDetails.upload.videoId;
+  const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;
 
   const [viewNum, setViewNum] = useState(0);
   // 조회수 가져오는 함수
@@ -22,7 +23,6 @@ const Recommend = ({ item, channelTitle }) => {
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics&key=${KEY}
     `);
       setViewNum(res.data.items[0].statistics.viewCount);
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -43,10 +43,16 @@ const Recommend = ({ item, channelTitle }) => {
         <ContentText>
           <Title size={16} text={title} mode={true} />
           <SubTitle text={channelTitle} />
-          <Row>
-            <ViewCount viewNum={viewNum} />
+
+          <ViewUpload
+            view={converCount(viewNum)}
+            date={publishedAt.slice(0, 19)}
+            convert={true}
+          />
+          {/* <Row>
+            <SubTitle text={`조회수 ${converCount(viewNum)}`} />
             <UploadDate date={publishedAt.slice(0, 19)} />
-          </Row>
+          </Row> */}
         </ContentText>
       </Row>
     </Link>

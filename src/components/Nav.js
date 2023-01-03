@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
-import { FaHome } from "react-icons/fa";
 import styled from "styled-components";
+import { FaHome, FaMusic } from "react-icons/fa";
 
 const Nav = () => {
   const navs = [{ icon: <FaHome />, text: "홈", path: "/" }];

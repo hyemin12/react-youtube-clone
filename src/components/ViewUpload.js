@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-const UploadDate = ({ date }) => {
+import SubTitle from "./SubTitle";
+
+const ViewUpload = ({ view, date, convert }) => {
   const calcDate = () => {
     const today = new Date();
     const upload = new Date(date);
@@ -22,10 +24,19 @@ const UploadDate = ({ date }) => {
     if (0 < minutesGap) return `${minutesGap}분전`;
     if (0 < secGap) return `${secGap}초전`;
   };
-  return <P>{calcDate()}</P>;
+  return (
+    <Row>
+      <SubTitle text={`조회수 ${view}`} />
+      <DateTitle>{convert ? calcDate(date) : date}</DateTitle>
+    </Row>
+  );
 };
-
-const P = styled.p`
+const Row = styled.div`
+  display: flex;
+  gap: 14px;
+  position: relative;
+`;
+const DateTitle = styled.p`
   margin: 0;
   padding: 2px 0;
   color: #777;
@@ -42,4 +53,4 @@ const P = styled.p`
     left: -7px;
   }
 `;
-export default UploadDate;
+export default ViewUpload;

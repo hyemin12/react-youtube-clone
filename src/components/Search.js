@@ -58,7 +58,7 @@ const SearchContainer = styled.div`
 `;
 const SearchInput = styled.input`
   width: 540px;
-  height: 100%;
+  height: 40px;
   border: 2px solid #ccc;
   border-radius: 20px 0 0 20px;
   padding: 0 10px;
@@ -73,13 +73,12 @@ const SearchInput = styled.input`
 `;
 const SearchBtn = styled.button`
   width: 60px;
-  height: 100%;
+  height: 40px;
   background-color: #eee;
   padding: 10px;
   border: 2px solid #ccc;
   border-left: none;
   border-radius: 0 20px 20px 0;
-  box-sizing: border-box;
   cursor: pointer;
   &:hover {
     border: 2px solid #999;

@@ -1,21 +1,13 @@
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import Aside from "./Aside";
-import Footer from "./Footer";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const Layout = ({ children, aside }) => {
-  const location = useLocation();
-
   return (
     <div>
       <Header />
-      <MainContent>
-        {aside ? <Aside /> : null}
-
-        {children}
-      </MainContent>
+      <MainContent>{children}</MainContent>
       <Footer />
     </div>
   );

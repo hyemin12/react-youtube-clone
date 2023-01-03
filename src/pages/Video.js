@@ -11,6 +11,9 @@ import Loading from "../components/Loading";
 import Iframe from "../components/Iframe";
 import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
+import { converCount } from "../hooks/converCount";
+import SubTitle from "../components/SubTitle";
+import ViewUpload from "../components/ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -21,8 +24,8 @@ const Video = () => {
   const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState();
-  const [channelImg, setChannelImg] = useState();
-  const [recommend, setRecommend] = useState();
+  const [channel, setChannel] = useState();
+  const [recommend, setRecommend] = useState({ channel: [], category: [] });
 
   const axiosGet = (keyword, option) => {
     const res = axios.get(
@@ -46,20 +49,28 @@ const Video = () => {
         "activities",
         `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
       );
+      const simillarRes = await axiosGet(
+        "videos",
+        `chart=mostPopular&videoCategoryId=${22}&maxResults=10&regionCode=kr`
+      );
 
-      console.log(dataRes, recommendRes, channelRes);
       setData({
         result: dataRes.data.items[0].snippet,
         statistic: dataRes.data.items[0].statistics,
       });
-      setChannelImg(channelRes.data.items[0].snippet.thumbnails.default.url);
-      setRecommend(recommendRes.data.items);
+      setChannel({
+        subscribe: channelRes.data.items[0].statistics.subscriberCount,
+        thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+      });
+      setRecommend({
+        channel: recommendRes.data.items,
+        category: simillarRes.data.items,
+      });
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(data);
   useEffect(() => {
     getData();
   }, []);
@@ -81,10 +92,15 @@ const Video = () => {
                     <ChannelRow>
                       <ChannelThumbnail
                         size={40}
-                        url={channelImg}
+                        url={channel.thumbnail}
                         title={data.result.channelTitle}
                       />
-                      <p>{data.result.channelTitle}</p>
+                      <div>
+                        <p>{data.result.channelTitle}</p>
+                        <SubTitle
+                          text={`구독자 ${converCount(channel.subscribe)}`}
+                        />
+                      </div>
                     </ChannelRow>
                     <div>
                       <LikeButton num={data.statistic.likeCount} />
@@ -93,7 +109,17 @@ const Video = () => {
                     </div>
                   </Row>
                   <Descriptions>
-                    <p>업로드: {data.result.publishedAt.slice(0, 10)}</p>
+                    <ChannelRow>
+                      <p>
+                        조회수:
+                        {data.statistic.viewCount.replace(
+                          /\B(?=(\d{3})+(?!\d))/g,
+                          ","
+                        )}
+                      </p>
+                      <p>업로드: {data.result.publishedAt.slice(0, 10)} </p>
+                    </ChannelRow>
+
                     {data.result.description
                       .split("\n")
                       .map((sentence, idx) =>
@@ -109,14 +135,29 @@ const Video = () => {
               </div>
               <div>
                 <div>
-                  <RecomTitle>같은 채널 다른 영상</RecomTitle>
+                  {recommend.channel.length < 1 && (
+                    <RecomTitle>같은 채널 다른 영상</RecomTitle>
+                  )}
+                  <RecomTitle>비슷한 영상</RecomTitle>
                 </div>
 
                 {recommend &&
-                  recommend
+                  recommend.channel
                     .filter((a) => a.contentDetails.upload.videoId !== id)
                     .map((item) => (
-                      <Recommend item={item} channelTitle={data.channelTitle} />
+                      <Recommend
+                        item={item}
+                        channelTitle={data.result.channelTitle}
+                      />
+                    ))}
+                {recommend &&
+                  recommend.category
+                    .filter((a) => a.id !== id)
+                    .map((item) => (
+                      <Recommend
+                        item={item}
+                        channelTitle={item.snippet.channelTitle}
+                      />
                     ))}
               </div>
             </Content>
