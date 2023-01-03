@@ -16,7 +16,6 @@ const Search = () => {
   const onChange = (e) => {
     setQuery(e.target.value);
   };
-  console.log(query, query.length);
   const handleSearch = useCallback(
     async (e) => {
       e.preventDefault();
@@ -28,7 +27,6 @@ const Search = () => {
           const res =
             await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&maxResults=20&key=${KEY}
       `);
-          console.log(query);
           setSearchQuery({ q: query, result: res.data.items });
           navigate(`/results/search=${query}`);
         }

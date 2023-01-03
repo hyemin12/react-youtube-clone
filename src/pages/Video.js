@@ -10,6 +10,7 @@ import Recommend from "../components/Recommend";
 import Loading from "../components/Loading";
 import Iframe from "../components/Iframe";
 import Button from "../components/Button";
+import LikeButton from "../components/LikeButton";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -29,6 +30,7 @@ const Video = () => {
     );
     return res;
   };
+
   /** 해당 페이지에서 필요한 데이터 가져오기
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
    * channelRes: 채널 정보 (채널 썸네일, 채널 이름)
@@ -44,8 +46,12 @@ const Video = () => {
         "activities",
         `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
       );
+
       console.log(dataRes, recommendRes, channelRes);
-      setData(dataRes.data.items[0].snippet);
+      setData({
+        result: dataRes.data.items[0].snippet,
+        statistic: dataRes.data.items[0].statistics,
+      });
       setChannelImg(channelRes.data.items[0].snippet.thumbnails.default.url);
       setRecommend(recommendRes.data.items);
       setLoading(false);
@@ -53,7 +59,7 @@ const Video = () => {
       console.log(err);
     }
   };
-
+  console.log(data);
   useEffect(() => {
     getData();
   }, []);
@@ -70,24 +76,25 @@ const Video = () => {
                 <Iframe id={id} width={"920"} height={"517.5"} />
 
                 <ContentText>
-                  <Title size={20} text={data.title} mode={false} />
+                  <Title size={20} text={data.result.title} mode={false} />
                   <Row>
                     <ChannelRow>
                       <ChannelThumbnail
                         size={40}
                         url={channelImg}
-                        title={data.channelTitle}
+                        title={data.result.channelTitle}
                       />
-                      <p>{data.channelTitle}</p>
+                      <p>{data.result.channelTitle}</p>
                     </ChannelRow>
                     <div>
+                      <LikeButton num={data.statistic.likeCount} />
                       <Button type={"link"} text={"Youtube에서 보기"} id={id} />
                       <Button type={"copy"} text={"공유하기"} id={id} />
                     </div>
                   </Row>
                   <Descriptions>
-                    <p>업로드: {data.publishedAt.slice(0, 10)}</p>
-                    {data.description
+                    <p>업로드: {data.result.publishedAt.slice(0, 10)}</p>
+                    {data.result.description
                       .split("\n")
                       .map((sentence, idx) =>
                         sentence === "" ? (
