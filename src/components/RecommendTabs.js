@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import Recommend from "../components/Recommend";
+import RecommendItem from "./RecommendItem";
 
 const RecommendTabs = ({ data, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -25,7 +25,10 @@ const RecommendTabs = ({ data, id }) => {
         data[currentIndex].list
           .filter((a) => videoId !== id)
           .map((item) => (
-            <Recommend item={item} channelTitle={item.snippet.channelTitle} />
+            <RecommendItem
+              item={item}
+              channelTitle={item.snippet.channelTitle}
+            />
           ))}
     </div>
   );

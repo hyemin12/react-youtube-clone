@@ -30,17 +30,13 @@ const Video = () => {
     { title: "같은 채널 다른 영상", list: [] },
   ]);
 
+  /** axios 요청 함수 */
   const axiosGet = (keyword, option) => {
     const res = axios.get(
       `https://www.googleapis.com/youtube/v3/${keyword}?${option}&part=snippet&key=${KEY}`
     );
     return res;
   };
-
-  const recommendTabs = [
-    { title: "같은 채널 다른 영상", recommendData: recommend.channel },
-    { title: "비슷한 영상", recommendData: recommend.category },
-  ];
 
   /** 해당 페이지에서 필요한 데이터 가져오기
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
@@ -143,29 +139,8 @@ const Video = () => {
                   </Descriptions>
                 </TextContainer>
               </div>
-              <div>
-                {recommend && <RecommendTabs data={recommend} id={id} />}
-                {/* {currentTab.recommendData} */}
-
-                {/* {recommend &&
-                  recommend.channel
-                    .filter((a) => a.contentDetails.upload.videoId !== id)
-                    .map((item) => (
-                      <Recommend
-                        item={item}
-                        channelTitle={data.result.channelTitle}
-                      />
-                    ))}
-                {recommend &&
-                  recommend.category
-                    .filter((a) => a.id !== id)
-                    .map((item) => (
-                      <Recommend
-                        item={item}
-                        channelTitle={item.snippet.channelTitle}
-                      />
-                    ))} */}
-              </div>
+              {/* 추천 동영상 */}
+              {recommend && <RecommendTabs data={recommend} id={id} />}
             </Content>
           </Layout>
         )

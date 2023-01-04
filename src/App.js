@@ -1,4 +1,3 @@
-import { createContext, useState } from "react";
 import Router from "./components/Router";
 import { ContextProvier } from "./hooks/searchContext";
 

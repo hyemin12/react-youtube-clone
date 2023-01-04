@@ -7,7 +7,7 @@ const Header = () => {
     <HeaderContainer>
       <Logo />
       <Search />
-      <div style={{ width: "30px", height: "30px" }}></div>
+      <LoginBtn>로그인</LoginBtn>
     </HeaderContainer>
   );
 };
@@ -17,5 +17,12 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 8px 20px;
+  &:hover {
+  }
+`;
+const LoginBtn = styled.a`
+  cursor:pointer &:hover {
+    color: tomato;
+  }
 `;
 export default Header;

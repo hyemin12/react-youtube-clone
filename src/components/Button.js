@@ -2,9 +2,9 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { FaYoutube, FaCopy } from "react-icons/fa";
 
-import Alert from "./Alert";
-
 import useAlert from "../hooks/useAlert";
+
+import Alert from "./Alert";
 
 const Button = ({ id, type, text }) => {
   const urlRef = useRef(null);

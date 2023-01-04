@@ -11,7 +11,7 @@ import Title from "./Title";
 import ViewUpload from "./ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
-const Recommend = ({ item, channelTitle }) => {
+const RecommendItem = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
   const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;
 
@@ -68,4 +68,4 @@ const ContentText = styled.div`
   padding: 4px 0;
 `;
 
-export default Recommend;
+export default RecommendItem;
