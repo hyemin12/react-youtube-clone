@@ -14,25 +14,17 @@
 - url 주소를 바탕으로 해당 영상 id값을 통해 상세 정보를 확인할 수 있는 페이지
 - url 주소의 값을 바탕으로 id 추출
 - iframe을 사용하여 유튜브 영상을 삽입
-- data => 영화 상세 정보{result:타이틀, 채널이름,설명, 업로드 날짜 등 ,statistic: 좋아요개수, 조회수 }
-- channel => 영상을 업로드한 채널 관련 정보 {subscribe: 구독자 수 등 ,thumbnail: 채널 썸네일 정보}
-- recommend => 추천 영상 목록
-  {channel: 채널에서 업로드한 다른 영상 목록들, category: 해당 영상의 카테고리id가 같은 영상 목록들}
+- state
+  - data => 영화 상세 정보 {result:타이틀, 채널이름,설명, 업로드 날짜 등 ,statistic: 좋아요개수, 조회수 }
+  - channel => 영상을 업로드한 채널 관련 정보 {subscribe: 구독자 수 등 ,thumbnail: 채널 썸네일 정보}
+  - recommend => 추천 영상 목록
+    {channel: 채널에서 업로드한 다른 영상 목록들, category: 해당 영상의 카테고리id가 같은 영상 목록들}
 
 ## 3. Search Page
 
-### 할일
-
-1. api 연결하기 https://developers.google.com/youtube/v3/getting-started?hl=ko
-2. 메인페이지 UI 만들기 (스타일드 컴포넌트 사용해서 스타일링하기)
-3. 인기동영상 데이터 가져와서 출력하기
-4. 검색 기능 만들기
-5. 페이지네이션 or 무한스크롤 구현하기
-6. 키워드 클릭 시 해당 키워드 관련 영상 데이터 가져오기
-7. 컴포넌트 정리하기...
-
-- 유튜브로 이동하는 버튼
-- 공유하기 버튼 만들기 (https://www.delftstack.com/ko/howto/react/react-copy-to-clipboard/)
+- 검색창에 입력된 검색 데이터를 요청하고, 받아온 데이터를 출력하는 페이지
+- 검색어, 데이터를 전역으로 관리 (path에 검색어 사용 /path={`/results/:search=${searchQuery.q}`})
+- 검색 결과가 없을 경우 `검색 결과가 없습니다` 문구 출력, 검색 결과가 있을 경우 `${검색어} 검색 결과` 문구 출력
 
 ## 컴포넌트
 
@@ -57,3 +49,16 @@ https://beta.reactjs.org/reference/react/useContext
 (https://tech.kakaoenterprise.com/149)
 
 페이지 하단에 도달했을 때 API가 호출되며 콘텐츠가 끊기지 않고 계속 로드되는 사용자 경험 방식.
+
+### 할일
+
+1. api 연결하기 https://developers.google.com/youtube/v3/getting-started?hl=ko
+2. 메인페이지 UI 만들기 (스타일드 컴포넌트 사용해서 스타일링하기)
+3. 인기동영상 데이터 가져와서 출력하기
+4. 검색 기능 만들기
+5. 페이지네이션 or 무한스크롤 구현하기
+6. 키워드 클릭 시 해당 키워드 관련 영상 데이터 가져오기
+7. 컴포넌트 정리하기...
+
+- 유튜브로 이동하는 버튼
+- 공유하기 버튼 만들기 (https://www.delftstack.com/ko/howto/react/react-copy-to-clipboard/)

@@ -15,7 +15,9 @@ const Search = () => {
       <SearchContainer>
         <Title
           size={24}
-          text={q.length === 0 ? "검색 결과가 없습니다." : `"${q}" 검색 결과`}
+          text={
+            result.length === 0 ? "검색 결과가 없습니다." : `"${q}" 검색 결과`
+          }
           mode={false}
         />
 
