@@ -13,10 +13,11 @@ const AlertContainer = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 9;
   &.top {
     width: auto;
     height: auto;

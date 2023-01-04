@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import axios from "axios";
 import { useSearchContext } from "../hooks/searchContext";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,7 @@ const Search = () => {
   const onChange = (e) => {
     setQuery(e.target.value);
   };
+
   const handleSearch = useCallback(
     async (e) => {
       e.preventDefault();
