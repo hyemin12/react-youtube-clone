@@ -8,7 +8,7 @@ import { converCount } from "../hooks/converCount";
 import ChannelThumbnail from "../components/ChannelThumbnail";
 import Layout from "../components/Layout";
 import Title from "../components/Title";
-import Recommend from "../components/Recommend";
+import RecommendTabs from "../components/RecommendTabs";
 import Loading from "../components/Loading";
 import Iframe from "../components/Iframe";
 import Button from "../components/Button";
@@ -25,7 +25,10 @@ const Video = () => {
 
   const [data, setData] = useState();
   const [channel, setChannel] = useState();
-  const [recommend, setRecommend] = useState({ channel: [], category: [] });
+  const [recommend, setRecommend] = useState([
+    { title: "비슷한 영상", list: [] },
+    { title: "같은 채널 다른 영상", list: [] },
+  ]);
 
   const axiosGet = (keyword, option) => {
     const res = axios.get(
@@ -33,6 +36,11 @@ const Video = () => {
     );
     return res;
   };
+
+  const recommendTabs = [
+    { title: "같은 채널 다른 영상", recommendData: recommend.channel },
+    { title: "비슷한 영상", recommendData: recommend.category },
+  ];
 
   /** 해당 페이지에서 필요한 데이터 가져오기
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
@@ -62,10 +70,10 @@ const Video = () => {
         subscribe: channelRes.data.items[0].statistics.subscriberCount,
         thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
       });
-      setRecommend({
-        channel: recommendRes.data.items,
-        category: simillarRes.data.items,
-      });
+      setRecommend([
+        { ...recommend[0], list: simillarRes.data.items },
+        { ...recommend[1], list: recommendRes.data.items },
+      ]);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -86,7 +94,7 @@ const Video = () => {
               <div>
                 <Iframe id={id} width={"920"} height={"517.5"} />
 
-                <ContentText>
+                <TextContainer>
                   <Title size={20} text={data.result.title} mode={false} />
                   <Row>
                     <ChannelRow>
@@ -102,12 +110,14 @@ const Video = () => {
                         />
                       </div>
                     </ChannelRow>
+                    {/* 채널 정보 옆 버튼그룹 */}
                     <div>
                       <LikeButton num={data.statistic.likeCount} />
                       <Button type={"link"} text={"Youtube에서 보기"} id={id} />
                       <Button type={"copy"} text={"공유하기"} id={id} />
                     </div>
                   </Row>
+                  {/* 영상 설명 */}
                   <Descriptions>
                     <ChannelRow>
                       <p>
@@ -131,17 +141,13 @@ const Video = () => {
                       )}
                     <br />
                   </Descriptions>
-                </ContentText>
+                </TextContainer>
               </div>
               <div>
-                <div>
-                  {recommend.channel.length < 1 && (
-                    <RecomTitle>같은 채널 다른 영상</RecomTitle>
-                  )}
-                  <RecomTitle>비슷한 영상</RecomTitle>
-                </div>
+                {recommend && <RecommendTabs data={recommend} id={id} />}
+                {/* {currentTab.recommendData} */}
 
-                {recommend &&
+                {/* {recommend &&
                   recommend.channel
                     .filter((a) => a.contentDetails.upload.videoId !== id)
                     .map((item) => (
@@ -158,7 +164,7 @@ const Video = () => {
                         item={item}
                         channelTitle={item.snippet.channelTitle}
                       />
-                    ))}
+                    ))} */}
               </div>
             </Content>
           </Layout>
@@ -172,15 +178,8 @@ const Content = styled.div`
   gap: 20px;
   padding: 0 84px;
 `;
-const RecomTitle = styled.p`
-  display: inline-block;
-  background-color: #ddd;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-`;
 
-const ContentText = styled.div`
+const TextContainer = styled.div`
   width: 100%;
 `;
 const ChannelRow = styled.div`

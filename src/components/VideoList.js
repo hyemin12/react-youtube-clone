@@ -3,7 +3,6 @@ import styled from "styled-components";
 import VideoItem from "./VideoItem";
 
 const VideoList = ({ videos }) => {
-  console.log(videos);
   return (
     <ListContainer>
       {videos.map((item) => (
