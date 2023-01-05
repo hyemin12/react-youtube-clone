@@ -12,6 +12,7 @@ import ChannelThumbnail from "./ChannelThumbnail";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
 import Loading from "./Loading";
+import VideoLength from "./VideoLength";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -26,9 +27,6 @@ const VideoItem = (item) => {
     publishedAt,
     liveBroadcastContent,
   } = item.snippet;
-
-  const { duration } = item.contentDetails;
-  console.log(duration, duration.split("M"));
 
   const [loading, setLoading] = useState(true);
   const [channelImg, setChannelImg] = useState();
@@ -73,14 +71,19 @@ const VideoItem = (item) => {
                 width: `${thumbnails.medium.width}px`,
               }}
             >
-              <Thumbnail
-                width={thumbnails.medium.width ? thumbnails.medium.width : 320}
-                height={
-                  thumbnails.medium.height ? thumbnails.medium.height : 180
-                }
-                url={thumbnails.medium.url}
-                title={title}
-              />
+              <div style={{ position: "relative" }}>
+                <Thumbnail
+                  width={
+                    thumbnails.medium.width ? thumbnails.medium.width : 320
+                  }
+                  height={
+                    thumbnails.medium.height ? thumbnails.medium.height : 180
+                  }
+                  url={thumbnails.medium.url}
+                  title={title}
+                />
+                <VideoLength time={item.contentDetails} />
+              </div>
               <VideoRow>
                 <ChannelThumbnail
                   url={channelImg}
