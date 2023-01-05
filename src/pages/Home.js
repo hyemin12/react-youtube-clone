@@ -16,26 +16,38 @@ const Home = () => {
   const [result, setResult] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const keywords = [
-    "인기",
-    "음악",
-    "Playlist",
-    "게임",
-    "배구",
-    "축구",
-    "런닝맨",
+    { keyword: "인기", category: 0 },
+    { keyword: "kpop", category: 10 },
+    { keyword: "Playlist", category: "" },
+    { keyword: "실시간", category: "" },
+    { keyword: "게임", category: 20 },
+    { keyword: "뉴스", category: 25 },
+    { keyword: "여행", category: 19 },
+    { keyword: "동물", category: 15 },
+    { keyword: "배구", category: "" },
+    { keyword: "축구", category: "" },
+    { keyword: "런닝맨", category: "" },
+    { keyword: "그것이알고싶다", category: "" },
   ];
 
   const getData = async () => {
+    const current = keywords[currentIndex];
+    console.log(current, currentIndex);
     try {
       if (currentIndex === 0) {
         const res = await axios.get(
           `https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
         );
         setResult(res.data.items);
+      } else if (typeof current.category === "number") {
+        const res =
+          await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&chart=mostPopular&videoCategoryId=${current.category}&type=video&maxResults=32&regionCode=kr&key=${KEY}
+        `);
+        setResult(res.data.items);
       } else {
         const res =
-          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${keywords[currentIndex]}&type=video&maxResults=20&regionCode=kr&key=${KEY}
-      `);
+          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${current.keyword}&videoLicense=youtube&type=video&maxResults=32&regionCode=kr&key=${KEY}
+    `);
         setResult(res.data.items);
       }
 
@@ -66,16 +78,16 @@ const Home = () => {
           </aside>
           <div>
             <Row>
-              {keywords.map((word, idx) => (
+              {keywords.map(({ keyword }, idx) => (
                 <Keyword
-                  key={word}
+                  key={keyword}
                   onClick={() => {
                     setCurrentIndex(idx);
                     setLoading(true);
                   }}
                   className={idx === currentIndex ? "isActive" : ""}
                 >
-                  <p># {word}</p>
+                  <p># {keyword}</p>
                 </Keyword>
               ))}
             </Row>

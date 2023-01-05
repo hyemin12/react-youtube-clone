@@ -60,7 +60,11 @@
 
 - react-icons : https://react-icons.github.io/react-icons/icons?name=fa
 
-### snippet : categoryId // channelId // thumbnail : 디폴트, 하이, 미디엄, 표준 // 타이틀
+#### - 유튜브 속성 (videos)
+
+- snippet : 기본 세부정보 (publishedAt,channelId,title,description,thumbnails(동영상썸네일),channelTitle,categoryId)
+- statistics : 동영상 통계 (viewCount, likeCount, commentCount)
+- contentDetails : 동영상 콘텐츠 정보 (contentDetails.contentRating.kmrbRating : 한국 동영상 평가)
 
 채널 id로 채널 정보 가져오기
 `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`

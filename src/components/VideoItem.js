@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { FaBroadcastTower } from "react-icons/fa";
 
 import { converCount } from "../hooks/converCount";
 
@@ -17,8 +18,14 @@ const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 const VideoItem = (item) => {
   const id = typeof item.id === "object" ? item.id.videoId : item.id;
 
-  const { thumbnails, title, channelTitle, channelId, publishedAt } =
-    item.snippet;
+  const {
+    thumbnails,
+    title,
+    channelTitle,
+    channelId,
+    publishedAt,
+    liveBroadcastContent,
+  } = item.snippet;
 
   const [loading, setLoading] = useState(true);
   const [channelImg, setChannelImg] = useState();
@@ -84,6 +91,12 @@ const VideoItem = (item) => {
                     date={publishedAt.slice(0, 19)}
                     convert={true}
                   />
+                  {liveBroadcastContent === "live" && (
+                    <Live>
+                      <FaBroadcastTower />
+                      실시간
+                    </Live>
+                  )}
                 </div>
               </VideoRow>
             </Link>
@@ -98,6 +111,10 @@ const VideoRow = styled.div`
   display: flex;
   gap: 14px;
   padding: 8px 4px;
+`;
+const Live = styled.p`
+  padding: 10px 20px;
+  background-color: tomato;
 `;
 
 export default VideoItem;

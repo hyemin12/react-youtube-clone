@@ -14,7 +14,8 @@ const ViewUpload = ({ view, date, convert }) => {
     const minutesGap = today.getMinutes() - upload.getMinutes();
     const secGap = today.getSeconds() - upload.getSeconds();
 
-    if (yearGap === 1 && dateGap < 7)
+    // 업로드 날짜가 12월일 경우 날짜차로 계산
+    if (yearGap === 1 && dateGap < 7 && upload.getMonth() + 1 === "12")
       return `${today.getDate() + 31 - upload.getDate()}일전`;
     if (0 < yearGap) return `${yearGap}년전`;
     if (0 < monthGap && monthGap < 12) return `${monthGap}달전`;
