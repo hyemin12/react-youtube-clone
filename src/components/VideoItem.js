@@ -27,6 +27,9 @@ const VideoItem = (item) => {
     liveBroadcastContent,
   } = item.snippet;
 
+  const { duration } = item.contentDetails;
+  console.log(duration, duration.split("M"));
+
   const [loading, setLoading] = useState(true);
   const [channelImg, setChannelImg] = useState();
   const [viewNum, setViewNum] = useState();

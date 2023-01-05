@@ -15,6 +15,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const keywords = [
     { keyword: "인기", category: 0 },
     { keyword: "kpop", category: 10 },
@@ -32,16 +33,17 @@ const Home = () => {
 
   const getData = async () => {
     const current = keywords[currentIndex];
-    console.log(current, currentIndex);
+
     try {
       if (currentIndex === 0) {
         const res = await axios.get(
-          `https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&part=contentDetails&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
         );
+
         setResult(res.data.items);
       } else if (typeof current.category === "number") {
         const res =
-          await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&chart=mostPopular&videoCategoryId=${current.category}&type=video&maxResults=32&regionCode=kr&key=${KEY}
+          await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&part=contentDetails&chart=mostPopular&videoCategoryId=${current.category}&type=video&maxResults=32&regionCode=kr&key=${KEY}
         `);
         setResult(res.data.items);
       } else {
@@ -56,7 +58,6 @@ const Home = () => {
       console.log(err);
     }
   };
-  console.log(result);
 
   useEffect(() => {
     getData();

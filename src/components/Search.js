@@ -1,9 +1,10 @@
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
-import { useCallback, useState } from "react";
-import axios from "axios";
+
 import { useSearchContext } from "../hooks/searchContext";
-import { useNavigate } from "react-router-dom";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 

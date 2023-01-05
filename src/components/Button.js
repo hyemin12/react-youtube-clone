@@ -9,7 +9,7 @@ import Alert from "./Alert";
 const Button = ({ id, type, text }) => {
   const urlRef = useRef(null);
 
-  const { isAlert, setIsAlert } = useAlert();
+  const [isAlert, setIsAlert] = useAlert();
 
   // 영상 주소 복사하는 함수
   const onCopy = (e) => {

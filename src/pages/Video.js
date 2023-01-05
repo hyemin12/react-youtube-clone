@@ -96,14 +96,14 @@ const Video = () => {
       ) : (
         data && (
           <Layout Layout aside={false}>
-            <Content>
+            <Container>
               <div>
                 <Iframe id={id} width={"920"} height={"517.5"} />
 
                 <div style={{ width: "100%" }}>
                   <Title size={20} text={data.snippet.title} mode={false} />
                   <Row>
-                    <ChannelRow>
+                    <ChannelContainer>
                       <ChannelThumbnail
                         size={40}
                         url={channel.thumbnail}
@@ -115,7 +115,7 @@ const Video = () => {
                           text={`구독자 ${converCount(channel.subscribe)}`}
                         />
                       </div>
-                    </ChannelRow>
+                    </ChannelContainer>
                     {/* 채널 정보 옆 버튼그룹 */}
                     <BtnGroup>
                       <LikeButton num={data.statistics.likeCount} />
@@ -125,7 +125,7 @@ const Video = () => {
                   </Row>
                   {/* 영상 설명 */}
                   <Descriptions>
-                    <ChannelRow>
+                    <ChannelContainer>
                       <p>
                         조회수:
                         {data.statistics.viewCount.replace(
@@ -134,7 +134,7 @@ const Video = () => {
                         )}
                       </p>
                       <p>업로드: {data.snippet.publishedAt.slice(0, 10)} </p>
-                    </ChannelRow>
+                    </ChannelContainer>
 
                     {data.snippet.description
                       .split("\n")
@@ -151,24 +151,34 @@ const Video = () => {
               </div>
               {/* 추천 동영상 */}
               {recommend && <RecommendTabs data={recommend} id={id} />}
-            </Content>
+            </Container>
           </Layout>
         )
       )}
     </>
   );
 };
-const Content = styled.div`
+const Container = styled.div`
   display: flex;
   gap: 20px;
   padding: 0 84px;
 `;
-const ChannelRow = styled.div`
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+`;
+const ChannelContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 10px 0;
   margin-bottom: 10px;
+`;
+const BtnGroup = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 const Descriptions = styled.div`
   background-color: #eee;
@@ -178,16 +188,6 @@ const Descriptions = styled.div`
   @media screen and (min-width: 1541px) {
     width: 67 vw;
   }
-`;
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-`;
-const BtnGroup = styled.div`
-  display: flex;
-  gap: 10px;
 `;
 
 export default Video;

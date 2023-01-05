@@ -1,3 +1,4 @@
+// 검색 Context API
 import { createContext, useContext, useState } from "react";
 
 const MyContext = createContext();
@@ -5,10 +6,12 @@ const MyContext = createContext();
 // Provider
 export const ContextProvier = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState({ q: "", result: [] });
+
   const value = { searchQuery, setSearchQuery };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
 };
+
 // custom hook
 export const useSearchContext = () => {
   return useContext(MyContext);

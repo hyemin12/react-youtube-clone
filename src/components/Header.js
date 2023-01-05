@@ -7,7 +7,7 @@ import Search from "./Search";
 import Alert from "./Alert";
 
 const Header = () => {
-  const { isAlert, setIsAlert } = useAlert();
+  const [isAlert, setIsAlert] = useAlert();
   return (
     <HeaderContainer>
       <Logo />
@@ -24,7 +24,7 @@ const Header = () => {
   );
 };
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;

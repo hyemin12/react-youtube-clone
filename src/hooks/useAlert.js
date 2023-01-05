@@ -11,6 +11,6 @@ const useAlert = () => {
     return () => clearTimeout(timer);
   }, [isAlert]);
 
-  return { isAlert, setIsAlert };
+  return [isAlert, setIsAlert];
 };
 export default useAlert;
