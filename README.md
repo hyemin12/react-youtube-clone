@@ -56,9 +56,9 @@
 
 ---
 
-#### 기타
+#### - 기타
 
-react-icons : https://react-icons.github.io/react-icons/icons?name=fa
+- react-icons : https://react-icons.github.io/react-icons/icons?name=fa
 
 ### snippet : categoryId // channelId // thumbnail : 디폴트, 하이, 미디엄, 표준 // 타이틀
 

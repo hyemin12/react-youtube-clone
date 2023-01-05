@@ -15,7 +15,15 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const keywords = ["인기", "음악", "Playlist", "게임", "배구", "축구"];
+  const keywords = [
+    "인기",
+    "음악",
+    "Playlist",
+    "게임",
+    "배구",
+    "축구",
+    "런닝맨",
+  ];
 
   const getData = async () => {
     try {
@@ -26,7 +34,7 @@ const Home = () => {
         setResult(res.data.items);
       } else {
         const res =
-          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${keywords[currentIndex]}&maxResults=20&regionCode=kr&key=${KEY}
+          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${keywords[currentIndex]}&type=video&maxResults=20&regionCode=kr&key=${KEY}
       `);
         setResult(res.data.items);
       }
@@ -36,7 +44,7 @@ const Home = () => {
       console.log(err);
     }
   };
-
+  console.log(result);
   useEffect(() => {
     getData();
   }, [currentIndex]);

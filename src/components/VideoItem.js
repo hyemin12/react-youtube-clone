@@ -44,7 +44,6 @@ const VideoItem = (item) => {
       console.log(err);
     }
   };
-
   useEffect(() => {
     getData();
   }, []);

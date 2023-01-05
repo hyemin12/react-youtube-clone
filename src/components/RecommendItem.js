@@ -22,6 +22,7 @@ const RecommendItem = ({ item, channelTitle }) => {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics&key=${KEY}
     `);
+      console.log(title, res);
       setViewNum(res.data.items[0].statistics.viewCount);
     } catch (err) {
       console.log(err);
@@ -49,10 +50,6 @@ const RecommendItem = ({ item, channelTitle }) => {
             date={publishedAt.slice(0, 19)}
             convert={true}
           />
-          {/* <Row>
-            <SubTitle text={`조회수 ${converCount(viewNum)}`} />
-            <UploadDate date={publishedAt.slice(0, 19)} />
-          </Row> */}
         </ContentText>
       </Row>
     </Link>
