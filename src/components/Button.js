@@ -53,7 +53,6 @@ export const Btn = styled.button`
   padding: 10px;
   border: none;
   border-radius: 20px;
-  margin-left: 10px;
   position: relative;
   transition: all 0.3s;
   cursor: pointer;

@@ -34,10 +34,13 @@ const VideoItem = (item) => {
   /** 채널 썸네일 가져오고, 조회수가 없이 데이터가 넘어왔을 경우 조회수 정보 가져오는 함수 실행 */
   const getData = async () => {
     try {
+      // 채널 썸네일 가져오기
       const res = await axios.get(
         `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
       );
       setChannelImg(res.data.items[0].snippet.thumbnails.default.url);
+
+      // 영상 조회수가 없이 데이터가 넘어왔을 경우 조회수 정보 가져오기
       if (item.statistics === undefined) {
         const countRes = await axios.get(
           `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics&key=${KEY}`
@@ -91,6 +94,7 @@ const VideoItem = (item) => {
                     date={publishedAt.slice(0, 19)}
                     convert={true}
                   />
+                  {/* 실시간 배지 */}
                   {liveBroadcastContent === "live" && (
                     <Live>
                       <FaBroadcastTower />

@@ -46,7 +46,7 @@ const Home = () => {
         setResult(res.data.items);
       } else {
         const res =
-          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${current.keyword}&videoLicense=youtube&type=video&maxResults=32&regionCode=kr&key=${KEY}
+          await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${current.keyword}&type=video&maxResults=32&regionCode=kr&key=${KEY}
     `);
         setResult(res.data.items);
       }
@@ -57,6 +57,7 @@ const Home = () => {
     }
   };
   console.log(result);
+
   useEffect(() => {
     getData();
   }, [currentIndex]);

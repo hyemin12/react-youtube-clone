@@ -11,6 +11,7 @@ import Title from "./Title";
 import ViewUpload from "./ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
+
 const RecommendItem = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
   const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;

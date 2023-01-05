@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -23,8 +23,13 @@ const Video = () => {
 
   const [loading, setLoading] = useState(true);
 
-  const [data, setData] = useState();
+  // result : 영상 기본 정보 , statistic : 조회수, 좋아요 수 등
+  const [data, setData] = useState({ result: {}, statistic: {} });
+
+  // subscribe: 구독자 수, thumbnail: 썸네일 주소
+  // const [channel, setChannel] = useState({ subscribe: 0, thumbnail: "" });
   const [channel, setChannel] = useState();
+
   const [recommend, setRecommend] = useState([
     { title: "비슷한 영상", list: [] },
     { title: "같은 채널 다른 영상", list: [] },
@@ -42,39 +47,44 @@ const Video = () => {
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
    * channelRes: 채널 정보 (채널 썸네일, 채널 이름)
    * recommendRes: 채널에서 업로드한 다른 영상 리스트
-   */ const getData = async () => {
+   */ const getData = useCallback(async () => {
     try {
       const dataRes = await axiosGet("videos", `id=${id}&part=statistics`);
+
       const channelRes = await axiosGet(
         "channels",
         `id=${dataRes.data.items[0].snippet.channelId}&part=statistics`
       );
-      const recommendRes = await axiosGet(
+      // 같은 채널 영상 목록
+      const sameChannel = await axiosGet(
         "activities",
         `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
       );
-      const simillarRes = await axiosGet(
+      // 같은 카테고리 영상 목록
+      const sameCategory = await axiosGet(
         "videos",
         `chart=mostPopular&videoCategoryId=${22}&maxResults=10&regionCode=kr`
       );
 
-      setData({
-        result: dataRes.data.items[0].snippet,
-        statistic: dataRes.data.items[0].statistics,
-      });
+      setData(dataRes.data.items[0]);
+
+      // setData({
+      //   result: dataRes.data.items[0].snippet,
+      //   statistic: dataRes.data.items[0].statistics,
+      // });
       setChannel({
         subscribe: channelRes.data.items[0].statistics.subscriberCount,
         thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
       });
       setRecommend([
-        { ...recommend[0], list: simillarRes.data.items },
-        { ...recommend[1], list: recommendRes.data.items },
+        { ...recommend[0], list: sameCategory.data.items },
+        { ...recommend[1], list: sameChannel.data.items },
       ]);
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [id]);
   useEffect(() => {
     getData();
   }, []);
@@ -90,43 +100,43 @@ const Video = () => {
               <div>
                 <Iframe id={id} width={"920"} height={"517.5"} />
 
-                <TextContainer>
-                  <Title size={20} text={data.result.title} mode={false} />
+                <div style={{ width: "100%" }}>
+                  <Title size={20} text={data.snippet.title} mode={false} />
                   <Row>
                     <ChannelRow>
                       <ChannelThumbnail
                         size={40}
                         url={channel.thumbnail}
-                        title={data.result.channelTitle}
+                        title={data.snippet.channelTitle}
                       />
                       <div>
-                        <p>{data.result.channelTitle}</p>
+                        <p>{data.snippet.channelTitle}</p>
                         <SubTitle
                           text={`구독자 ${converCount(channel.subscribe)}`}
                         />
                       </div>
                     </ChannelRow>
                     {/* 채널 정보 옆 버튼그룹 */}
-                    <div>
-                      <LikeButton num={data.statistic.likeCount} />
+                    <BtnGroup>
+                      <LikeButton num={data.statistics.likeCount} />
                       <Button type={"link"} text={"Youtube에서 보기"} id={id} />
                       <Button type={"copy"} text={"공유하기"} id={id} />
-                    </div>
+                    </BtnGroup>
                   </Row>
                   {/* 영상 설명 */}
                   <Descriptions>
                     <ChannelRow>
                       <p>
                         조회수:
-                        {data.statistic.viewCount.replace(
+                        {data.statistics.viewCount.replace(
                           /\B(?=(\d{3})+(?!\d))/g,
                           ","
                         )}
                       </p>
-                      <p>업로드: {data.result.publishedAt.slice(0, 10)} </p>
+                      <p>업로드: {data.snippet.publishedAt.slice(0, 10)} </p>
                     </ChannelRow>
 
-                    {data.result.description
+                    {data.snippet.description
                       .split("\n")
                       .map((sentence, idx) =>
                         sentence === "" ? (
@@ -137,7 +147,7 @@ const Video = () => {
                       )}
                     <br />
                   </Descriptions>
-                </TextContainer>
+                </div>
               </div>
               {/* 추천 동영상 */}
               {recommend && <RecommendTabs data={recommend} id={id} />}
@@ -152,10 +162,6 @@ const Content = styled.div`
   display: flex;
   gap: 20px;
   padding: 0 84px;
-`;
-
-const TextContainer = styled.div`
-  width: 100%;
 `;
 const ChannelRow = styled.div`
   display: flex;
@@ -179,9 +185,9 @@ const Row = styled.div`
   align-items: center;
   gap: 10px;
 `;
-const Hashtag = styled(Link)`
-  margin-right: 6px;
-  color: blue;
+const BtnGroup = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 export default Video;
