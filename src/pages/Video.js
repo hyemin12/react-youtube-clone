@@ -26,8 +26,6 @@ const Video = () => {
   // result : 영상 기본 정보 , statistic : 조회수, 좋아요 수 등
   const [data, setData] = useState({ result: {}, statistic: {} });
 
-  // subscribe: 구독자 수, thumbnail: 썸네일 주소
-  // const [channel, setChannel] = useState({ subscribe: 0, thumbnail: "" });
   const [channel, setChannel] = useState();
 
   const [recommend, setRecommend] = useState([
@@ -67,11 +65,6 @@ const Video = () => {
       );
 
       setData(dataRes.data.items[0]);
-
-      // setData({
-      //   result: dataRes.data.items[0].snippet,
-      //   statistic: dataRes.data.items[0].statistics,
-      // });
       setChannel({
         subscribe: channelRes.data.items[0].statistics.subscriberCount,
         thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,

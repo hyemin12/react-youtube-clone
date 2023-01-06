@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -127,4 +127,4 @@ const Live = styled.p`
   background-color: tomato;
 `;
 
-export default VideoItem;
+export default React.memo(VideoItem);

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
-
 import axios from "axios";
 import styled from "styled-components";
+import { FaAngleRight } from "react-icons/fa";
 
 import Layout from "../components/Layout";
 import Loading from "../components/Loading";
@@ -13,6 +13,7 @@ const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const keywordRef = useRef(null);
   const [result, setResult] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -29,9 +30,12 @@ const Home = () => {
     { keyword: "축구", category: "" },
     { keyword: "런닝맨", category: "" },
     { keyword: "그것이알고싶다", category: "" },
+    { keyword: "한일전", category: "" },
+    { keyword: "한일전1", category: "" },
+    { keyword: "한일전2", category: "" },
   ];
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     const current = keywords[currentIndex];
 
     try {
@@ -57,18 +61,19 @@ const Home = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [currentIndex]);
 
   useEffect(() => {
     getData();
   }, [currentIndex]);
 
-  /** 카테고리 아이디 정보
-   * sport 17
-   * music 10
-   * travel 19
-   *  */
+  // 화면 길이
+  console.log(document.documentElement.clientWidth);
+  console.dir(keywordRef.current, document);
 
+  // clientWidth 1288
+  // offsetWidth 1288
+  // scrollWidth 1603
   return (
     <>
       {loading ? (
@@ -79,21 +84,26 @@ const Home = () => {
             <Nav />
           </aside>
           <div>
-            <Row>
-              {keywords.map(({ keyword }, idx) => (
-                <Keyword
-                  key={keyword}
-                  onClick={() => {
-                    setCurrentIndex(idx);
-                    setLoading(true);
-                  }}
-                  className={idx === currentIndex ? "isActive" : ""}
-                >
-                  <p># {keyword}</p>
-                </Keyword>
-              ))}
-            </Row>
-            <VideoList videos={result} />
+            <KeywordContainer style={{ display: "flex" }}>
+              <Row ref={keywordRef}>
+                {keywords.map(({ keyword }, idx) => (
+                  <Keyword
+                    key={keyword}
+                    onClick={() => {
+                      setCurrentIndex(idx);
+                      setLoading(true);
+                    }}
+                    className={idx === currentIndex ? "isActive" : ""}
+                  >
+                    <p># {keyword}</p>
+                  </Keyword>
+                ))}
+              </Row>
+              <NextBtn>
+                <FaAngleRight />
+              </NextBtn>
+            </KeywordContainer>
+            {/* <VideoList videos={result} /> */}
           </div>
         </Layout>
       )}
@@ -103,18 +113,49 @@ const Home = () => {
 const Row = styled.div`
   display: flex;
   gap: 12px;
+  width: calc(100vw - 250px);
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+const KeywordContainer = styled.div`
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  position: relative;
 `;
 const Keyword = styled(Link)`
   display: block;
   border: 1px solid #ddd;
   padding: 10px 20px;
   border-radius: 30px;
+  flex-shrink: 0;
   &:hover {
     background-color: #eee;
   }
   &.isActive {
     background-color: #555;
     color: #fff;
+  }
+`;
+
+const NextBtn = styled.button`
+  diplay: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: #eee;
+  border: none;
+  border-radius: 50%;
+  font-size: 1em;
+  position: absolute;
+  right: -60px;
+  cursor: pointer;
+  &:hover {
+    background-color: #a1a1a1;
+    box-shadow: 2px 4px 4px #eee;
   }
 `;
 
