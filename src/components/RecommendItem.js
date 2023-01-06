@@ -9,6 +9,8 @@ import Thumbnail from "./Thumbnail";
 import SubTitle from "./SubTitle";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
+import VideoLength from "./VideoLength";
+import Loading from "./Loading";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -16,15 +18,20 @@ const RecommendItem = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
   const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;
 
-  const [viewNum, setViewNum] = useState(0);
+  const [ectData, setEctData] = useState({ viewNum: 0, length: "" });
+  const [loading, setLoading] = useState(true);
   // 조회수 가져오는 함수
   const getData = async () => {
     try {
       const res =
-        await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics&key=${KEY}
+        await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics&part=contentDetails&key=${KEY}
     `);
-      console.log(title, res);
-      setViewNum(res.data.items[0].statistics.viewCount);
+
+      setEctData({
+        viewNum: res.data.items[0].statistics.viewCount,
+        videolength: res.data.items[0].contentDetails.duration,
+      });
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -32,28 +39,36 @@ const RecommendItem = ({ item, channelTitle }) => {
   useEffect(() => {
     getData();
   }, []);
-
   return (
-    <Link to={`../${id}`}>
-      <Row>
-        <Thumbnail
-          width={200}
-          height={200 * (9 / 16)}
-          title={title}
-          url={thumbnails.medium.url}
-        />
-        <ContentText>
-          <Title size={16} text={title} mode={true} />
-          <SubTitle text={channelTitle} />
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <Link to={`../${id}`}>
+          <Row>
+            <div style={{ position: "relative" }}>
+              <Thumbnail
+                width={200}
+                height={200 * (9 / 16)}
+                title={title}
+                url={thumbnails.medium.url}
+              />
+              <VideoLength time={ectData.videolength} />
+            </div>
+            <ContentText>
+              <Title size={16} text={title} mode={true} />
+              <SubTitle text={channelTitle} />
 
-          <ViewUpload
-            view={converCount(viewNum)}
-            date={publishedAt.slice(0, 19)}
-            convert={true}
-          />
-        </ContentText>
-      </Row>
-    </Link>
+              <ViewUpload
+                view={converCount(ectData.viewNum)}
+                date={publishedAt.slice(0, 19)}
+                convert={true}
+              />
+            </ContentText>
+          </Row>
+        </Link>
+      )}
+    </>
   );
 };
 const Row = styled.div`

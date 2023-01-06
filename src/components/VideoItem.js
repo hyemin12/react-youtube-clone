@@ -82,7 +82,7 @@ const VideoItem = (item) => {
                   url={thumbnails.medium.url}
                   title={title}
                 />
-                <VideoLength time={item.contentDetails} />
+                <VideoLength time={item.contentDetails.duration} />
               </div>
               <VideoRow>
                 <ChannelThumbnail

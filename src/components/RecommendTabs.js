@@ -12,7 +12,7 @@ const RecommendTabs = ({ data, id }) => {
     <div>
       {data.map(({ title }, idx) => (
         <RecomTitle
-          key={title}
+          key={`${idx}${title}`}
           className={currentIndex === idx ? "active" : ""}
           onClick={() => {
             setCurrentIndex(idx);

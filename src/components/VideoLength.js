@@ -3,15 +3,26 @@ import styled from "styled-components";
 const VideoLength = ({ time }) => {
   // 포맷: PT00M00S
   // M 앞의 숫자가 분/ S앞의 숫자가 초
-  const splitTime = time.duration.split("M");
-  const min = splitTime[0].replace("PT", "").padStart(2, "0");
-  const sec = splitTime[1].replace("S", "").padStart(2, "0");
+  //
+  // console.log(time, splitTime);
 
-  return (
-    <Time>
-      {min}:{sec}
-    </Time>
-  );
+  const covertTime = (t) => {
+    let min, sec;
+    if (t.includes("M")) {
+      const splitTime = t.split("M");
+      min = splitTime[0].replace("PT", "").padStart(2, "0");
+      sec = splitTime[1].replace("S", "").padStart(2, "0");
+      return `${min}:${sec}`;
+    } else {
+      sec = t.replaceAll(/[PTS]/g, "").padStart(2, "0");
+      return `00:${sec}`;
+    }
+  };
+
+  // const min = splitTime[0].replace("PT", "");
+  // const sec = splitTime[1].replace("S", "").padStart(2, "0");
+
+  return <Time>{covertTime(time)}</Time>;
 };
 
 const Time = styled.span`

@@ -45,7 +45,7 @@ const Search = () => {
           type="text"
           placeholder="검색"
           onChange={onChange}
-          value={query}
+          defaultValue={query}
         />
         <SearchBtn>
           <FaSearch />

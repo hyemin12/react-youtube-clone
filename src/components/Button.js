@@ -37,7 +37,11 @@ const Button = ({ id, type, text }) => {
       {type === "copy" && (
         <Btn onClick={onCopy}>
           <Row>
-            <input value={`${id}`} ref={urlRef} style={{ display: "none" }} />
+            <input
+              defaultValue={`${id}`}
+              ref={urlRef}
+              style={{ display: "none" }}
+            />
             <FaCopy />
             <p>{text}</p>
           </Row>
