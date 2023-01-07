@@ -34,9 +34,9 @@ const Video = () => {
   ]);
 
   /** axios 요청 함수 */
-  const axiosGet = (keyword, option) => {
+  const axiosGet = (resource, option) => {
     const res = axios.get(
-      `https://www.googleapis.com/youtube/v3/${keyword}?${option}&part=snippet&key=${KEY}`
+      `https://www.googleapis.com/youtube/v3/${resource}?${option}&part=snippet&key=${KEY}`
     );
     return res;
   };

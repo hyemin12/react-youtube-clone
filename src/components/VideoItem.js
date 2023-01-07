@@ -40,7 +40,6 @@ const VideoItem = (item) => {
         `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
       );
       setChannelImg(res.data.items[0].snippet.thumbnails.default.url);
-
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -48,7 +47,7 @@ const VideoItem = (item) => {
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [channelId]);
 
   // 조회수, 영상길이 데이터가 넘어오지 않았을 때 데이터 가져오는 함수 (검색해서 가져온 데이터)
   const getAddData = async () => {

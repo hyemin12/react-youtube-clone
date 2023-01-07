@@ -61,14 +61,58 @@
 
 - react-icons : https://react-icons.github.io/react-icons/icons?name=fa
 
-#### - 유튜브 속성 (videos)
+---
+
+### - Youtube Data Api
+
+#### - 리소스 및 리소스 유형
+
+| 리소스        | 설명                                                                                                                                                                                        |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| activity      | - 특정 사용자가 youtube 사이트에서 실행한 작업의 정보를 포함 <br>- 동영상 평가, 동영상 공유, 동영상을 즐겨찾기에 추가, 채널 게시판에 게시 등이 포함됨                                       |
+| channel       | - 단일 채널에 대한 정보를 포함                                                                                                                                                              |
+| channelBanner | - 새로 업로드한 이미지를 채널의 배너 이미지로 설정하는데 사용할 URL을 식별                                                                                                                  |
+| guideCategory | - 채널의 콘텐츠 또는 기타 지표(인기도)를 기반으로 채널에 연결하는 카테고리를 식별<br> - 사용자가 원하는 콘텐츠를 더 쉽게 찾을 수 있는 방법                                                  |
+| playlist      | - 단일 유튜브 재생목록을 표시<br>- 재생목록은 순서대로 감상하거나 다른 사용자와 공유할 수 있는 영상 목록                                                                                    |
+| playlistItem  | - 재생목록에 포함된 동영상과 같은 리소스를 식별<br> - 재생목록에서 사용되는 방식을 설명하는 세부정보도 포함되어 있음                                                                        |
+| search result | 지정된 검색 매개변수와 일치하는 유투브 동영상, 채널 또는 재생목록의 정보를 포함<br> - 동영상과 같이 고유하게 식별할 수 있는 리소스를 보여주지만, 자체적으로는 영구적인 데이터를 가지지 않음 |
+| subscription  | - 사용자의 구독 정보를 포함                                                                                                                                                                 |
+| thumbnail     | 미리보기 이미지를 식별                                                                                                                                                                      |
+| video         | 단일 유튜브 동영상을 표시                                                                                                                                                                   |
+| vidooCategory | 업로드된 동영상과 연결되었거나 연결할 수 있는 카테고리를 식별                                                                                                                               |
+
+---
+
+#### - 리소스 videos
+
+`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
+
+##### part
 
 - snippet : 기본 세부정보 (publishedAt,channelId,title,description,thumbnails(동영상썸네일),channelTitle,categoryId)
 - statistics : 동영상 통계 (viewCount, likeCount, commentCount)
 - contentDetails : 동영상 콘텐츠 정보 (contentDetails.contentRating.kmrbRating : 한국 동영상 평가)
 
-채널 id로 채널 정보 가져오기
+##### ect
+
+- chart=mostPopular
+- videoCategoryId : 비디오카테고리 (chart 사용할 때 만 사용 가능)
+- maxResult : 최대 검색결과
+- regionCode : 지역/나라
+
+---
+
+#### - 채널 videos
+
 `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
+
+#### part
+
+- snippet : 기본 세부정보 (publishedAt,channelId,title,description,thumbnails(동영상썸네일),channelTitle,categoryId)
+
+---
+
+---
 
 useContext API
 https://beta.reactjs.org/reference/react/useContext
