@@ -78,7 +78,7 @@
 | search result | 지정된 검색 매개변수와 일치하는 유투브 동영상, 채널 또는 재생목록의 정보를 포함<br> - 동영상과 같이 고유하게 식별할 수 있는 리소스를 보여주지만, 자체적으로는 영구적인 데이터를 가지지 않음 |
 | subscription  | - 사용자의 구독 정보를 포함                                                                                                                                                                 |
 | thumbnail     | 미리보기 이미지를 식별                                                                                                                                                                      |
-| video         | 단일 유튜브 동영상을 표시                                                                                                                                                                   |
+| videos        | 매개변수와 일치하는 동영상 목록 반환                                                                                                                                                        |
 | vidooCategory | 업로드된 동영상과 연결되었거나 연결할 수 있는 카테고리를 식별                                                                                                                               |
 
 ---
@@ -108,7 +108,11 @@
 
 #### part
 
-- snippet : 기본 세부정보 (publishedAt,channelId,title,description,thumbnails(동영상썸네일),channelTitle,categoryId)
+- snippet : 기본 세부정보 (publishedAt,title(채널이름),description(채널설명),thumbnails(채널썸네일))
+- contentDetails : 채널 정보 요약 (relatedPlaylists: 업로드된 영상 또는 채널과 관련된 재생목록을 식별하는 맵)
+- statistics : 통계 (조회수, 댓글 수, 구독자 수, 업로드 영상 수)
+- topicDetails : 채널과 관련된 freebase 주제 정보 요약
+- brandingSettings : 채널 브랜드 정보 (채널 배너, 채널 제목, )
 
 ---
 
