@@ -30,7 +30,7 @@ const VideoItem = (item) => {
 
   const [loading, setLoading] = useState(true);
   const [channelImg, setChannelImg] = useState();
-  const [addData, setAddData] = useState();
+  const [ectData, setEctData] = useState();
 
   // 채널 썸네일 가져오는 함수
   const getData = async () => {
@@ -57,7 +57,7 @@ const VideoItem = (item) => {
       const res = await axios.get(
         `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}`
       );
-      setAddData(res.data.items[0]);
+      setEctData(res.data.items[0]);
     } catch (err) {
       console.log(err);
     }
@@ -78,24 +78,16 @@ const VideoItem = (item) => {
               width: `${thumbnails.medium.width}px`,
             }}
           >
-            <div style={{ position: "relative" }}>
-              <Thumbnail
-                width={thumbnails.medium.width ? thumbnails.medium.width : 320}
-                height={
-                  thumbnails.medium.height ? thumbnails.medium.height : 180
-                }
-                url={thumbnails.medium.url}
-                title={title}
-              />
-              {
-                <VideoLength
-                  time={
-                    item.contentDetails.duration ||
-                    addData.contentDetails.duration
-                  }
-                />
+            <Thumbnail
+              width={thumbnails.medium.width ? thumbnails.medium.width : 320}
+              height={thumbnails.medium.height ? thumbnails.medium.height : 180}
+              url={thumbnails.medium.url}
+              title={title}
+              duration={
+                item.contentDetails.duration || ectData.contentDetails.duration
               }
-            </div>
+            />
+
             <VideoRow>
               <ChannelThumbnail
                 url={channelImg}
@@ -109,7 +101,7 @@ const VideoItem = (item) => {
 
                 <ViewUpload
                   view={converCount(
-                    item.statistics.viewCount || addData.statistics.viewCount
+                    item.statistics.viewCount || ectData.statistics.viewCount
                   )}
                   date={publishedAt.slice(0, 19)}
                   convert={true}

@@ -20,13 +20,13 @@ const RecommendItem = ({ item, channelTitle }) => {
 
   const [ectData, setEctData] = useState({ viewNum: 0, length: "" });
   const [loading, setLoading] = useState(true);
+
   // 조회수 가져오는 함수
   const getData = async () => {
     try {
       const res =
-        await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics&part=contentDetails&key=${KEY}
+        await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}
     `);
-
       setEctData({
         viewNum: res.data.items[0].statistics.viewCount,
         videolength: res.data.items[0].contentDetails.duration,
@@ -46,15 +46,14 @@ const RecommendItem = ({ item, channelTitle }) => {
       ) : (
         <Link to={`../${id}`}>
           <Row>
-            <div style={{ position: "relative" }}>
-              <Thumbnail
-                width={200}
-                height={200 * (9 / 16)}
-                title={title}
-                url={thumbnails.medium.url}
-              />
-              <VideoLength time={ectData.videolength} />
-            </div>
+            <Thumbnail
+              width={200}
+              height={200 * (9 / 16)}
+              title={title}
+              url={thumbnails.medium.url}
+              duration={ectData.videolength}
+            />
+
             <ContentText>
               <Title size={16} text={title} mode={true} />
               <SubTitle text={channelTitle} />
