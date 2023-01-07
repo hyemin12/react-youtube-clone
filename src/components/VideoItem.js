@@ -30,7 +30,7 @@ const VideoItem = (item) => {
 
   const [loading, setLoading] = useState(true);
   const [channelImg, setChannelImg] = useState();
-  const [viewNum, setViewNum] = useState();
+  const [addData, setAddData] = useState();
 
   /** 채널 썸네일 가져오고, 조회수가 없이 데이터가 넘어왔을 경우 조회수 정보 가져오는 함수 실행 */
   const getData = async () => {
@@ -41,15 +41,6 @@ const VideoItem = (item) => {
       );
       setChannelImg(res.data.items[0].snippet.thumbnails.default.url);
 
-      // 영상 조회수가 없이 데이터가 넘어왔을 경우 조회수 정보 가져오기
-      if (item.statistics === undefined) {
-        const countRes = await axios.get(
-          `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics&key=${KEY}`
-        );
-        setViewNum(countRes.data.items[0].statistics.viewCount);
-      } else {
-        setViewNum(item.statistics.viewCount);
-      }
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -58,59 +49,79 @@ const VideoItem = (item) => {
   useEffect(() => {
     getData();
   }, []);
+
+  // 조회수, 영상길이 데이터가 넘어오지 않았을 때 데이터 가져오는 함수 (검색해서 가져온 데이터)
+  const getAddData = async () => {
+    if (item.kind === "youtube#video") return;
+
+    const res = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}`
+    );
+    console.log("데이터!!");
+    setAddData(res.data.items[0]);
+  };
+  useEffect(() => {
+    getAddData();
+  }, []);
+
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <>
-          {viewNum !== undefined && (
-            <Link
-              to={{ pathname: "/watch", search: `${id}` }}
-              style={{
-                width: `${thumbnails.medium.width}px`,
-              }}
-            >
-              <div style={{ position: "relative" }}>
-                <Thumbnail
-                  width={
-                    thumbnails.medium.width ? thumbnails.medium.width : 320
+          <Link
+            to={{ pathname: "/watch", search: `${id}` }}
+            style={{
+              width: `${thumbnails.medium.width}px`,
+            }}
+          >
+            <div style={{ position: "relative" }}>
+              <Thumbnail
+                width={thumbnails.medium.width ? thumbnails.medium.width : 320}
+                height={
+                  thumbnails.medium.height ? thumbnails.medium.height : 180
+                }
+                url={thumbnails.medium.url}
+                title={title}
+              />
+              {
+                <VideoLength
+                  time={
+                    item.contentDetails.duration ||
+                    addData.contentDetails.duration
                   }
-                  height={
-                    thumbnails.medium.height ? thumbnails.medium.height : 180
-                  }
-                  url={thumbnails.medium.url}
-                  title={title}
                 />
-                <VideoLength time={item.contentDetails.duration} />
-              </div>
-              <VideoRow>
-                <ChannelThumbnail
-                  url={channelImg}
-                  title={channelTitle}
-                  size={34}
-                />
+              }
+            </div>
+            <VideoRow>
+              <ChannelThumbnail
+                url={channelImg}
+                title={channelTitle}
+                size={34}
+              />
 
-                <div>
-                  <Title size={16} text={title} mode={true} />
-                  <SubTitle text={channelTitle} />
+              <div>
+                <Title size={16} text={title} mode={true} />
+                <SubTitle text={channelTitle} />
 
-                  <ViewUpload
-                    view={converCount(viewNum)}
-                    date={publishedAt.slice(0, 19)}
-                    convert={true}
-                  />
-                  {/* 실시간 배지 */}
-                  {liveBroadcastContent === "live" && (
-                    <Live>
-                      <FaBroadcastTower />
-                      실시간
-                    </Live>
+                <ViewUpload
+                  view={converCount(
+                    item.statistics.viewCount || addData.statistics.viewCount
                   )}
-                </div>
-              </VideoRow>
-            </Link>
-          )}
+                  date={publishedAt.slice(0, 19)}
+                  convert={true}
+                />
+                {/* 실시간 배지 */}
+                {liveBroadcastContent === "live" && (
+                  <Live>
+                    <FaBroadcastTower />
+                    실시간
+                  </Live>
+                )}
+              </div>
+            </VideoRow>
+          </Link>
         </>
       )}
     </>

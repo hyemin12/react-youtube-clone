@@ -45,34 +45,39 @@ const Video = () => {
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
    * channelRes: 채널 정보 (채널 썸네일, 채널 이름)
    * recommendRes: 채널에서 업로드한 다른 영상 리스트
-   */ const getData = useCallback(async () => {
+   */
+  const getData = useCallback(async () => {
     try {
       const dataRes = await axiosGet("videos", `id=${id}&part=statistics`);
+      console.log(dataRes);
+      if (dataRes.status === 200) {
+        const channelid = dataRes.data.items[0].snippet.channelId;
+        const channelRes = await axiosGet(
+          "channels",
+          `id=${channelid}&part=statistics`
+        );
+        // 같은 채널 영상 목록
+        const sameChannel = await axiosGet(
+          "activities",
+          `channelId=${channelid}&maxResults=10&part=contentDetails`
+        );
+        // 같은 카테고리 영상 목록
+        const sameCategory = await axiosGet(
+          "videos",
+          `chart=mostPopular&videoCategoryId=${22}&maxResults=10&regionCode=kr`
+        );
 
-      const channelRes = await axiosGet(
-        "channels",
-        `id=${dataRes.data.items[0].snippet.channelId}&part=statistics`
-      );
-      // 같은 채널 영상 목록
-      const sameChannel = await axiosGet(
-        "activities",
-        `channelId=${dataRes.data.items[0].snippet.channelId}&maxResults=10&part=contentDetails`
-      );
-      // 같은 카테고리 영상 목록
-      const sameCategory = await axiosGet(
-        "videos",
-        `chart=mostPopular&videoCategoryId=${22}&maxResults=10&regionCode=kr`
-      );
+        setData(dataRes.data.items[0]);
+        setChannel({
+          subscribe: channelRes.data.items[0].statistics.subscriberCount,
+          thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+        });
+        setRecommend([
+          { ...recommend[0], list: sameCategory.data.items },
+          { ...recommend[1], list: sameChannel.data.items },
+        ]);
+      }
 
-      setData(dataRes.data.items[0]);
-      setChannel({
-        subscribe: channelRes.data.items[0].statistics.subscriberCount,
-        thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
-      });
-      setRecommend([
-        { ...recommend[0], list: sameCategory.data.items },
-        { ...recommend[1], list: sameChannel.data.items },
-      ]);
       setLoading(false);
     } catch (err) {
       console.log(err);

@@ -1,3 +1,4 @@
+// 검색 결과 페이지 path={`/results/:search=${searchQuery.q}`}
 import styled from "styled-components";
 
 import { useSearchContext } from "../hooks/searchContext";

@@ -33,32 +33,31 @@ const Home = () => {
     // { keyword: "한일전", category: "" },
   ];
 
-  /** 영상 목록 가져오는 함수
-   * 인기: popularRes
-   * 카테고리 아이디가 있는 경우 : categoryRes
-   * 카테고리 아이디가 없는 경우 :
-   */
+  /** 영상 목록 가져오는 함수 */
   const getData = useCallback(async () => {
     const current = keywords[currentIndex];
     try {
       if (currentIndex === 0) {
-        const popularRes = await axios.get(
-          `https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&part=contentDetails&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
+        // 인기 키워드
+        const res = await axios.get(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
         );
-
-        setResult(popularRes.data.items);
+        console.log(res);
+        setResult(res.data.items);
       } else if (typeof current.category === "number") {
-        const categoryRes =
-          await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&part=contentDetails&chart=mostPopular&videoCategoryId=${current.category}&type=video&maxResults=32&regionCode=kr&key=${KEY}
+        // 카테고리 아이디가 있는 경우
+        const res =
+          await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&chart=mostPopular&videoCategoryId=${current.category}&type=video&maxResults=32&regionCode=kr&key=${KEY}
         `);
-        setResult(categoryRes.data.items);
+        console.log(res);
+        setResult(res.data.items);
       } else {
+        // 카테고리 아이디가 없는 경우
         const res =
           await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${current.keyword}&type=video&maxResults=32&regionCode=kr&key=${KEY}
     `);
         setResult(res.data.items);
       }
-
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -84,11 +83,7 @@ const Home = () => {
       }
     }
   }, [isOverflow]);
-  console.log(isOverflow);
 
-  // clientWidth 1288
-  // offsetWidth 1288
-  // scrollWidth 1603
   return (
     <>
       {loading ? (
@@ -98,7 +93,7 @@ const Home = () => {
           <aside>
             <Nav />
           </aside>
-          <div>
+          <div id="main">
             <KeywordContainer style={{ display: "flex" }}>
               <Row ref={keywordRef}>
                 {keywords.map(({ keyword }, idx) => (
@@ -120,7 +115,7 @@ const Home = () => {
                 </NextBtn>
               )}
             </KeywordContainer>
-            {/* <VideoList videos={result} /> */}
+            <VideoList videos={result} />
           </div>
         </Layout>
       )}
