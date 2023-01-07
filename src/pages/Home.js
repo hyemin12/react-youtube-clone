@@ -30,26 +30,28 @@ const Home = () => {
     { keyword: "축구", category: "" },
     { keyword: "런닝맨", category: "" },
     { keyword: "그것이알고싶다", category: "" },
-    { keyword: "한일전", category: "" },
-    { keyword: "한일전1", category: "" },
-    { keyword: "한일전2", category: "" },
+    // { keyword: "한일전", category: "" },
   ];
 
+  /** 영상 목록 가져오는 함수
+   * 인기: popularRes
+   * 카테고리 아이디가 있는 경우 : categoryRes
+   * 카테고리 아이디가 없는 경우 :
+   */
   const getData = useCallback(async () => {
     const current = keywords[currentIndex];
-
     try {
       if (currentIndex === 0) {
-        const res = await axios.get(
+        const popularRes = await axios.get(
           `https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&part=contentDetails&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
         );
 
-        setResult(res.data.items);
+        setResult(popularRes.data.items);
       } else if (typeof current.category === "number") {
-        const res =
+        const categoryRes =
           await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&part=statistics&part=contentDetails&chart=mostPopular&videoCategoryId=${current.category}&type=video&maxResults=32&regionCode=kr&key=${KEY}
         `);
-        setResult(res.data.items);
+        setResult(categoryRes.data.items);
       } else {
         const res =
           await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${current.keyword}&type=video&maxResults=32&regionCode=kr&key=${KEY}
@@ -67,9 +69,22 @@ const Home = () => {
     getData();
   }, [currentIndex]);
 
-  // 화면 길이
-  console.log(document.documentElement.clientWidth);
-  console.dir(keywordRef.current, document);
+  /** 키워드 컨테이너 크기에 따라 overflow 상태 변경
+   * keywordWidth: 키워드 컨테이너(고정값)
+   * fullWidth: 키워드 컨테이너 전체 width값
+   */
+  const [isOverflow, setIsOverflow] = useState(false);
+  useEffect(() => {
+    if (keywordRef.current) {
+      const keywordWidth = keywordRef.current.clientWidth;
+      const fullWidth = keywordRef.current.scrollWidth;
+      console.log(fullWidth, keywordWidth);
+      if (keywordWidth < fullWidth) {
+        setIsOverflow(true);
+      }
+    }
+  }, [isOverflow]);
+  console.log(isOverflow);
 
   // clientWidth 1288
   // offsetWidth 1288
@@ -99,9 +114,11 @@ const Home = () => {
                   </Keyword>
                 ))}
               </Row>
-              <NextBtn>
-                <FaAngleRight />
-              </NextBtn>
+              {isOverflow && (
+                <NextBtn>
+                  <FaAngleRight />
+                </NextBtn>
+              )}
             </KeywordContainer>
             {/* <VideoList videos={result} /> */}
           </div>
