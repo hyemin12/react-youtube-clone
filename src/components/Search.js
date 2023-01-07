@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -23,7 +23,7 @@ const Search = () => {
       e.preventDefault();
 
       try {
-        if (query.length === 0) {
+        if (!query) {
           alert("검색어를 입력하세요");
         } else {
           const res =

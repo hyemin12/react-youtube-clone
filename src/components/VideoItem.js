@@ -32,7 +32,7 @@ const VideoItem = (item) => {
   const [channelImg, setChannelImg] = useState();
   const [addData, setAddData] = useState();
 
-  /** 채널 썸네일 가져오고, 조회수가 없이 데이터가 넘어왔을 경우 조회수 정보 가져오는 함수 실행 */
+  // 채널 썸네일 가져오는 함수
   const getData = async () => {
     try {
       // 채널 썸네일 가져오기
@@ -53,12 +53,14 @@ const VideoItem = (item) => {
   // 조회수, 영상길이 데이터가 넘어오지 않았을 때 데이터 가져오는 함수 (검색해서 가져온 데이터)
   const getAddData = async () => {
     if (item.kind === "youtube#video") return;
-
-    const res = await axios.get(
-      `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}`
-    );
-    console.log("데이터!!");
-    setAddData(res.data.items[0]);
+    try {
+      const res = await axios.get(
+        `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}`
+      );
+      setAddData(res.data.items[0]);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getAddData();

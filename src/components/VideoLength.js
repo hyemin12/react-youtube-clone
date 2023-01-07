@@ -3,8 +3,6 @@ import styled from "styled-components";
 const VideoLength = ({ time }) => {
   // 포맷: PT00M00S
   // M 앞의 숫자가 분/ S앞의 숫자가 초
-  //
-  // console.log(time, splitTime);
 
   const covertTime = (t) => {
     let min, sec;
@@ -18,9 +16,6 @@ const VideoLength = ({ time }) => {
       return `00:${sec}`;
     }
   };
-
-  // const min = splitTime[0].replace("PT", "");
-  // const sec = splitTime[1].replace("S", "").padStart(2, "0");
 
   return <Time>{covertTime(time)}</Time>;
 };

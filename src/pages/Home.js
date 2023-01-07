@@ -42,14 +42,12 @@ const Home = () => {
         const res = await axios.get(
           `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&chart=mostPopular&regionCode=kr&maxResults=32&key=${KEY}`
         );
-        console.log(res);
         setResult(res.data.items);
       } else if (typeof current.category === "number") {
         // 카테고리 아이디가 있는 경우
         const res =
           await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&chart=mostPopular&videoCategoryId=${current.category}&type=video&maxResults=32&regionCode=kr&key=${KEY}
         `);
-        console.log(res);
         setResult(res.data.items);
       } else {
         // 카테고리 아이디가 없는 경우
@@ -62,7 +60,7 @@ const Home = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [currentIndex]);
+  }, []);
 
   useEffect(() => {
     getData();
@@ -77,7 +75,6 @@ const Home = () => {
     if (keywordRef.current) {
       const keywordWidth = keywordRef.current.clientWidth;
       const fullWidth = keywordRef.current.scrollWidth;
-      console.log(fullWidth, keywordWidth);
       if (keywordWidth < fullWidth) {
         setIsOverflow(true);
       }
