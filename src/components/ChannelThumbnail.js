@@ -1,9 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-const ChannelThumbnail = ({ title, url, size, customUrl }) => {
-  const { pathname } = useLocation();
+import { useSetChnIdContext } from "../hooks/getChannelIdContext";
 
+const ChannelThumbnail = ({ title, url, size, customUrl, id }) => {
+  const { pathname } = useLocation();
+  const { setSettingId } = useSetChnIdContext();
   return (
     <>
       {pathname === "/channel" ? (
@@ -13,7 +15,12 @@ const ChannelThumbnail = ({ title, url, size, customUrl }) => {
           style={{ width: `${size}px`, height: `${size}px` }}
         />
       ) : (
-        <Link to={{ pathname: "/channel", search: `${customUrl}` }}>
+        <Link
+          to={{ pathname: "/channel", search: `${customUrl}` }}
+          onClick={() => {
+            setSettingId(id);
+          }}
+        >
           <Img
             src={url}
             alt={title}

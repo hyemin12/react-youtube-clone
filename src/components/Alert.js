@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+/**알림창 컴포넌트 (1초 후에 사라지는 메세지창)
+ * 기본값 center : 전체화면 정가운데 메세지가 나타남
+ * 옵션값 top: 해당 문구윗부분에 나타남
+ */
 const Alert = ({ text, position }) => {
   return (
     <AlertContainer className={position}>

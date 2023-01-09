@@ -5,17 +5,18 @@ import styled from "styled-components";
 
 import { converCount } from "../hooks/converCount";
 
-import Thumbnail from "./Thumbnail";
-import SubTitle from "./SubTitle";
-import Title from "./Title";
-import ViewUpload from "./ViewUpload";
 import Loading from "./Loading";
+import Thumbnail from "./Thumbnail";
+import Title from "./Title";
 import ChannelTitle from "./ChannelTitle";
+import ViewUpload from "./ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
+// 추천 영상 목록 아이템 컴포넌트
 const RecommendItem = ({ item, channelTitle }) => {
-  const { title, publishedAt, thumbnails } = item.snippet;
+  const { title, publishedAt, thumbnails, channelId } = item.snippet;
+
   const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;
 
   const [ectData, setEctData] = useState({ viewNum: 0, length: "" });
@@ -56,7 +57,7 @@ const RecommendItem = ({ item, channelTitle }) => {
 
             <ContentText>
               <Title size={16} text={title} cut={true} />
-              <ChannelTitle text={channelTitle} customUrl={""} />
+              <ChannelTitle text={channelTitle} customUrl={""} id={channelId} />
 
               <ViewUpload
                 view={converCount(ectData.viewNum)}

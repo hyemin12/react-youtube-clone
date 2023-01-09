@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
 import { converCount } from "../hooks/converCount";
 
-import ChannelThumbnail from "../components/ChannelThumbnail";
-import Layout from "../components/Layout";
-import Title from "../components/Title";
-import RecommendTabs from "../components/RecommendTabs";
 import Loading from "../components/Loading";
+import Layout from "../components/Layout";
 import Iframe from "../components/Iframe";
+import Title from "../components/Title";
+import SubTitle from "../components/SubTitle";
+import ChannelThumbnail from "../components/ChannelThumbnail";
+import RecommendTabs from "../components/RecommendTabs";
 import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
-import SubTitle from "../components/SubTitle";
 import ChannelTitle from "../components/ChannelTitle";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
@@ -86,10 +86,11 @@ const Video = () => {
       console.log(err);
     }
   }, [id]);
+
   useEffect(() => {
     getData();
   }, []);
-  console.log(data);
+
   return (
     <>
       {loading ? (
@@ -110,11 +111,13 @@ const Video = () => {
                         url={channel.thumbnail}
                         title={data.snippet.channelTitle}
                         customUrl={channel.customUrl}
+                        id={data.snippet.channelId}
                       />
                       <div>
                         <ChannelTitle
                           text={data.snippet.channelTitle}
                           customUrl={channel.customUrl}
+                          id={data.snippet.channelId}
                         />
 
                         <SubTitle

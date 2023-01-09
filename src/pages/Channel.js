@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { converCount } from "../hooks/converCount";
+import { useSetChnIdContext } from "../hooks/getChannelIdContext";
 
 import Loading from "../components/Loading";
 import ChannelThumbnail from "../components/ChannelThumbnail";
@@ -14,14 +15,17 @@ const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 const Channel = () => {
   console.log("채널컴포넌트");
 
+  // 데이터를 가져올 "채널아이디"
+  const { settingId } = useSetChnIdContext();
+
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+
   const getData = async () => {
     try {
       const res =
-        await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics,brandingSettings&id=UC4ZA57iJrf73bJlApKFeLRw&key=${KEY}
+        await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics,brandingSettings&id=${settingId}&key=${KEY}
     `);
-      console.log(res.data.items[0]);
       setData({
         thumbnail: res.data.items[0].snippet.thumbnails,
         title: res.data.items[0].snippet.title,

@@ -98,6 +98,7 @@ const VideoItem = (item) => {
                 title={channelTitle}
                 size={34}
                 customUrl={channel.customUrl}
+                id={channelId}
               />
 
               <div>
@@ -105,6 +106,7 @@ const VideoItem = (item) => {
                 <ChannelTitle
                   text={channelTitle}
                   customUrl={channel.customUrl}
+                  id={channelId}
                 />
 
                 <ViewUpload

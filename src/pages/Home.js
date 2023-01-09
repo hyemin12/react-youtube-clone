@@ -62,7 +62,7 @@ const Home = () => {
       console.log(err);
     }
   }, []);
-  //"UC4ZA57iJrf73bJlApKFeLRw"
+
   useEffect(() => {
     getData();
   }, [currentIndex]);
