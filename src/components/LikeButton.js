@@ -9,24 +9,24 @@ import { Btn, Row } from "./Button";
 
 const LikeButton = ({ num }) => {
   const [plusLike, setPlusLike] = useState({
-    mode: false,
+    isLike: false,
     number: Number(num),
   });
 
   const [isAlert, setIsAlert] = useAlert();
 
   const increaseLike = () => {
-    if (plusLike.mode) {
-      setPlusLike({ mode: false, number: plusLike.number - 1 });
+    if (plusLike.isLike) {
+      setPlusLike({ isLike: false, number: plusLike.number - 1 });
     } else {
-      setPlusLike({ mode: true, number: plusLike.number + 1 });
+      setPlusLike({ isLike: true, number: plusLike.number + 1 });
       setIsAlert(true);
     }
   };
   return (
-    <Btn onClick={increaseLike} mode={plusLike.mode}>
+    <Btn onClick={increaseLike} isLike={plusLike.isLike}>
       <Row>
-        <FaThumbsUp style={{ color: plusLike.mode ? "tomato" : "#111" }} />
+        <FaThumbsUp style={{ color: plusLike.isLike ? "tomato" : "#111" }} />
         <p>{converCount(plusLike.number)}</p>
       </Row>
       {isAlert && <Alert text={"좋아요🧡"} position={"top"} />}

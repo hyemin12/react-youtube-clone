@@ -3,15 +3,18 @@ import styled from "styled-components";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = ({ children, aside }) => {
+const Layout = ({ children }) => {
   return (
-    <div>
+    <Container>
       <Header />
       <MainContent>{children}</MainContent>
       <Footer />
-    </div>
+    </Container>
   );
 };
+const Container = styled.div`
+  min-width: 1500px;
+`;
 const MainContent = styled.div`
   display: flex;
   gap: 20px;

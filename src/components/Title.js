@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const Title = ({ size, text, mode }) => {
+const Title = ({ size, text, cut }) => {
   return (
-    <H4 size={size} className={mode ? "overflow" : ""}>
+    <H4 size={size} className={cut ? "overflow" : ""}>
       {text.replace(/&#39;/g, "'").replace(/&quot;/g, "˝")}
     </H4>
   );

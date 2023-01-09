@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const SubTitle = ({ text }) => {
-  return <Subtitle>{text}</Subtitle>;
+  return <P>{text}</P>;
 };
-const Subtitle = styled.p`
+const P = styled.p`
   margin: 0;
   padding: 2px 0;
   color: #777;

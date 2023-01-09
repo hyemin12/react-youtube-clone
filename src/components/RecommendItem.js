@@ -9,8 +9,8 @@ import Thumbnail from "./Thumbnail";
 import SubTitle from "./SubTitle";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
-import VideoLength from "./VideoLength";
 import Loading from "./Loading";
+import ChannelTitle from "./ChannelTitle";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -55,8 +55,8 @@ const RecommendItem = ({ item, channelTitle }) => {
             />
 
             <ContentText>
-              <Title size={16} text={title} mode={true} />
-              <SubTitle text={channelTitle} />
+              <Title size={16} text={title} cut={true} />
+              <ChannelTitle text={channelTitle} customUrl={""} />
 
               <ViewUpload
                 view={converCount(ectData.viewNum)}

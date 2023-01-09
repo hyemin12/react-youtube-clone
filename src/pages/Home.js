@@ -12,6 +12,7 @@ import Nav from "../components/Nav";
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Home = () => {
+  console.log("홈페이지");
   const [loading, setLoading] = useState(true);
   const keywordRef = useRef(null);
   const [result, setResult] = useState([]);
@@ -61,7 +62,7 @@ const Home = () => {
       console.log(err);
     }
   }, []);
-
+  //"UC4ZA57iJrf73bJlApKFeLRw"
   useEffect(() => {
     getData();
   }, [currentIndex]);

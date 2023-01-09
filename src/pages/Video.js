@@ -14,12 +14,14 @@ import Iframe from "../components/Iframe";
 import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
 import SubTitle from "../components/SubTitle";
+import ChannelTitle from "../components/ChannelTitle";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Video = () => {
-  const location = useLocation();
-  const id = location.search.replace("?", "");
+  console.log("비디오페이지");
+  const { search } = useLocation();
+  const id = search.replace("?", "");
 
   const [loading, setLoading] = useState(true);
 
@@ -49,12 +51,12 @@ const Video = () => {
   const getData = useCallback(async () => {
     try {
       const dataRes = await axiosGet("videos", `id=${id}&part=statistics`);
-      console.log(dataRes);
+
       if (dataRes.status === 200) {
         const channelid = dataRes.data.items[0].snippet.channelId;
         const channelRes = await axiosGet(
           "channels",
-          `id=${channelid}&part=statistics`
+          `id=${channelid}&part=statistics,snippet`
         );
         // 같은 채널 영상 목록
         const sameChannel = await axiosGet(
@@ -71,6 +73,7 @@ const Video = () => {
         setChannel({
           subscribe: channelRes.data.items[0].statistics.subscriberCount,
           thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+          customUrl: channelRes.data.items[0].snippet.customUrl,
         });
         setRecommend([
           { ...recommend[0], list: sameCategory.data.items },
@@ -86,7 +89,7 @@ const Video = () => {
   useEffect(() => {
     getData();
   }, []);
-
+  console.log(data);
   return (
     <>
       {loading ? (
@@ -99,16 +102,21 @@ const Video = () => {
                 <Iframe id={id} width={"920"} height={"517.5"} />
 
                 <div style={{ width: "100%" }}>
-                  <Title size={20} text={data.snippet.title} mode={false} />
+                  <Title size={20} text={data.snippet.title} cut={false} />
                   <Row>
                     <ChannelContainer>
                       <ChannelThumbnail
                         size={40}
                         url={channel.thumbnail}
                         title={data.snippet.channelTitle}
+                        customUrl={channel.customUrl}
                       />
                       <div>
-                        <p>{data.snippet.channelTitle}</p>
+                        <ChannelTitle
+                          text={data.snippet.channelTitle}
+                          customUrl={channel.customUrl}
+                        />
+
                         <SubTitle
                           text={`구독자 ${converCount(channel.subscribe)}`}
                         />

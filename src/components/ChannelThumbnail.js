@@ -1,12 +1,27 @@
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-const ChannelThumbnail = ({ title, url, size }) => {
+const ChannelThumbnail = ({ title, url, size, customUrl }) => {
+  const { pathname } = useLocation();
+
   return (
-    <Img
-      src={url}
-      alt={title}
-      style={{ width: `${size}px`, height: `${size}px` }}
-    />
+    <>
+      {pathname === "/channel" ? (
+        <Img
+          src={url}
+          alt={title}
+          style={{ width: `${size}px`, height: `${size}px` }}
+        />
+      ) : (
+        <Link to={{ pathname: "/channel", search: `${customUrl}` }}>
+          <Img
+            src={url}
+            alt={title}
+            style={{ width: `${size}px`, height: `${size}px` }}
+          />
+        </Link>
+      )}
+    </>
   );
 };
 

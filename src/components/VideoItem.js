@@ -13,6 +13,7 @@ import Title from "./Title";
 import ViewUpload from "./ViewUpload";
 import Loading from "./Loading";
 import VideoLength from "./VideoLength";
+import ChannelTitle from "./ChannelTitle";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -29,7 +30,7 @@ const VideoItem = (item) => {
   } = item.snippet;
 
   const [loading, setLoading] = useState(true);
-  const [channelImg, setChannelImg] = useState();
+  const [channel, setChannel] = useState({ thumbnail: "", customUrl: "" });
   const [ectData, setEctData] = useState();
 
   // 채널 썸네일 가져오는 함수
@@ -39,7 +40,11 @@ const VideoItem = (item) => {
       const res = await axios.get(
         `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
       );
-      setChannelImg(res.data.items[0].snippet.thumbnails.default.url);
+      console.log(res);
+      setChannel({
+        thumbnail: res.data.items[0].snippet.thumbnails.default.url,
+        customUrl: res.data.items[0].snippet.customUrl,
+      });
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -89,14 +94,18 @@ const VideoItem = (item) => {
 
             <VideoRow>
               <ChannelThumbnail
-                url={channelImg}
+                url={channel.thumbnail}
                 title={channelTitle}
                 size={34}
+                customUrl={channel.customUrl}
               />
 
               <div>
-                <Title size={16} text={title} mode={true} />
-                <SubTitle text={channelTitle} />
+                <Title size={16} text={title} cut={true} />
+                <ChannelTitle
+                  text={channelTitle}
+                  customUrl={channel.customUrl}
+                />
 
                 <ViewUpload
                   view={converCount(

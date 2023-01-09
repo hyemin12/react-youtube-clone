@@ -12,7 +12,7 @@ const RecommendTabs = ({ data, id }) => {
     <div>
       {data.map(({ title }, idx) => (
         <RecomTitle
-          key={`${idx}${title}`}
+          key={title}
           className={currentIndex === idx ? "active" : ""}
           onClick={() => {
             setCurrentIndex(idx);
@@ -23,9 +23,10 @@ const RecommendTabs = ({ data, id }) => {
       ))}
       {data &&
         data[currentIndex].list
-          .filter((a) => videoId !== id)
+          .filter(() => videoId !== id)
           .map((item) => (
             <RecommendItem
+              key={item.snippet.title}
               item={item}
               channelTitle={item.snippet.channelTitle}
             />
