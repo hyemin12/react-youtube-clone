@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import YoutubeLogo from "../images/Youtube-logo.png";
 
@@ -8,9 +9,9 @@ const LogoImg = styled.img`
 
 const Logo = () => {
   return (
-    <a href="/">
+    <Link to="/">
       <LogoImg src={YoutubeLogo} alt="Youtube" />
-    </a>
+    </Link>
   );
 };
 export default Logo;

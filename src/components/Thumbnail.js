@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import VideoLength from "./VideoLength";
 
+// 영상 썸네일
 const Thumbnail = ({ width, height, url, title, duration }) => {
   return (
     <div style={{ position: "relative" }}>

@@ -7,6 +7,7 @@ import { converCount } from "../hooks/converCount";
 import Alert from "./Alert";
 import { Btn, Row } from "./Button";
 
+// 좋아요 버튼
 const LikeButton = ({ num }) => {
   const [plusLike, setPlusLike] = useState({
     isLike: false,
@@ -15,6 +16,7 @@ const LikeButton = ({ num }) => {
 
   const [isAlert, setIsAlert] = useAlert();
 
+  // 좋아요 활성화/비활성화
   const increaseLike = () => {
     if (plusLike.isLike) {
       setPlusLike({ isLike: false, number: plusLike.number - 1 });

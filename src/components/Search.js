@@ -8,9 +8,11 @@ import { useSearchContext } from "../hooks/searchContext";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
+// 검색 컴포넌트 (input)
 const Search = () => {
-  const [query, setQuery] = useState("");
   const { setSearchQuery } = useSearchContext();
+
+  const [query, setQuery] = useState("");
 
   const navigate = useNavigate();
 

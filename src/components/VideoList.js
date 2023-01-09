@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import VideoItem from "./VideoItem";
 
+// 영상 목록 (리스트)
 const VideoList = ({ videos }) => {
   return (
     <ListContainer>
