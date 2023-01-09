@@ -8,20 +8,20 @@ import { converCount } from "../hooks/converCount";
 import Loading from "./Loading";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
-import ChannelTitle from "./ChannelTitle";
+import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
-// 추천 영상 목록 아이템 컴포넌트
+// 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {
-  const { title, publishedAt, thumbnails, channelId } = item.snippet;
+  const { title, publishedAt, thumbnails } = item.snippet;
 
   const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;
 
   const [ectData, setEctData] = useState({ viewNum: 0, length: "" });
   const [loading, setLoading] = useState(true);
-
+  console.log(item.snippet);
   // 조회수 가져오는 함수
   const getData = async () => {
     try {
@@ -57,7 +57,7 @@ const RecommendItem = ({ item, channelTitle }) => {
 
             <ContentText>
               <Title size={16} text={title} cut={true} />
-              <ChannelTitle text={channelTitle} customUrl={""} id={channelId} />
+              <SubTitle text={channelTitle} />
 
               <ViewUpload
                 view={converCount(ectData.viewNum)}

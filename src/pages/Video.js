@@ -14,7 +14,7 @@ import ChannelThumbnail from "../components/ChannelThumbnail";
 import RecommendTabs from "../components/RecommendTabs";
 import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
-import ChannelTitle from "../components/ChannelTitle";
+import LinkButton from "../components/LinkButton";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -105,26 +105,27 @@ const Video = () => {
                 <div style={{ width: "100%" }}>
                   <Title size={20} text={data.snippet.title} cut={false} />
                   <Row>
-                    <ChannelContainer>
-                      <ChannelThumbnail
-                        size={40}
-                        url={channel.thumbnail}
-                        title={data.snippet.channelTitle}
-                        customUrl={channel.customUrl}
-                        id={data.snippet.channelId}
-                      />
-                      <div>
-                        <ChannelTitle
-                          text={data.snippet.channelTitle}
-                          customUrl={channel.customUrl}
-                          id={data.snippet.channelId}
+                    <LinkButton
+                      pathname={"/channel"}
+                      query={channel.customUrl}
+                      id={data.snippet.channelId}
+                    >
+                      <ChannelContainer>
+                        <ChannelThumbnail
+                          size={40}
+                          url={channel.thumbnail}
+                          title={data.snippet.channelTitle}
                         />
+                        <div>
+                          <p>{data.snippet.channelTitle}</p>
 
-                        <SubTitle
-                          text={`구독자 ${converCount(channel.subscribe)}`}
-                        />
-                      </div>
-                    </ChannelContainer>
+                          <SubTitle
+                            text={`구독자 ${converCount(channel.subscribe)}`}
+                          />
+                        </div>
+                      </ChannelContainer>
+                    </LinkButton>
+
                     {/* 채널 정보 옆 버튼그룹 */}
                     <BtnGroup>
                       <LikeButton num={data.statistics.likeCount} />

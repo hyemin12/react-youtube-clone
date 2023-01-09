@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// 비디오 길이 표시
 const VideoLength = ({ time }) => {
   // 포맷: PT00M00S
   // M 앞의 숫자가 분/ S앞의 숫자가 초

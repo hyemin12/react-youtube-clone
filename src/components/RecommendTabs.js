@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import RecommendItem from "./RecommendItem";
 
+// 추천 영상 목록 (리스트)
 const RecommendTabs = ({ data, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -11,7 +12,7 @@ const RecommendTabs = ({ data, id }) => {
   return (
     <div>
       {data.map(({ title }, idx) => (
-        <RecomTitle
+        <TabTitle
           key={title}
           className={currentIndex === idx ? "active" : ""}
           onClick={() => {
@@ -19,7 +20,7 @@ const RecommendTabs = ({ data, id }) => {
           }}
         >
           {title}
-        </RecomTitle>
+        </TabTitle>
       ))}
       {data &&
         data[currentIndex].list
@@ -34,7 +35,7 @@ const RecommendTabs = ({ data, id }) => {
     </div>
   );
 };
-const RecomTitle = styled.p`
+const TabTitle = styled.p`
   display: inline-block;
   background-color: #ddd;
   padding: 10px 20px;

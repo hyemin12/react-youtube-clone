@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { FaBroadcastTower } from "react-icons/fa";
 
 import { converCount } from "../hooks/converCount";
 
-import SubTitle from "./SubTitle";
-import Thumbnail from "./Thumbnail";
-import ChannelThumbnail from "./ChannelThumbnail";
-import Title from "./Title";
-import ViewUpload from "./ViewUpload";
 import Loading from "./Loading";
-import VideoLength from "./VideoLength";
-import ChannelTitle from "./ChannelTitle";
+import Thumbnail from "./Thumbnail";
+import LinkButton from "./LinkButton";
+import Title from "./Title";
+import SubTitle from "./SubTitle";
+import ChannelThumbnail from "./ChannelThumbnail";
+import ViewUpload from "./ViewUpload";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
+// 영상목록 - 영상 (아이템)
 const VideoItem = (item) => {
   const id = typeof item.id === "object" ? item.id.videoId : item.id;
 
@@ -75,63 +74,71 @@ const VideoItem = (item) => {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          <Link
-            to={{ pathname: "/watch", search: `${id}` }}
-            style={{
-              width: `${thumbnails.medium.width}px`,
-            }}
-          >
-            <Thumbnail
-              width={thumbnails.medium.width ? thumbnails.medium.width : 320}
-              height={thumbnails.medium.height ? thumbnails.medium.height : 180}
-              url={thumbnails.medium.url}
-              title={title}
-              duration={
-                item.contentDetails.duration || ectData.contentDetails.duration
-              }
-            />
-
-            <VideoRow>
-              <ChannelThumbnail
-                url={channel.thumbnail}
-                title={channelTitle}
-                size={34}
-                customUrl={channel.customUrl}
-                id={channelId}
+        <ItemContainer width={`${thumbnails.medium.width}`}>
+          <LinkButton pathname={"/watch"} query={id} className={"width"}>
+            <span>
+              <Thumbnail
+                width={thumbnails.medium.width ? thumbnails.medium.width : 320}
+                height={
+                  thumbnails.medium.height ? thumbnails.medium.height : 180
+                }
+                url={thumbnails.medium.url}
+                title={title}
+                duration={
+                  item.contentDetails.duration ||
+                  ectData.contentDetails.duration
+                }
               />
 
-              <div>
-                <Title size={16} text={title} cut={true} />
-                <ChannelTitle
-                  text={channelTitle}
-                  customUrl={channel.customUrl}
+              <VideoRow>
+                <LinkButton
+                  pathname={"/channel"}
+                  query={channel.customUrl}
                   id={channelId}
-                />
+                >
+                  <ChannelThumbnail
+                    url={channel.thumbnail}
+                    title={channelTitle}
+                    size={34}
+                  />
+                </LinkButton>
 
-                <ViewUpload
-                  view={converCount(
-                    item.statistics.viewCount || ectData.statistics.viewCount
+                <div>
+                  <Title size={16} text={title} cut={true} />
+                  <LinkButton
+                    pathname={"/channel"}
+                    query={channel.customUrl}
+                    id={channelId}
+                  >
+                    <SubTitle text={channelTitle} />
+                  </LinkButton>
+
+                  <ViewUpload
+                    view={converCount(
+                      item.statistics.viewCount || ectData.statistics.viewCount
+                    )}
+                    date={publishedAt.slice(0, 19)}
+                    convert={true}
+                  />
+                  {/* 실시간 배지 */}
+                  {liveBroadcastContent === "live" && (
+                    <Live>
+                      <FaBroadcastTower />
+                      실시간
+                    </Live>
                   )}
-                  date={publishedAt.slice(0, 19)}
-                  convert={true}
-                />
-                {/* 실시간 배지 */}
-                {liveBroadcastContent === "live" && (
-                  <Live>
-                    <FaBroadcastTower />
-                    실시간
-                  </Live>
-                )}
-              </div>
-            </VideoRow>
-          </Link>
-        </>
+                </div>
+              </VideoRow>
+            </span>
+          </LinkButton>
+        </ItemContainer>
       )}
     </>
   );
 };
-
+const ItemContainer = styled.div`
+  width: ${(props) => props.width}px;
+`;
 const VideoRow = styled.div`
   display: flex;
   gap: 14px;
