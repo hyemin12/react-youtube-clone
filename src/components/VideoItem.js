@@ -75,7 +75,7 @@ const VideoItem = (item) => {
         <Loading />
       ) : (
         <ItemContainer width={`${thumbnails.medium.width}`}>
-          <LinkButton pathname={"/watch"} query={id} className={"width"}>
+          <LinkButton pathname={"/watch"} query={id}>
             <span>
               <Thumbnail
                 width={thumbnails.medium.width ? thumbnails.medium.width : 320}
@@ -91,28 +91,15 @@ const VideoItem = (item) => {
               />
 
               <VideoRow>
-                <LinkButton
-                  pathname={"/channel"}
-                  query={channel.customUrl}
-                  id={channelId}
-                >
-                  <ChannelThumbnail
-                    url={channel.thumbnail}
-                    title={channelTitle}
-                    size={34}
-                  />
-                </LinkButton>
+                <ChannelThumbnail
+                  url={channel.thumbnail}
+                  title={channelTitle}
+                  size={34}
+                />
 
                 <div>
                   <Title size={16} text={title} cut={true} />
-                  <LinkButton
-                    pathname={"/channel"}
-                    query={channel.customUrl}
-                    id={channelId}
-                  >
-                    <SubTitle text={channelTitle} />
-                  </LinkButton>
-
+                  <SubTitle text={channelTitle} />
                   <ViewUpload
                     view={converCount(
                       item.statistics.viewCount || ectData.statistics.viewCount

@@ -8,7 +8,7 @@ const LinkButton = ({ pathname, query, id, children }) => {
   const { setSettingId } = useSetChnIdContext();
 
   const onClick = () => {
-    if (pathname !== "channel" || !id) {
+    if (pathname === "channel" || !id) {
       return;
     }
     setSettingId(id);

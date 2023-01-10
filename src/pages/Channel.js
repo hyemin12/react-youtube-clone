@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 import { converCount } from "../hooks/converCount";
@@ -9,6 +9,7 @@ import ChannelThumbnail from "../components/ChannelThumbnail";
 import Title from "../components/Title";
 import Layout from "../components/Layout";
 import styled from "styled-components";
+import Description from "../components/Description";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -21,16 +22,21 @@ const Channel = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics,brandingSettings&id=${settingId}&key=${KEY}
     `);
+      console.log(res.data.items[0]);
+
       setData({
         thumbnail: res.data.items[0].snippet.thumbnails,
         title: res.data.items[0].snippet.title,
         customUrl: res.data.items[0].snippet.customUrl,
+        description: res.data.items[0].snippet.description,
+        publishedAt: res.data.items[0].snippet.publishedAt,
         subscriberCount: res.data.items[0].statistics.subscriberCount,
+        viewCount: res.data.items[0].statistics.viewCount,
         bannerImg:
           res.data.items[0].brandingSettings.image.bannerExternalUrl || null,
       });
@@ -38,34 +44,47 @@ const Channel = () => {
     } catch (err) {
       console.log(err);
     }
-  };
-
+  }, [settingId]);
+  console.log(data);
   useEffect(() => {
     getData();
-  }, []);
+  }, [settingId]);
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
         <Layout>
-          <Container>
-            {data.bannerImg && <Banner src={data.bannerImg} alt={"banner"} />}
-            <Row>
-              <ChannelThumbnail
-                url={data.thumbnail.default.url}
-                size={data.thumbnail.default.width}
-                alt={data.title}
-                customUrl={data.customUrl}
-              />
-              <div>
-                <Title size={24} text={data.title} cut={false} />
+          {data && (
+            <Container>
+              {data.bannerImg && <Banner src={data.bannerImg} alt={"banner"} />}
+              <Row>
+                <ChannelThumbnail
+                  url={data.thumbnail.default.url}
+                  ize={data.thumbnail.default.width}
+                  alt={data.title}
+                  customUrl={data.customUrl}
+                />
+                <div>
+                  <Title size={24} text={data.title} cut={false} />
 
-                <P>{data.customUrl}</P>
-                <P>구독자 {converCount(data.subscriberCount)}</P>
+                  <P>{data.customUrl}</P>
+                  <P>구독자 {converCount(data.subscriberCount)}</P>
+                </div>
+              </Row>
+              <div>
+                <span>홈</span>
+                <span>정보</span>
               </div>
-            </Row>
-          </Container>
+              <div>
+                <p>설명</p>
+                <Description des={data.description} />
+                <p>통계</p>
+                <p>가입일: </p>
+                <p>조회수: {Number(data.viewCount).toLocaleString()}회</p>
+              </div>
+            </Container>
+          )}
         </Layout>
       )}
     </>

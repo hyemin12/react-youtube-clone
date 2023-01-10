@@ -15,6 +15,7 @@ import RecommendTabs from "../components/RecommendTabs";
 import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
 import LinkButton from "../components/LinkButton";
+import Description from "../components/Description";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -146,15 +147,8 @@ const Video = () => {
                       <p>업로드: {data.snippet.publishedAt.slice(0, 10)} </p>
                     </ChannelContainer>
 
-                    {data.snippet.description
-                      .split("\n")
-                      .map((sentence, idx) =>
-                        sentence === "" ? (
-                          <br />
-                        ) : (
-                          <p key={`${sentence}${idx}`}>{sentence}</p>
-                        )
-                      )}
+                    <Description des={data.snippet.description} />
+
                     <br />
                   </Descriptions>
                 </div>

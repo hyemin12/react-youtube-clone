@@ -21,7 +21,6 @@ const RecommendItem = ({ item, channelTitle }) => {
 
   const [ectData, setEctData] = useState({ viewNum: 0, length: "" });
   const [loading, setLoading] = useState(true);
-  console.log(item.snippet);
 
   // 조회수 가져오는 함수
   const getData = async () => {

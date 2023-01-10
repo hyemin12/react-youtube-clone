@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import RecommendItem from "./RecommendItem";
@@ -8,10 +8,10 @@ const RecommendTabs = ({ data, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const videoId = data.contentDetails ? data.contentDetails.upload : data.id;
-
+  console.log(data);
   return (
     <div>
-      {data.map(({ title }, idx) => (
+      {data.map(({ title, list }, idx) => (
         <TabTitle
           key={title}
           className={currentIndex === idx ? "active" : ""}
@@ -19,7 +19,7 @@ const RecommendTabs = ({ data, id }) => {
             setCurrentIndex(idx);
           }}
         >
-          {title}
+          {list.length > 0 && title}
         </TabTitle>
       ))}
       {data &&
@@ -49,4 +49,4 @@ const TabTitle = styled.p`
   }
 `;
 
-export default RecommendTabs;
+export default React.memo(RecommendTabs);
