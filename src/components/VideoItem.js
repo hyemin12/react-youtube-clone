@@ -76,48 +76,56 @@ const VideoItem = (item) => {
       ) : (
         <ItemContainer width={`${thumbnails.medium.width}`}>
           <LinkButton pathname={"/watch"} query={id}>
-            <span>
-              <Thumbnail
-                width={thumbnails.medium.width ? thumbnails.medium.width : 320}
-                height={
-                  thumbnails.medium.height ? thumbnails.medium.height : 180
-                }
-                url={thumbnails.medium.url}
-                title={title}
-                duration={
-                  item.contentDetails.duration ||
-                  ectData.contentDetails.duration
-                }
-              />
-
-              <VideoRow>
-                <ChannelThumbnail
-                  url={channel.thumbnail}
-                  title={channelTitle}
-                  size={34}
-                />
-
-                <div>
-                  <Title size={16} text={title} cut={true} />
-                  <SubTitle text={channelTitle} />
-                  <ViewUpload
-                    view={converCount(
-                      item.statistics.viewCount || ectData.statistics.viewCount
-                    )}
-                    date={publishedAt.slice(0, 19)}
-                    convert={true}
-                  />
-                  {/* 실시간 배지 */}
-                  {liveBroadcastContent === "live" && (
-                    <Live>
-                      <FaBroadcastTower />
-                      실시간
-                    </Live>
-                  )}
-                </div>
-              </VideoRow>
-            </span>
+            <Thumbnail
+              width={thumbnails.medium.width ? thumbnails.medium.width : 320}
+              height={thumbnails.medium.height ? thumbnails.medium.height : 180}
+              url={thumbnails.medium.url}
+              title={title}
+              duration={
+                item.contentDetails.duration || ectData.contentDetails.duration
+              }
+            />
           </LinkButton>
+
+          <VideoRow>
+            <LinkButton
+              pathname={"/channel"}
+              query={channel.customUrl}
+              id={channelId}
+            >
+              <ChannelThumbnail
+                url={channel.thumbnail}
+                title={channelTitle}
+                size={34}
+              />
+            </LinkButton>
+            <div>
+              <LinkButton
+                pathname={"/watch"}
+                query={channel.customUrl}
+                id={channelId}
+              >
+                <Title size={16} text={title} cut={true} />{" "}
+              </LinkButton>
+              <LinkButton pathname={"/channel"} query={id}>
+                <SubTitle text={channelTitle} />
+              </LinkButton>
+              <ViewUpload
+                view={converCount(
+                  item.statistics.viewCount || ectData.statistics.viewCount
+                )}
+                date={publishedAt.slice(0, 19)}
+                convert={true}
+              />
+              {/* 실시간 배지 */}
+              {liveBroadcastContent === "live" && (
+                <Live>
+                  <FaBroadcastTower />
+                  실시간
+                </Live>
+              )}
+            </div>
+          </VideoRow>
         </ItemContainer>
       )}
     </>

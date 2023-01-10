@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { converCount } from "../hooks/converCount";
 import { useSetChnIdContext } from "../hooks/getChannelIdContext";
+import { converContry } from "../hooks/converContry";
 
 import Loading from "../components/Loading";
 import ChannelThumbnail from "../components/ChannelThumbnail";
@@ -15,7 +16,7 @@ const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Channel = () => {
   console.log("채널컴포넌트");
-
+  console.log();
   // 데이터를 가져올 "채널아이디"
   const { settingId } = useSetChnIdContext();
 
@@ -35,6 +36,7 @@ const Channel = () => {
         customUrl: res.data.items[0].snippet.customUrl,
         description: res.data.items[0].snippet.description,
         publishedAt: res.data.items[0].snippet.publishedAt,
+        country: res.data.items[0].snippet.country,
         subscriberCount: res.data.items[0].statistics.subscriberCount,
         viewCount: res.data.items[0].statistics.viewCount,
         bannerImg:
@@ -49,6 +51,7 @@ const Channel = () => {
   useEffect(() => {
     getData();
   }, [settingId]);
+  console.log();
   return (
     <>
       {loading ? (
@@ -58,7 +61,7 @@ const Channel = () => {
           {data && (
             <Container>
               {data.bannerImg && <Banner src={data.bannerImg} alt={"banner"} />}
-              <Row>
+              <Row align={"center"}>
                 <ChannelThumbnail
                   url={data.thumbnail.default.url}
                   ize={data.thumbnail.default.width}
@@ -77,11 +80,20 @@ const Channel = () => {
                 <span>정보</span>
               </div>
               <div>
-                <p>설명</p>
-                <Description des={data.description} />
-                <p>통계</p>
-                <p>가입일: </p>
-                <p>조회수: {Number(data.viewCount).toLocaleString()}회</p>
+                <Row align={"start"}>
+                  <div>
+                    <H4>설명</H4>
+                    <Description des={data.description} />
+                    <Line />
+                    <H4>세부정보</H4>
+                    <p>위치: {converContry(data.country)}</p>
+                  </div>
+                  <div>
+                    <H4>통계</H4>
+                    <p>가입일: </p>
+                    <p>조회수: {Number(data.viewCount).toLocaleString()}회</p>
+                  </div>
+                </Row>
               </div>
             </Container>
           )}
@@ -103,13 +115,20 @@ const Banner = styled.img`
 `;
 const Row = styled.div`
   display: flex;
-  align-items: center;
+  align-items: ${(props) => props.align};
   gap: 16px;
   padding: 10px 0;
 `;
 const P = styled.p`
   color: #555;
   font-size: 1em;
+`;
+const H4 = styled.h4`
+  margin-bottom: 1em;
+`;
+const Line = styled.hr`
+  background-color: #555;
+  margin: 1.5em 0;
 `;
 
 export default Channel;

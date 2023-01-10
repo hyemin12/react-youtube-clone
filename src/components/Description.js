@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const Description = ({ des }) => {
-  console.log(des);
   return (
     <DesContainer>
       {des
