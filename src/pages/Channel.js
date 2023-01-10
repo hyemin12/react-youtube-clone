@@ -11,6 +11,7 @@ import Title from "../components/Title";
 import Layout from "../components/Layout";
 import styled from "styled-components";
 import Description from "../components/Description";
+import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -81,17 +82,26 @@ const Channel = () => {
               </div>
               <div>
                 <Row align={"start"}>
-                  <div>
+                  <div style={{ width: "vw" }}>
                     <H4>설명</H4>
                     <Description des={data.description} />
-                    <Line />
-                    <H4>세부정보</H4>
-                    <p>위치: {converContry(data.country)}</p>
                   </div>
-                  <div>
-                    <H4>통계</H4>
-                    <p>가입일: </p>
-                    <p>조회수: {Number(data.viewCount).toLocaleString()}회</p>
+                  <div style={{ flexGrow: 1 }}>
+                    <H4>추가정보</H4>
+                    <Row align={"center"}>
+                      <FaInfoCircle />
+                      <p>가입일: {data.publishedAt.slice(0, 10)}</p>
+                    </Row>
+
+                    <Row align={"center"}>
+                      <FaChartLine />
+                      <p>조회수: {Number(data.viewCount).toLocaleString()}회</p>
+                    </Row>
+
+                    <Row align={"center"}>
+                      <FaMapMarker />
+                      <p>위치: {converContry(data.country)}</p>
+                    </Row>
                   </div>
                 </Row>
               </div>
@@ -125,10 +135,6 @@ const P = styled.p`
 `;
 const H4 = styled.h4`
   margin-bottom: 1em;
-`;
-const Line = styled.hr`
-  background-color: #555;
-  margin: 1.5em 0;
 `;
 
 export default Channel;
