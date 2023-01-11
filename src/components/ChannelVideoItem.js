@@ -21,7 +21,7 @@ const ChannelVideoItem = (item) => {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=statistics,contentDetails&key=${KEY}
     `);
-      console.log(res.data.items[0]);
+      // console.log(res.data.items[0]);
       setStatsData({
         viewNum: res.data.items[0].statistics.viewCount,
         videolength: res.data.items[0].contentDetails.duration,

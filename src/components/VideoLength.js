@@ -6,7 +6,13 @@ const VideoLength = ({ time }) => {
   // M 앞의 숫자가 분/ S앞의 숫자가 초
   const covertTime = (t) => {
     let min, sec;
-    if (t.includes("M")) {
+
+    if (t.includes("H")) {
+      const splitTime = t.split(/[MH]/g);
+      return splitTime
+        .map((t) => t.replace(/[PTS]/g, "").padStart(2, "0"))
+        .join(":");
+    } else if (t.includes("M")) {
       const splitTime = t.split("M");
       min = splitTime[0].replace("PT", "").padStart(2, "0");
       sec = splitTime[1].includes("S")
