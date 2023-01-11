@@ -20,7 +20,7 @@ const RecommendItem = ({ item, channelTitle }) => {
 
   const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;
 
-  const [ectData, setEctData] = useState({ viewNum: 0, length: "" });
+  const [statsData, setStatsData] = useState({ viewNum: 0, length: "" });
   const [loading, setLoading] = useState(true);
 
   // 조회수 가져오는 함수
@@ -29,7 +29,7 @@ const RecommendItem = ({ item, channelTitle }) => {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}
     `);
-      setEctData({
+      setStatsData({
         viewNum: res.data.items[0].statistics.viewCount,
         videolength: res.data.items[0].contentDetails.duration,
       });
@@ -53,7 +53,7 @@ const RecommendItem = ({ item, channelTitle }) => {
               height={200 * (9 / 16)}
               title={title}
               url={thumbnails.medium.url}
-              duration={ectData.videolength}
+              duration={statsData.videolength}
             />
 
             <ContentText>
@@ -61,7 +61,7 @@ const RecommendItem = ({ item, channelTitle }) => {
               <SubTitle text={channelTitle} />
 
               <ViewUpload
-                view={converCount(ectData.viewNum)}
+                view={converCount(statsData.viewNum)}
                 date={publishedAt.slice(0, 19)}
                 convert={true}
               />
