@@ -100,11 +100,7 @@ const VideoItem = (item) => {
               />
             </LinkButton>
             <div>
-              <LinkButton
-                pathname={"/watch"}
-                query={channel.customUrl}
-                id={channelId}
-              >
+              <LinkButton pathname={"/watch"} query={id}>
                 <Title size={16} text={title} cut={true} />{" "}
               </LinkButton>
               <LinkButton pathname={"/channel"} query={id}>

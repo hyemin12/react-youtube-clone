@@ -90,7 +90,7 @@ const Video = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [id]);
 
   return (
     <>

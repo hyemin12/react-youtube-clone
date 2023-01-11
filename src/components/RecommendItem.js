@@ -10,6 +10,7 @@ import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
+import LinkButton from "./LinkButton";
 
 const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
@@ -45,7 +46,7 @@ const RecommendItem = ({ item, channelTitle }) => {
       {loading ? (
         <Loading />
       ) : (
-        <Link to={`../${id}`}>
+        <LinkButton pathname={"/watch"} query={id}>
           <Row>
             <Thumbnail
               width={200}
@@ -66,7 +67,7 @@ const RecommendItem = ({ item, channelTitle }) => {
               />
             </ContentText>
           </Row>
-        </Link>
+        </LinkButton>
       )}
     </>
   );

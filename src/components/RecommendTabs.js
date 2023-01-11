@@ -7,8 +7,6 @@ import RecommendItem from "./RecommendItem";
 const RecommendTabs = ({ data, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const videoId = data.contentDetails ? data.contentDetails.upload : data.id;
-  console.log(data);
   return (
     <div>
       {data.map(({ title, list }, idx) => (
@@ -24,7 +22,12 @@ const RecommendTabs = ({ data, id }) => {
       ))}
       {data &&
         data[currentIndex].list
-          .filter(() => videoId !== id)
+          .filter(
+            (item) =>
+              (item.contentDetails
+                ? item.contentDetails.upload.videoId
+                : item.id) !== id
+          )
           .map((item) => (
             <RecommendItem
               key={item.snippet.title}
