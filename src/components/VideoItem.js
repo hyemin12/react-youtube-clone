@@ -39,7 +39,6 @@ const VideoItem = (item) => {
       const res = await axios.get(
         `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
       );
-      console.log(res);
       setChannel({
         thumbnail: res.data.items[0].snippet.thumbnails.default.url,
         customUrl: res.data.items[0].snippet.customUrl,
