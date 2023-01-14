@@ -11,7 +11,11 @@ const ChannelInfo = (channelData) => {
       <Row align={"start"}>
         <div style={{ width: "69vw" }}>
           <H4>설명</H4>
-          <Description des={channelData.description} />
+          {channelData.description ? (
+            <Description des={channelData.description} />
+          ) : (
+            <p>등록된 설명이 없습니다.</p>
+          )}
         </div>
         <div style={{ flexGrow: 1 }}>
           <H4>추가정보</H4>

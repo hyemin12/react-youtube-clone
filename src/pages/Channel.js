@@ -17,14 +17,13 @@ import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
 import Iframe from "../components/Iframe";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
+import LinkButton from "../components/LinkButton";
 
 const Channel = () => {
   console.log("채널컴포넌트");
 
   // 데이터를 가져올 "채널아이디"
   const id = localStorage.getItem("YT_ID");
-  console.log(id);
-  // const { settingId } = useSetChnIdContext();
 
   const [channelData, setChannelData] = useState();
   const [videoData, setVideoData] = useState();
@@ -73,7 +72,7 @@ const Channel = () => {
   useEffect(() => {
     getData();
   }, [id]);
-
+  console.log(currentIdx);
   return (
     <>
       {loading ? (
@@ -113,9 +112,7 @@ const Channel = () => {
                 ))}
               </TabTitleContainer>
               <div></div>
-              {tabs.map(({ tabTitle, tabContent }, idx) => (
-                <div key={tabTitle}>{tabContent}</div>
-              ))}
+              {tabs[currentIdx].tabContent}
             </Container>
           )}
         </Layout>

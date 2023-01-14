@@ -1,5 +1,9 @@
 const ChannelHome = () => {
-  return <div></div>;
+  return (
+    <div>
+      <p>채널 홈</p>
+    </div>
+  );
 };
 
 export default ChannelHome;

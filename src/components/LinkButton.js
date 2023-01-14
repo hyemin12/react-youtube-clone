@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const LinkButton = ({ pathname, query, id, children }) => {
   const onClick = () => {
     if (pathname === "channel" || !id) {
+      localStorage.removeItem("YT_ID");
       return;
     }
     localStorage.setItem("YT_ID", id);
