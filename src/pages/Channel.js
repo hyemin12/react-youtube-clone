@@ -17,7 +17,6 @@ import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
 import Iframe from "../components/Iframe";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
-import LinkButton from "../components/LinkButton";
 
 const Channel = () => {
   console.log("채널컴포넌트");
@@ -25,16 +24,15 @@ const Channel = () => {
   // 데이터를 가져올 "채널아이디"
   const id = localStorage.getItem("YT_ID");
 
+  const [loading, setLoading] = useState(true);
   const [channelData, setChannelData] = useState();
   const [videoData, setVideoData] = useState();
-  const [loading, setLoading] = useState(true);
 
   const tabs = [
     { tabTitle: "홈", tabContent: <ChannelHome /> },
     {
       tabTitle: "동영상",
-      tabContent: "",
-      //<ChannelVideos videoData={videoData} id={id} />,
+      tabContent: <ChannelVideos {...videoData} />,
     },
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
@@ -46,6 +44,7 @@ const Channel = () => {
       const resVideos = await requestVideos(id);
 
       setVideoData({
+        id: id,
         result: resVideos.data.items,
         nextPage: resVideos.data.nextPageToken,
         totalResults: resVideos.data.pageInfo.totalResults,
@@ -67,7 +66,6 @@ const Channel = () => {
       console.log(err);
     }
   }, [id]);
-  console.log(videoData, loading);
 
   useEffect(() => {
     getData();
