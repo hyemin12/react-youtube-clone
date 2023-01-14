@@ -31,3 +31,20 @@ LinkButton (Link) 태그 안에 LinkButton을 사용해서 생긴 오류.
   !videoData.nextPage && <Btn onClick={getMoreData}>더보기</Btn>;
 }
 ```
+
+## 데이터 요청 url를 확인하다가 google api를 깃허브에 업로드해서, 히스토리를 삭제하고 다시 업로드함
+
+`
+
+- git log
+  // commit 로그 확인
+
+- git reset HEAD^
+  // 커밋을 바로 이전 상황으로 되돌아가기
+
+- git reset HEAD~6
+  // 최근 커밋을 기준으로 n번째 상황으로 되돌아가기
+
+- git push -f origin master
+  // 강제로 업로드하기
+  `
