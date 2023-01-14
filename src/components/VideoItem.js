@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import { FaBroadcastTower } from "react-icons/fa";
 
@@ -12,8 +11,10 @@ import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ChannelThumbnail from "./ChannelThumbnail";
 import ViewUpload from "./ViewUpload";
-
-const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
+import {
+  requestChannelThumb,
+  requestContentDetails,
+} from "../hooks/requestAxios";
 
 // 영상목록 - 영상 (아이템)
 const VideoItem = (item) => {
@@ -32,17 +33,23 @@ const VideoItem = (item) => {
   const [channel, setChannel] = useState({ thumbnail: "", customUrl: "" });
   const [ectData, setEctData] = useState();
 
-  // 채널 썸네일 가져오는 함수
+  // 채널 썸네일 가져오기
   const getData = async () => {
     try {
-      // 채널 썸네일 가져오기
-      const res = await axios.get(
-        `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${KEY}`
-      );
+      const res = await requestChannelThumb(channelId);
       setChannel({
         thumbnail: res.data.items[0].snippet.thumbnails.default.url,
         customUrl: res.data.items[0].snippet.customUrl,
       });
+      // 조회수, 영상길이 데이터가 넘어오지 않았을 때 데이터 가져오는 함수 (검색해서 가져온 데이터)
+      if (item.kind === "youtube#searchResult") {
+        const res = await requestContentDetails(id);
+
+        setEctData({
+          viewCount: res.data.items[0].statistics.viewCount,
+          duration: res.data.items[0].contentDetails.duration,
+        });
+      }
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -51,22 +58,6 @@ const VideoItem = (item) => {
   useEffect(() => {
     getData();
   }, [channelId]);
-
-  // 조회수, 영상길이 데이터가 넘어오지 않았을 때 데이터 가져오는 함수 (검색해서 가져온 데이터)
-  const getAddData = async () => {
-    if (item.kind === "youtube#video") return;
-    try {
-      const res = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}`
-      );
-      setEctData(res.data.items[0]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    getAddData();
-  }, []);
 
   return (
     <>
@@ -81,7 +72,7 @@ const VideoItem = (item) => {
               url={thumbnails.medium.url}
               title={title}
               duration={
-                item.contentDetails.duration || ectData.contentDetails.duration
+                ectData ? ectData.duration : item.contentDetails.duration
               }
             />
           </LinkButton>
@@ -107,7 +98,7 @@ const VideoItem = (item) => {
               </LinkButton>
               <ViewUpload
                 view={converCount(
-                  item.statistics.viewCount || ectData.statistics.viewCount
+                  ectData ? ectData.viewCount : item.statistics.viewCount
                 )}
                 date={publishedAt.slice(0, 19)}
                 convert={true}

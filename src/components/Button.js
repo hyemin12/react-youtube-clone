@@ -6,7 +6,7 @@ import useAlert from "../hooks/useAlert";
 
 import Alert from "./Alert";
 
-const Button = ({ id, type, text }) => {
+const Button = ({ id, type, text, func }) => {
   const urlRef = useRef(null);
 
   const [isAlert, setIsAlert] = useAlert();
@@ -46,6 +46,11 @@ const Button = ({ id, type, text }) => {
             <p>{text}</p>
           </Row>
           {isAlert && <Alert text={"복사 성공!"} position={"top"} />}
+        </Btn>
+      )}
+      {type === "" && (
+        <Btn onClick={func()}>
+          <p>{text}</p>
         </Btn>
       )}
     </>

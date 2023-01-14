@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
 
 import { converCount } from "../hooks/converCount";
+import { requestContentDetails } from "../hooks/requestAxios";
 
 import Loading from "./Loading";
 import Thumbnail from "./Thumbnail";
@@ -12,13 +11,13 @@ import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 import LinkButton from "./LinkButton";
 
-const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
-
 // 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
 
-  const id = item.contentDetails ? item.contentDetails.upload.videoId : item.id;
+  const id = item.contentDetails.upload
+    ? item.contentDetails.upload.videoId
+    : item.id;
 
   const [statsData, setStatsData] = useState({ viewNum: 0, length: "" });
   const [loading, setLoading] = useState(true);
@@ -26,9 +25,8 @@ const RecommendItem = ({ item, channelTitle }) => {
   // 조회수 가져오는 함수
   const getData = async () => {
     try {
-      const res =
-        await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&part=statistics,contentDetails&key=${KEY}
-    `);
+      const res = await requestContentDetails(id);
+
       setStatsData({
         viewNum: res.data.items[0].statistics.viewCount,
         videolength: res.data.items[0].contentDetails.duration,

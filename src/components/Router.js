@@ -10,9 +10,7 @@ import Channel from "../pages/Channel";
 
 const Router = () => {
   const { searchQuery } = useSearchContext();
-  const param = useParams();
-  const location = useLocation();
-  console.log(param, location);
+
   return (
     <Routes>
       <Route path={"/channel"} element={<Channel />}></Route>

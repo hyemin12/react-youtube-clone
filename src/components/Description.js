@@ -6,7 +6,11 @@ const Description = ({ des }) => {
       {des
         .split("\n")
         .map((sentence, idx) =>
-          sentence === "" ? <br /> : <p key={`${sentence}${idx}`}>{sentence}</p>
+          sentence === "" ? (
+            <br key={idx} />
+          ) : (
+            <p key={`${sentence}${idx}`}>{sentence}</p>
+          )
         )}
     </DesContainer>
   );

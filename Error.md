@@ -15,3 +15,19 @@ LinkButton (Link) 태그 안에 LinkButton을 사용해서 생긴 오류.
 -채널 썸네일, 채널 타이틀 => LinkButton to 채널 페이지
 
 ---
+
+## `Expected `onClick`listener to be a function, instead got a value of`object` type.`
+
+하위 컴포넌트에 props 전달할 때 발생하는 오류
+
+```js
+// 잘못 작성한 코드
+{
+  !videoData.nextPage && <Btn onClick={getMoreData()}>더보기</Btn>;
+}
+
+// 수정한 코드
+{
+  !videoData.nextPage && <Btn onClick={getMoreData}>더보기</Btn>;
+}
+```

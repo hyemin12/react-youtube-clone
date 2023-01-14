@@ -144,9 +144,16 @@ https://beta.reactjs.org/reference/react/useContext
 
 ---
 
-1월 12일
+1월 13일
 
-- 더보기 버튼 클릭시 데이터 더 가져오기 (nextPageToken 사용해서)
 - 채널 페이지 탭 기능
 - 채널페이지 레이아웃 스타일 바꾸기
 - 플레이리스트 데이터 가져와서 화면에 출력할 방법 생각하기
+
+const axios_list = [dataRes, channelRes, sameChannel, sameCategory];
+
+        axios.all(axios_list).then(
+          axios.spread((...respon) => {
+            console.log(respon);
+          })
+        );

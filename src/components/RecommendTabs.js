@@ -24,7 +24,7 @@ const RecommendTabs = ({ data, id }) => {
         data[currentIndex].list
           .filter(
             (item) =>
-              (item.contentDetails
+              (item.contentDetails.upload
                 ? item.contentDetails.upload.videoId
                 : item.id) !== id
           )

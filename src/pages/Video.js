@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
 
 import { converCount } from "../hooks/converCount";
+import {
+  requestAxios,
+  requestChannel,
+  requestPopularVideos,
+  requestVideos,
+} from "../hooks/requestAxios";
 
 import Loading from "../components/Loading";
 import Layout from "../components/Layout";
@@ -16,8 +21,6 @@ import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
 import LinkButton from "../components/LinkButton";
 import Description from "../components/Description";
-
-const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const Video = () => {
   console.log("비디오페이지");
@@ -36,14 +39,6 @@ const Video = () => {
     { title: "같은 채널 다른 영상", list: [] },
   ]);
 
-  /** axios 요청 함수 */
-  const axiosGet = (resource, option) => {
-    const res = axios.get(
-      `https://www.googleapis.com/youtube/v3/${resource}?${option}&part=snippet&key=${KEY}`
-    );
-    return res;
-  };
-
   /** 해당 페이지에서 필요한 데이터 가져오기
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
    * channelRes: 채널 정보 (채널 썸네일, 채널 이름)
@@ -51,23 +46,25 @@ const Video = () => {
    */
   const getData = useCallback(async () => {
     try {
-      const dataRes = await axiosGet("videos", `id=${id}&part=statistics`);
+      const dataRes = await requestAxios.get("videos", {
+        params: {
+          part: "snippet,statistics",
+          id: id,
+        },
+      });
 
       if (dataRes.status === 200) {
-        const channelid = dataRes.data.items[0].snippet.channelId;
-        const channelRes = await axiosGet(
-          "channels",
-          `id=${channelid}&part=statistics,snippet`
-        );
+        const channelId = dataRes.data.items[0].snippet.channelId;
+        const channelRes = await requestChannel(channelId);
+
         // 같은 채널 영상 목록
-        const sameChannel = await axiosGet(
-          "activities",
-          `channelId=${channelid}&maxResults=10&part=contentDetails`
-        );
+        const sameChannel = await requestVideos(channelId);
+
         // 같은 카테고리 영상 목록
-        const sameCategory = await axiosGet(
-          "videos",
-          `chart=mostPopular&videoCategoryId=${22}&maxResults=10&regionCode=kr`
+        //videoCategoryId
+        const sameCategory = await requestPopularVideos(
+          dataRes.data.items[0].snippet.categoryId,
+          15
         );
 
         setData(dataRes.data.items[0]);
@@ -87,7 +84,7 @@ const Video = () => {
       console.log(err);
     }
   }, [id]);
-
+  console.log(data);
   useEffect(() => {
     getData();
   }, [id]);

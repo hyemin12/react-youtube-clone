@@ -1,13 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+
 import { converCount } from "../hooks/converCount";
+import { requestContentDetails } from "../hooks/requestAxios";
+
 import LinkButton from "./LinkButton";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
-
-const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 const ChannelVideoItem = (item) => {
   const { videoId } = item.contentDetails.upload;
@@ -16,12 +16,10 @@ const ChannelVideoItem = (item) => {
   const [loading, setLoading] = useState(true);
   const [statsData, setStatsData] = useState();
 
+  // 영상 조회수, 영상 길이 얻어오기
   const getData = async () => {
     try {
-      const res =
-        await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=statistics,contentDetails&key=${KEY}
-    `);
-      // console.log(res.data.items[0]);
+      const res = await requestContentDetails(videoId);
       setStatsData({
         viewNum: res.data.items[0].statistics.viewCount,
         videolength: res.data.items[0].contentDetails.duration,

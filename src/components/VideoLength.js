@@ -7,7 +7,6 @@ const VideoLength = ({ time }) => {
   const covertTime = (t) => {
     const splitTime = t.split(/[MH]/g);
     if (!t.includes("M") && !t.includes("H")) {
-      console.log(splitTime);
       return `00:${splitTime[0].replaceAll(/[PTS]/g, "").padStart(2, "0")}`;
     }
 
@@ -40,14 +39,33 @@ const VideoLength = ({ time }) => {
     //   return `00:${sec}`;
     // }
   };
-
-  return <Time>{covertTime(time)}</Time>;
+  //
+  return (
+    <>
+      {time === "P0D" ? (
+        <Live>스트리밍 중</Live>
+      ) : (
+        <Time>{covertTime(time)}</Time>
+      )}
+    </>
+  );
 };
 
 const Time = styled.span`
   display: inline-block;
   padding: 4px 8px;
   background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  font-size: 0.7em;
+  color: #fff;
+  position: absolute;
+  bottom: 6px;
+  right: 2px;
+`;
+const Live = styled.span`
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: tomato;
   border-radius: 8px;
   font-size: 0.7em;
   color: #fff;
