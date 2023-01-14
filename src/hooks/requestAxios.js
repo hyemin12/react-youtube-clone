@@ -63,7 +63,7 @@ export const requestVideos = (channelId, token) =>
     params: {
       part: "snippet,contentDetails",
       channelId: channelId,
-      maxResults: 15,
+      maxResults: 50,
       pageToken: token && token,
     },
   });

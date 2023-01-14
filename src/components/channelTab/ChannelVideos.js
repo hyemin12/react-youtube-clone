@@ -14,12 +14,15 @@ const ChannelVideos = (videoData) => {
   const getMoreData = async () => {
     setLoading(true);
     try {
-      const res = await requestVideos(videoData.id, videoData.nextPage);
+      const res = await requestVideos(videoData.id, list.nextPage);
 
-      console.log(videoData.id, res.data.items);
+      console.log(videoData.id, res.data);
       setList({
-        result: [...videoData.result].concat(res.data.items),
-        nextPage: res.data.items.length < 15 ? "" : res.data.nextPageToken,
+        result: list.result.concat(res.data.items),
+        nextPage:
+          res.data.items.length < 15 || !res.data.nextPageToken
+            ? ""
+            : res.data.nextPageToken,
         totalResults: videoData.totalResults,
       });
       setLoading(false);
@@ -51,7 +54,7 @@ const ChannelVideos = (videoData) => {
           </div>
         ) : (
           <>
-            {!videoData.nextPage === "" && (
+            {list.nextPage !== "" && (
               <BtnRow>
                 <Btn onClick={getMoreData}>더보기</Btn>
               </BtnRow>
@@ -66,6 +69,7 @@ const VideoRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 20px 0;
 `;
 const BtnRow = styled.div`
   display: flex;

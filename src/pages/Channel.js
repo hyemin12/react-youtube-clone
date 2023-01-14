@@ -70,7 +70,7 @@ const Channel = () => {
   useEffect(() => {
     getData();
   }, [id]);
-  console.log(currentIdx);
+
   return (
     <>
       {loading ? (
@@ -144,11 +144,13 @@ const TabTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 30px;
+  border-bottom: 1px solid #e1e1e1;
+  margin-bottom: 30px;
 `;
 const TabTitle = styled.p`
+  padding-bottom: 6px;
   cursor: pointer;
   &.active {
-    padding-bottom: 4px;
     border-bottom: 2px solid #555;
   }
   &:hover {
