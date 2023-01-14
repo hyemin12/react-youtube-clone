@@ -5,35 +5,32 @@ import { converContry } from "../../hooks/converContry";
 
 import Description from "../../components/Description";
 
-const ChannelInfo = () => {
+const ChannelInfo = (channelData) => {
   return (
     <div>
-      {/* <Row align={"start"}>
-    <div style={{ width: "69vw" }}>
-      <H4>설명</H4>
-      <Description des={channelData.description} />
-    </div>
-    <div style={{ flexGrow: 1 }}>
-      <H4>추가정보</H4>
-      <Row align={"center"}>
-        <FaInfoCircle />
-        <p>가입일: {channelData.publishedAt.slice(0, 10)}</p>
-      </Row>
+      <Row align={"start"}>
+        <div style={{ width: "69vw" }}>
+          <H4>설명</H4>
+          <Description des={channelData.description} />
+        </div>
+        <div style={{ flexGrow: 1 }}>
+          <H4>추가정보</H4>
+          <Row align={"center"}>
+            <FaInfoCircle />
+            <p>가입일: {channelData.publishedAt.slice(0, 10)}</p>
+          </Row>
 
-      <Row align={"center"}>
-        <FaChartLine />
-        <p>
-          조회수: {Number(channelData.viewCount).toLocaleString()}
-          회
-        </p>
-      </Row>
+          <Row align={"center"}>
+            <FaChartLine />
+            <p>조회수: {Number(channelData.viewCount).toLocaleString()}회</p>
+          </Row>
 
-      <Row align={"center"}>
-        <FaMapMarker />
-        <p>위치: {converContry(channelData.country)}</p>
+          <Row align={"center"}>
+            <FaMapMarker />
+            <p>위치: {converContry(channelData.country)}</p>
+          </Row>
+        </div>
       </Row>
-    </div>
-  </Row> */}
     </div>
   );
 };

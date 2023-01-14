@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { converCount } from "../hooks/converCount";
-import { useSetChnIdContext } from "../hooks/getChannelIdContext";
 import {
   requestVideos,
   requestChannel,
@@ -16,13 +15,16 @@ import Layout from "../components/Layout";
 
 import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
+import Iframe from "../components/Iframe";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
 
 const Channel = () => {
   console.log("채널컴포넌트");
 
   // 데이터를 가져올 "채널아이디"
-  const { settingId } = useSetChnIdContext();
+  const id = localStorage.getItem("YT_ID");
+  console.log(id);
+  // const { settingId } = useSetChnIdContext();
 
   const [channelData, setChannelData] = useState();
   const [videoData, setVideoData] = useState();
@@ -30,20 +32,19 @@ const Channel = () => {
 
   const tabs = [
     { tabTitle: "홈", tabContent: <ChannelHome /> },
-    { tabTitle: "동영상", tabContent: <ChannelVideos /> },
-    { tabTitle: "정보", tabContent: <ChannelInfo /> },
+    {
+      tabTitle: "동영상",
+      tabContent: "",
+      //<ChannelVideos videoData={videoData} id={id} />,
+    },
+    { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
   const [currentIdx, setCurrentIndex] = useState(0);
 
-  console.log(currentIdx);
   const getData = useCallback(async () => {
     try {
-      const resChannel = await requestChannel(settingId);
-      const resVideos = await requestVideos(settingId);
-      const ttt = await requestAxios("channelSections", {
-        params: { part: "snippet,id,contentDetails", channelId: settingId },
-      });
-      console.log(ttt);
+      const resChannel = await requestChannel(id);
+      const resVideos = await requestVideos(id);
 
       setVideoData({
         result: resVideos.data.items,
@@ -66,13 +67,12 @@ const Channel = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [settingId]);
+  }, [id]);
+  console.log(videoData, loading);
 
   useEffect(() => {
     getData();
-  }, [settingId]);
-
-  console.log("데이터!", videoData);
+  }, [id]);
 
   return (
     <>
@@ -112,6 +112,10 @@ const Channel = () => {
                   </TabTitle>
                 ))}
               </TabTitleContainer>
+              <div></div>
+              {tabs.map(({ tabTitle, tabContent }, idx) => (
+                <div key={tabTitle}>{tabContent}</div>
+              ))}
             </Container>
           )}
         </Layout>
@@ -134,7 +138,7 @@ const Row = styled.div`
   display: flex;
   align-items: ${(props) => props.align};
   gap: 16px;
-  padding: 10px 0;
+  padding: 20px 0;
 `;
 const P = styled.p`
   color: #555;
