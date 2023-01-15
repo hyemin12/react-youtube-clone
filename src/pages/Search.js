@@ -6,6 +6,7 @@ import { useSearchContext } from "../hooks/searchContext";
 import Layout from "../components/Layout";
 import Title from "../components/Title";
 import VideoList from "../components/VideoList";
+import SearchItem from "../components/SearchItem";
 
 const Search = () => {
   const { searchQuery } = useSearchContext();
@@ -22,11 +23,18 @@ const Search = () => {
           mode={false}
         />
 
-        {result && <VideoList videos={result} />}
+        {result && (
+          <ListContainer>
+            {result.map((item) => (
+              <SearchItem {...item} key={item.etag} />
+            ))}
+          </ListContainer>
+        )}
       </SearchContainer>
     </Layout>
   );
 };
+const ListContainer = styled.div``;
 
 const SearchContainer = styled.div`
   margin: 0 auto;

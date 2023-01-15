@@ -27,8 +27,7 @@ const Search = () => {
           alert("검색어를 입력하세요");
         } else {
           const res = await requestSearchVideos(query);
-          const res2 = await requestSearchVideos(query, 32, "channel");
-          console.log(res2);
+
           setSearchQuery({ q: query, result: res.data.items });
 
           navigate(`/results/search=${query}`);

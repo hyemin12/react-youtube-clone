@@ -12,7 +12,6 @@ import Layout from "../components/Layout";
 import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
-import ChannelItem from "../components/ChannelItem";
 
 const Channel = () => {
   console.log("채널컴포넌트");
@@ -79,7 +78,20 @@ const Channel = () => {
                 <Banner src={channelData.bannerImg} alt={"banner"} />
               )}
 
-              <ChannelItem data={channelData} />
+              <Row>
+                <ChannelThumbnail
+                  url={channelData.thumbnail.default.url}
+                  ize={channelData.thumbnail.default.width}
+                  alt={channelData.title}
+                  customUrl={channelData.customUrl}
+                />
+                <div>
+                  <Title size={24} text={channelData.title} cut={false} />
+
+                  <P>{channelData.customUrl}</P>
+                  <P>구독자 {convertCount(channelData.subscriberCount)}</P>
+                </div>
+              </Row>
 
               <TabTitleContainer>
                 {tabs.map(({ tabTitle }, idx) => (
@@ -113,6 +125,16 @@ const Banner = styled.img`
   width: 100%;
   height: calc((100vw - 240px) / 6.2 - 1px);
   object-fit: cover;
+`;
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+`;
+const P = styled.p`
+  color: #555;
+  font-size: 1em;
 `;
 
 const TabTitleContainer = styled.div`
