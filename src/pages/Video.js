@@ -102,8 +102,13 @@ const Video = () => {
                 <Iframe id={id} width={"920"} height={"517.5"} />
 
                 <div style={{ width: "100%" }}>
-                  <Title size={20} text={data.snippet.title} cut={false} />
-                  <Row gap={10} justify={"space-between"}>
+                  <Title
+                    size={20}
+                    text={data.snippet.title}
+                    cut={false}
+                    margin={"0 0 10px 0"}
+                  />
+                  <Row gap={10} justify={"space-between"} align={"center"}>
                     <LinkButton
                       pathname={"/channel"}
                       query={channel.customUrl}

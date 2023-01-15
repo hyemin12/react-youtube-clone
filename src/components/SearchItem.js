@@ -68,20 +68,22 @@ const SearchItem = (data) => {
               duration={ectData.duration}
             />
             <div>
-              <Title text={title} />
+              <Title text={title} margin={"0 0 10px 0"} />
               <ViewUpload
                 view={convertCount(ectData.viewCount)}
                 date={publishedAt}
                 convert={true}
               />
-              <Row gap={10} align={"center"}>
-                <ChannelThumbnail
-                  title={channelTitle}
-                  url={channel.thumbnail}
-                  size={30}
-                />
-                <SubTitle text={channelTitle} />
-              </Row>
+              <div style={{ padding: "14px 0" }}>
+                <Row gap={10} align={"center"}>
+                  <ChannelThumbnail
+                    title={channelTitle}
+                    url={channel.thumbnail}
+                    size={30}
+                  />
+                  <SubTitle text={channelTitle} />
+                </Row>
+              </div>
               <SubTitle text={description} />
             </div>
           </Row>

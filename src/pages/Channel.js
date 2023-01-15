@@ -80,19 +80,17 @@ const Channel = () => {
               )}
 
               <Row gap={16} align={"center"}>
-                <div style={{ padding: "20px 0" }}>
-                  <ChannelThumbnail
-                    url={channelData.thumbnail.default.url}
-                    ize={channelData.thumbnail.default.width}
-                    alt={channelData.title}
-                    customUrl={channelData.customUrl}
-                  />
-                  <div>
-                    <Title size={24} text={channelData.title} cut={false} />
+                <ChannelThumbnail
+                  url={channelData.thumbnail.default.url}
+                  ize={channelData.thumbnail.default.width}
+                  alt={channelData.title}
+                  customUrl={channelData.customUrl}
+                />
+                <div>
+                  <Title size={24} text={channelData.title} cut={false} />
 
-                    <P>{channelData.customUrl}</P>
-                    <P>구독자 {convertCount(channelData.subscriberCount)}</P>
-                  </div>
+                  <P>{channelData.customUrl}</P>
+                  <P>구독자 {convertCount(channelData.subscriberCount)}</P>
                 </div>
               </Row>
 
@@ -127,6 +125,7 @@ const Container = styled.div`
 const Banner = styled.img`
   width: 100%;
   height: calc((100vw - 240px) / 6.2 - 1px);
+  margin-bottom: 40px;
   object-fit: cover;
 `;
 
@@ -140,7 +139,7 @@ const TabTitleContainer = styled.div`
   justify-content: center;
   gap: 30px;
   border-bottom: 1px solid #e1e1e1;
-  margin-bottom: 30px;
+  margin: 30px 0;
 `;
 const TabTitle = styled.p`
   padding-bottom: 6px;

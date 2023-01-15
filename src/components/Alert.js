@@ -40,7 +40,7 @@ const AlertContainer = styled.div`
     border-right: 6px solid transparent;
     position: absolute;
     left: 50%;
-    bottom: -12px;
+    bottom: -11px;
     transform: translateX(-50%);
   }
 `;

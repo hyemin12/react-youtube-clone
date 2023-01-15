@@ -30,10 +30,8 @@ const ViewUpload = ({ view, date, convert }) => {
   };
   return (
     <Row gap={14}>
-      <div style={{ position: "relative" }}>
-        <SubTitle text={`조회수 ${view}`} />
-        <DateTitle>{convert ? calcDate(date) : date}</DateTitle>
-      </div>
+      <SubTitle text={`조회수 ${view}`} />
+      <DateTitle>{convert ? calcDate(date) : date}</DateTitle>
     </Row>
   );
 };
