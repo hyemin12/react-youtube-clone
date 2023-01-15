@@ -1,12 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { converCount } from "../hooks/converCount";
-import {
-  requestVideos,
-  requestChannel,
-  requestAxios,
-} from "../hooks/requestAxios";
+import { convertCount } from "../hooks/convertCount";
+import { requestVideos, requestChannel } from "../hooks/requestAxios";
 
 import Loading from "../components/Loading";
 import ChannelThumbnail from "../components/ChannelThumbnail";
@@ -15,8 +11,8 @@ import Layout from "../components/Layout";
 
 import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
-import Iframe from "../components/Iframe";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
+import ChannelItem from "../components/ChannelItem";
 
 const Channel = () => {
   console.log("채널컴포넌트");
@@ -82,20 +78,9 @@ const Channel = () => {
               {channelData.bannerImg && (
                 <Banner src={channelData.bannerImg} alt={"banner"} />
               )}
-              <Row align={"center"}>
-                <ChannelThumbnail
-                  url={channelData.thumbnail.default.url}
-                  ize={channelData.thumbnail.default.width}
-                  alt={channelData.title}
-                  customUrl={channelData.customUrl}
-                />
-                <div>
-                  <Title size={24} text={channelData.title} cut={false} />
 
-                  <P>{channelData.customUrl}</P>
-                  <P>구독자 {converCount(channelData.subscriberCount)}</P>
-                </div>
-              </Row>
+              <ChannelItem data={channelData} />
+
               <TabTitleContainer>
                 {tabs.map(({ tabTitle }, idx) => (
                   <TabTitle
@@ -109,7 +94,7 @@ const Channel = () => {
                   </TabTitle>
                 ))}
               </TabTitleContainer>
-              <div></div>
+
               {tabs[currentIdx].tabContent}
             </Container>
           )}
@@ -128,16 +113,6 @@ const Banner = styled.img`
   width: 100%;
   height: calc((100vw - 240px) / 6.2 - 1px);
   object-fit: cover;
-`;
-const Row = styled.div`
-  display: flex;
-  align-items: ${(props) => props.align};
-  gap: 16px;
-  padding: 20px 0;
-`;
-const P = styled.p`
-  color: #555;
-  font-size: 1em;
 `;
 
 const TabTitleContainer = styled.div`

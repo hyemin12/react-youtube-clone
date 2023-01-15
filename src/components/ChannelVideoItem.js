@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { converCount } from "../hooks/converCount";
+import { convertCount } from "../hooks/convertCount";
 import { requestContentDetails } from "../hooks/requestAxios";
 
 import LinkButton from "./LinkButton";
@@ -45,7 +45,7 @@ const ChannelVideoItem = (item) => {
             />
             <Title text={title} cut={true} />
             <ViewUpload
-              view={converCount(statsData.viewNum)}
+              view={convertCount(statsData.viewNum)}
               date={publishedAt.slice(0, 19)}
               convert={true}
             />

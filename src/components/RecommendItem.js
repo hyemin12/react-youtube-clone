@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { converCount } from "../hooks/converCount";
+import { convertCount } from "../hooks/convertCount";
 import { requestContentDetails } from "../hooks/requestAxios";
 
 import Loading from "./Loading";
@@ -59,7 +59,7 @@ const RecommendItem = ({ item, channelTitle }) => {
               <SubTitle text={channelTitle} />
 
               <ViewUpload
-                view={converCount(statsData.viewNum)}
+                view={convertCount(statsData.viewNum)}
                 date={publishedAt.slice(0, 19)}
                 convert={true}
               />

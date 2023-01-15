@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 
 import useAlert from "../hooks/useAlert";
-import { converCount } from "../hooks/converCount";
+import { convertCount } from "../hooks/convertCount";
 
 import Alert from "./Alert";
 import { Btn, Row } from "./Button";
@@ -29,7 +29,7 @@ const LikeButton = ({ num }) => {
     <Btn onClick={increaseLike} isLike={plusLike.isLike}>
       <Row>
         <FaThumbsUp style={{ color: plusLike.isLike ? "tomato" : "#111" }} />
-        <p>{converCount(plusLike.number)}</p>
+        <p>{convertCount(plusLike.number)}</p>
       </Row>
       {isAlert && <Alert text={"좋아요🧡"} position={"top"} />}
     </Btn>

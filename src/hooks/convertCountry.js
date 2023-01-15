@@ -1,6 +1,6 @@
 import { countries } from "countries-list";
 
-export const converContry = (code) => {
+export const convertCountry = (code) => {
   // countries.code
   if (!code) {
     return;

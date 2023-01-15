@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { converCount } from "../hooks/converCount";
+import { convertCount } from "../hooks/convertCount";
 import {
   requestAxios,
   requestChannel,
@@ -118,7 +118,7 @@ const Video = () => {
                           <p>{data.snippet.channelTitle}</p>
 
                           <SubTitle
-                            text={`구독자 ${converCount(channel.subscribe)}`}
+                            text={`구독자 ${convertCount(channel.subscribe)}`}
                           />
                         </div>
                       </ChannelContainer>

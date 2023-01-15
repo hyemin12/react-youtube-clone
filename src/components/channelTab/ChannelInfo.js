@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 
-import { converContry } from "../../hooks/converContry";
+import { convertCountry } from "../../hooks/convertCountry";
 
 import Description from "../../components/Description";
 
@@ -31,7 +31,7 @@ const ChannelInfo = (channelData) => {
 
           <Row align={"center"}>
             <FaMapMarker />
-            <p>위치: {converContry(channelData.country)}</p>
+            <p>위치: {convertCountry(channelData.country)}</p>
           </Row>
         </div>
       </Row>

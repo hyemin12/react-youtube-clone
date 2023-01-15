@@ -3,7 +3,7 @@
  * 1000~ 10000 : 1000으로 나눈 값
  * 10000이상 : 10000으로 나눈 값
  */
-export const converCount = (num) => {
+export const convertCount = (num) => {
   if (1000 > num) return `${num}회`;
 
   if (1000 < num && num < 10000)

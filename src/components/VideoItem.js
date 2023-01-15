@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaBroadcastTower } from "react-icons/fa";
 
-import { converCount } from "../hooks/converCount";
+import { convertCount } from "../hooks/convertCount";
 
 import Loading from "./Loading";
 import Thumbnail from "./Thumbnail";
@@ -97,7 +97,7 @@ const VideoItem = (item) => {
                 <SubTitle text={channelTitle} />
               </LinkButton>
               <ViewUpload
-                view={converCount(
+                view={convertCount(
                   ectData ? ectData.viewCount : item.statistics.viewCount
                 )}
                 date={publishedAt.slice(0, 19)}

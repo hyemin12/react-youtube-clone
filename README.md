@@ -55,6 +55,127 @@
 
 ---
 
+## #Hooks
+
+### @ convertCount
+
+숫자 변환 훅 - 조회수, 구독자 변경할 때 사용
+
+- 1000회 미만: 그대로 출력
+- 1000~ 10000 : 1000으로 나눈 값
+- 10000이상 : 10000으로 나눈 값
+
+```js
+export const convertCount = (num) => {
+  if (1000 > num) return `${num}회`;
+
+  if (1000 < num && num < 10000)
+    return num % 1000 === 0
+      ? `${parseInt(num / 1000)}천`
+      : `${(num / 1000).toFixed(1)}천`;
+
+  if (num >= 10000)
+    return num % 10000 === 0
+      ? `${parseInt(num / 10000)}만`
+      : `${(num / 10000).toFixed(1)}만`;
+};
+```
+
+[ect]  
+ convertCount를 사용하지 않고, 그대로 출력할 때에는 .toLocaleString()를 사용해서 천단위마다 , 를 찍어줌
+
+---
+
+### @ requestAxios
+
+youtube api 인스턴스
+
+```js
+export const requestAxios = axios.create({
+  baseURL: "https://www.googleapis.com/youtube/v3",
+  params: { key: KEY, regionCode: "kr" },
+});
+```
+
+- baseURL, default params 설정
+- requestAxios.get('',{params: {}}) 로 작성해서 사용
+
+```js
+// 사용
+
+// 영상 목록 가져오기 (인기 기준)
+export const requestPopularVideos = (videoCategory, maxResult = 32) =>
+  requestAxios.get("videos", {
+    params: {
+      part: "snippet,statistics,contentDetails",
+      chart: "mostPopular",
+      maxResults: maxResult,
+      videoCategoryId: videoCategory && videoCategory,
+    },
+  });
+
+// 검색결과 (영상 리스트)
+export const requestSearchVideos = (query, maxResult = 32) =>
+  requestAxios.get("search", {
+    params: {
+      part: "snippet",
+      maxResults: maxResult,
+      q: query,
+      type: "video",
+    },
+  });
+```
+
+---
+
+### @ searchContext
+
+검색어, 검색 결과 전역관리하기 위해 만듬
+
+- q: 검색어 (input에서 받아온 값)
+- result: 검색 결과 목록 (받아온 데이터)
+
+```js
+// hooks/searchContext.js
+export const ContextProvier = ({ children }) => {
+  const [searchQuery, setSearchQuery] = useState({ q: "", result: [] });
+
+  const value = { searchQuery, setSearchQuery };
+
+  return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
+};
+```
+
+```js
+// pages/Search.js
+
+const Search = () => {
+  const { searchQuery } = useSearchContext();
+
+  const { q, result } = searchQuery;
+  return (
+    <Layout aside={true}>
+      <SearchContainer>
+        <Title
+          size={24}
+          text={
+            result.length === 0 ? "검색 결과가 없습니다." : `"${q}" 검색 결과`
+          }
+          mode={false}
+        />
+
+        {result && <VideoList videos={result} />}
+      </SearchContainer>
+    </Layout>
+  );
+};
+```
+
+- 값 가져와서 사용하기
+- result가 있으면 "검색어 검색 결과" 출력
+- result가 없으면 "검색 결과 없습니다." 출력
+- result가 있을 때만 영상리스트 컴포넌트 출력
+
 ---
 
 #### - 기타
