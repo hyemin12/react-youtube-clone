@@ -21,6 +21,7 @@ import Button from "../components/Button";
 import LikeButton from "../components/LikeButton";
 import LinkButton from "../components/LinkButton";
 import Description from "../components/Description";
+import Row from "../components/FlexRow";
 
 const Video = () => {
   console.log("비디오페이지");
@@ -102,7 +103,7 @@ const Video = () => {
 
                 <div style={{ width: "100%" }}>
                   <Title size={20} text={data.snippet.title} cut={false} />
-                  <Row>
+                  <Row gap={10} justify={"space-between"}>
                     <LinkButton
                       pathname={"/channel"}
                       query={channel.customUrl}
@@ -164,12 +165,7 @@ const Container = styled.div`
   gap: 20px;
   padding: 0 84px;
 `;
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-`;
+
 const ChannelContainer = styled.div`
   display: flex;
   align-items: center;

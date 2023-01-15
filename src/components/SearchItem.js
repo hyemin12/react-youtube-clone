@@ -7,7 +7,7 @@ import {
 } from "../hooks/requestAxios";
 import ChannelThumbnail from "./ChannelThumbnail";
 import Loading from "./Loading";
-import Row from "./Row";
+import Row from "./FlexRow";
 import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";

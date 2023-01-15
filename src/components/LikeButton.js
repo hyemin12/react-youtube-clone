@@ -5,7 +5,8 @@ import useAlert from "../hooks/useAlert";
 import { convertCount } from "../hooks/convertCount";
 
 import Alert from "./Alert";
-import { Btn, Row } from "./Button";
+import { Btn } from "./Button";
+import Row from "./FlexRow";
 
 // 좋아요 버튼
 const LikeButton = ({ num }) => {
@@ -27,7 +28,7 @@ const LikeButton = ({ num }) => {
   };
   return (
     <Btn onClick={increaseLike} isLike={plusLike.isLike}>
-      <Row>
+      <Row gap={5} align={"center"}>
         <FaThumbsUp style={{ color: plusLike.isLike ? "tomato" : "#111" }} />
         <p>{convertCount(plusLike.number)}</p>
       </Row>

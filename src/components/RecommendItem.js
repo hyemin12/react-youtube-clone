@@ -10,6 +10,7 @@ import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 import LinkButton from "./LinkButton";
+import Row from "./FlexRow";
 
 // 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {
@@ -45,7 +46,7 @@ const RecommendItem = ({ item, channelTitle }) => {
         <Loading />
       ) : (
         <LinkButton pathname={"/watch"} query={id}>
-          <Row>
+          <Row gap={10}>
             <Thumbnail
               width={200}
               height={200 * (9 / 16)}
@@ -70,11 +71,7 @@ const RecommendItem = ({ item, channelTitle }) => {
     </>
   );
 };
-const Row = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-`;
+
 const ContentText = styled.div`
   width: 180px;
   padding: 4px 0;

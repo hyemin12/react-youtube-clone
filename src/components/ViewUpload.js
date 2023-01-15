@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Row from "./FlexRow";
 
 import SubTitle from "./SubTitle";
 
@@ -28,17 +29,15 @@ const ViewUpload = ({ view, date, convert }) => {
     if (0 < secGap) return `${secGap}초전`;
   };
   return (
-    <Row>
-      <SubTitle text={`조회수 ${view}`} />
-      <DateTitle>{convert ? calcDate(date) : date}</DateTitle>
+    <Row gap={14}>
+      <div style={{ position: "relative" }}>
+        <SubTitle text={`조회수 ${view}`} />
+        <DateTitle>{convert ? calcDate(date) : date}</DateTitle>
+      </div>
     </Row>
   );
 };
-const Row = styled.div`
-  display: flex;
-  gap: 14px;
-  position: relative;
-`;
+
 const DateTitle = styled.p`
   margin: 0;
   padding: 2px 0;

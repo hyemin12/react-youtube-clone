@@ -5,6 +5,7 @@ import { FaYoutube, FaCopy } from "react-icons/fa";
 import useAlert from "../hooks/useAlert";
 
 import Alert from "./Alert";
+import Row from "./FlexRow";
 
 const Button = ({ id, type, text, func }) => {
   const urlRef = useRef(null);
@@ -27,7 +28,7 @@ const Button = ({ id, type, text, func }) => {
             target="_blank"
             rel="noreferrer"
           >
-            <Row>
+            <Row gap={5} align={"center"}>
               <FaYoutube />
               <p>{text}</p>
             </Row>
@@ -36,7 +37,7 @@ const Button = ({ id, type, text, func }) => {
       )}
       {type === "copy" && (
         <Btn onClick={onCopy}>
-          <Row>
+          <Row gap={5} align={"center"}>
             <input
               defaultValue={`${id}`}
               ref={urlRef}
@@ -69,9 +70,5 @@ export const Btn = styled.button`
     background-color: #ccc;
   }
 `;
-export const Row = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`;
+
 export default Button;
