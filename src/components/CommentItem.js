@@ -17,7 +17,7 @@ const CommentItem = (comment) => {
     textOriginal,
     likeCount,
   } = comment;
-  console.log(comment);
+
   return (
     <Item>
       <Row gap={14}>
@@ -34,7 +34,6 @@ const CommentItem = (comment) => {
           <p>{textOriginal}</p>
           <BtnGroup>
             <LikeButton num={likeCount ? likeCount : 0} bg={"none"} />
-            <LikeButton bg={"none"} mode={"dislike"} />
           </BtnGroup>
         </div>
       </Row>

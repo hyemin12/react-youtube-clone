@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 const Description = ({ des }) => {
@@ -18,4 +19,4 @@ const Description = ({ des }) => {
 const DesContainer = styled.div`
   line-height: 1.4;
 `;
-export default Description;
+export default React.memo(Description);

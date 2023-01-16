@@ -41,6 +41,7 @@ const Video = () => {
     { title: "같은 채널 다른 영상", list: [] },
   ]);
   const [commentList, setCommentList] = useState([]);
+  const [currentValue, setCurrentValue] = useState("relevance");
 
   /** 해당 페이지에서 필요한 데이터 가져오기
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
@@ -64,20 +65,10 @@ const Video = () => {
         const sameChannel = await requestVideos(channelId);
 
         // 같은 카테고리 영상 목록
-        //videoCategoryId
         const sameCategory = await requestPopularVideos(
           dataRes.data.items[0].snippet.categoryId,
           15
         );
-        const commentThr = await requestAxios("commentThreads", {
-          params: {
-            videoId: id,
-            part: "snippet",
-            maxResults: 50,
-          },
-        });
-        setCommentList(commentThr.data.items);
-        // console.log();
 
         setData(dataRes.data.items[0]);
         setChannel({
@@ -100,6 +91,26 @@ const Video = () => {
   useEffect(() => {
     getData();
   }, [id]);
+
+  const handleIndex = (e) => {
+    setCurrentValue(e.target.value);
+  };
+  console.log(currentValue);
+  const getComment = async () => {
+    const commentThr = await requestAxios("commentThreads", {
+      params: {
+        videoId: id,
+        part: "snippet",
+        maxResults: 30,
+        order: currentValue,
+      },
+    });
+    setCommentList(commentThr.data.items);
+  };
+
+  useEffect(() => {
+    getComment(currentValue);
+  }, [currentValue]);
 
   return (
     <>
@@ -162,7 +173,13 @@ const Video = () => {
                   </Descriptions>
                   {/* 댓글 목록 */}
 
-                  <h4 style={{ padding: "20px 0" }}>댓글</h4>
+                  <Row align={"center"} gap={10}>
+                    <h4 style={{ padding: "20px 0" }}>댓글</h4>
+                    <select onChange={handleIndex}>
+                      <option value="relevance">인기댓글순</option>
+                      <option value="time">최신순</option>
+                    </select>
+                  </Row>
                   <Row align={"center"} gap={12}>
                     <ChannelThumbnail title={"unknown-user"} size={40} />
                     <Input placeholder="댓글 추가 기능을 준비중입니다." />
