@@ -271,11 +271,32 @@ https://beta.reactjs.org/reference/react/useContext
 
 ---
 
-1월 13일
+1. 플레이리스트 데이터 가져와서 화면에 출력할 방법 생각하기 (https://developers.google.com/youtube/iframe_api_reference?hl=ko)
 
-- 채널 페이지 탭 기능
-- 채널페이지 레이아웃 스타일 바꾸기
-- 플레이리스트 데이터 가져와서 화면에 출력할 방법 생각하기
+```
+https://www.youtube.com/embed?listType=playlist&list=PLC77007E23FF423C6
+
+list
+list 매개변수는 listType 매개변수와 함께 플레이어에서 로드할 콘텐츠를 식별합니다.
+listType 매개변수 값이 search인 경우 list 매개변수 값이 검색어를 지정합니다.
+listType 매개변수 값이 user_uploads인 경우 list 매개변수 값이 로드할 동영상을 업로드한 YouTube 채널을 식별합니다.
+listType 매개변수 값이 playlist인 경우 list 매개변수 값이 YouTube 재생목록 ID를 지정합니다. 매개변수 값에서 아래 예에 표시된 것처럼 재생목록 ID 앞에 PL 문자를 붙여야 합니다.
+
+ 매개변수는 재생할 동영상 ID의 쉼표로 구분된 목록을 지정합니다. 값을 지정하면 URL 경로에서 지정한 VIDEO_ID가 먼저 재생되며 playlist 매개변수에서 지정한 동영상이 그 후에 재생됩니다.
+
+
+https://www.youtube.com/embed?
+    listType=playlist
+    &list=PLC77007E23FF423C6
+참고: list 및 listType 매개변수의 값을 지정하면 IFrame 삽입 URL에서 동영상 ID를 지정할 필요가 없습니다.
+
+```
+
+2. start 변수 사용하면 특정 시간 이후 동영상 재생을 시작!
+
+3. 댓글 필터 데이터 가져오기 (최신순에서 다시 인기순으로 변경이 안됨...)
+
+4. 좋아요. 싫어요 버튼 <- 버튼 클릭시 반대되는 버튼 state 값을 변경... 변경은 잘 되는데 화면에서는 변경이 안됨... <- 왜지?
 
 const axios_list = [dataRes, channelRes, sameChannel, sameCategory];
 
