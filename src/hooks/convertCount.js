@@ -4,7 +4,7 @@
  * 10000이상 : 10000으로 나눈 값
  */
 export const convertCount = (num) => {
-  if (1000 > num) return `${num}회`;
+  if (1000 > num) return `${num}`;
 
   if (1000 < num && num < 10000)
     return num % 1000 === 0

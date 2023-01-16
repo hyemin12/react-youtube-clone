@@ -178,6 +178,12 @@ const Search = () => {
 
 ---
 
+#### - youtube timestamp
+
+https://stackoverflow.com/questions/71134812/how-to-jump-to-a-timestamp-in-a-youtube-iframe-in-react
+
+https://developers.google.com/youtube/iframe_api_reference#seekTo
+
 #### - 기타
 
 - react-icons : https://react-icons.github.io/react-icons/icons?name=fa

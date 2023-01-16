@@ -68,7 +68,7 @@ const SearchItem = (data) => {
               duration={ectData.duration}
             />
             <div>
-              <Title text={title} margin={"0 0 10px 0"} />
+              <Title text={title} />
               <ViewUpload
                 view={convertCount(ectData.viewCount)}
                 date={publishedAt}

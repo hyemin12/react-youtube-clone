@@ -22,6 +22,7 @@ import LikeButton from "../components/LikeButton";
 import LinkButton from "../components/LinkButton";
 import Description from "../components/Description";
 import Row from "../components/FlexRow";
+import CommentItem from "../components/CommentItem";
 
 const Video = () => {
   console.log("비디오페이지");
@@ -39,6 +40,7 @@ const Video = () => {
     { title: "비슷한 영상", list: [] },
     { title: "같은 채널 다른 영상", list: [] },
   ]);
+  const [commentList, setCommentList] = useState([]);
 
   /** 해당 페이지에서 필요한 데이터 가져오기
    * dataRes: 영상 정보 (제목, 업로드날짜, 설명, 아이디 등)
@@ -67,6 +69,15 @@ const Video = () => {
           dataRes.data.items[0].snippet.categoryId,
           15
         );
+        const commentThr = await requestAxios("commentThreads", {
+          params: {
+            videoId: id,
+            part: "snippet",
+            maxResults: 50,
+          },
+        });
+        setCommentList(commentThr.data.items);
+        // console.log();
 
         setData(dataRes.data.items[0]);
         setChannel({
@@ -85,7 +96,7 @@ const Video = () => {
       console.log(err);
     }
   }, [id]);
-  console.log(data);
+
   useEffect(() => {
     getData();
   }, [id]);
@@ -102,12 +113,7 @@ const Video = () => {
                 <Iframe id={id} width={"920"} height={"517.5"} />
 
                 <div style={{ width: "100%" }}>
-                  <Title
-                    size={20}
-                    text={data.snippet.title}
-                    cut={false}
-                    margin={"0 0 10px 0"}
-                  />
+                  <Title size={20} text={data.snippet.title} cut={false} />
                   <Row gap={10} justify={"space-between"} align={"center"}>
                     <LinkButton
                       pathname={"/channel"}
@@ -154,6 +160,19 @@ const Video = () => {
 
                     <br />
                   </Descriptions>
+                  {/* 댓글 목록 */}
+                  <CommentContainer>
+                    {commentList.map((comment) => {
+                      const commentItem =
+                        comment.snippet.topLevelComment.snippet;
+                      return (
+                        <CommentItem
+                          {...commentItem}
+                          key={`${commentItem.authorDisplayName}-${commentItem.textOriginal}`}
+                        />
+                      );
+                    })}
+                  </CommentContainer>
                 </div>
               </div>
               {/* 추천 동영상 */}
@@ -190,6 +209,11 @@ const Descriptions = styled.div`
   @media screen and (min-width: 1541px) {
     width: 67 vw;
   }
+`;
+const CommentContainer = styled.div`
+  flex-shrink: 0;
+  width: 920px;
+  padding-right: 40px;
 `;
 
 export default Video;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaThumbsUp } from "react-icons/fa";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 import useAlert from "../hooks/useAlert";
 import { convertCount } from "../hooks/convertCount";
@@ -9,31 +9,54 @@ import { Btn } from "./Button";
 import Row from "./FlexRow";
 
 // 좋아요 버튼
-const LikeButton = ({ num }) => {
+const LikeButton = ({ num, unit, mode, bg }) => {
   const [plusLike, setPlusLike] = useState({
     isLike: false,
-    number: Number(num),
+    number: typeof num ? num : Number(num),
   });
-
+  const [disLike, setDisLike] = useState(false);
   const [isAlert, setIsAlert] = useAlert();
 
   // 좋아요 활성화/비활성화
-  const increaseLike = () => {
+  const clickLike = () => {
     if (plusLike.isLike) {
-      setPlusLike({ isLike: false, number: plusLike.number - 1 });
+      setPlusLike({ isLike: false, number: parseInt(plusLike.number) });
     } else {
-      setPlusLike({ isLike: true, number: plusLike.number + 1 });
+      setPlusLike({ isLike: true, number: parseInt(plusLike.number) + 1 });
       setIsAlert(true);
     }
   };
+  console.log(plusLike);
+  const clickDisLike = () => {
+    if (disLike) {
+      setPlusLike({ isLike: false, number: plusLike.number });
+    } else {
+      setDisLike(true);
+    }
+  };
   return (
-    <Btn onClick={increaseLike} isLike={plusLike.isLike}>
-      <Row gap={5} align={"center"}>
-        <FaThumbsUp style={{ color: plusLike.isLike ? "tomato" : "#111" }} />
-        <p>{convertCount(plusLike.number)}</p>
-      </Row>
-      {isAlert && <Alert text={"좋아요🧡"} position={"top"} />}
-    </Btn>
+    <>
+      {mode !== "dislike" ? (
+        <Btn onClick={clickLike} isLike={plusLike.isLike} bg={bg}>
+          <Row gap={5} align={"center"}>
+            <FaThumbsUp
+              style={{ color: plusLike.isLike ? "tomato" : "#111" }}
+            />
+            <p>{plusLike.number !== 0 && convertCount(plusLike.number)}</p>
+          </Row>
+          {isAlert && <Alert text={"좋아요🧡"} position={"top"} />}
+        </Btn>
+      ) : (
+        <Btn onClick={clickDisLike} bg={bg}>
+          <Row gap={5} align={"center"}>
+            <FaThumbsDown
+              style={{ color: plusLike.isLike ? "tomato" : "#111" }}
+            />
+          </Row>
+          {disLike && <Alert text={"싫어요😢"} position={"top"} />}
+        </Btn>
+      )}
+    </>
   );
 };
 

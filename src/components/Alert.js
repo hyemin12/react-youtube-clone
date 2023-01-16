@@ -25,7 +25,6 @@ const AlertContainer = styled.div`
   &.top {
     width: auto;
     height: auto;
-    display: inline-block;
     position: absolute;
     top: -34px;
     right: 0px;

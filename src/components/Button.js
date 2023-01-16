@@ -59,7 +59,7 @@ const Button = ({ id, type, text, func }) => {
 };
 export const Btn = styled.button`
   height: 100%;
-  background-color: #eee;
+  background-color: ${(props) => (props.bg ? "transparent" : props.bg)};
   padding: 10px;
   border: none;
   border-radius: 20px;
