@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
+import unknownImg from "../images/unknownChannel.png";
+
 // 채널 썸네일 - 이미지 컴포넌트
 const ChannelThumbnail = ({ title, url, size }) => {
   return (
     <Img
-      src={url}
+      src={url ? url : unknownImg}
       alt={title}
       style={{ width: `${size}px`, height: `${size}px` }}
     />

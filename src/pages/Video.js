@@ -161,6 +161,13 @@ const Video = () => {
                     <br />
                   </Descriptions>
                   {/* 댓글 목록 */}
+
+                  <h4 style={{ padding: "20px 0" }}>댓글</h4>
+                  <Row align={"center"} gap={12}>
+                    <ChannelThumbnail title={"unknown-user"} size={40} />
+                    <Input placeholder="댓글 추가 기능을 준비중입니다." />
+                  </Row>
+
                   <CommentContainer>
                     {commentList.map((comment) => {
                       const commentItem =
@@ -214,6 +221,13 @@ const CommentContainer = styled.div`
   flex-shrink: 0;
   width: 920px;
   padding-right: 40px;
+`;
+const Input = styled.input`
+  width: 100%;
+  border: none;
+  padding: 5px 0;
+  border-bottom: 1px solid #555;
+  font-size: 1em;
 `;
 
 export default Video;

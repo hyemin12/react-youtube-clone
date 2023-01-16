@@ -12,7 +12,7 @@ import Row from "./FlexRow";
 const LikeButton = ({ num, unit, mode, bg }) => {
   const [plusLike, setPlusLike] = useState({
     isLike: false,
-    number: typeof num ? num : Number(num),
+    number: typeof num ? num : parseInt(num),
   });
   const [disLike, setDisLike] = useState(false);
   const [isAlert, setIsAlert] = useAlert();
@@ -20,7 +20,7 @@ const LikeButton = ({ num, unit, mode, bg }) => {
   // 좋아요 활성화/비활성화
   const clickLike = () => {
     if (plusLike.isLike) {
-      setPlusLike({ isLike: false, number: parseInt(plusLike.number) });
+      setPlusLike({ isLike: false, number: parseInt(plusLike.number) - 1 });
     } else {
       setPlusLike({ isLike: true, number: parseInt(plusLike.number) + 1 });
       setIsAlert(true);
