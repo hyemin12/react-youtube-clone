@@ -33,9 +33,9 @@ const CommentItem = (comment) => {
                 <p>{authorDisplayName}</p>
                 <SubTitle text={calcDate(publishedAt)} />
               </Row>
-              <p>{textOriginal}</p>
+              <P>{textOriginal}</P>
             </div>
-            <LikeButton num={likeCount ? likeCount : 0} bg={"none"} />
+            <LikeButton num={likeCount ? likeCount : 0} />
           </Row>
         </TextContainer>
       </Row>
@@ -49,5 +49,10 @@ const Item = styled.div`
 
 const TextContainer = styled.div`
   flex-grow: 1;
+`;
+const P = styled.p`
+  padding-top: 4px;
+  color: #555;
+  font-size: 0.9em;
 `;
 export default CommentItem;

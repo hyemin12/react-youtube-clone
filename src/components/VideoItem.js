@@ -92,18 +92,17 @@ const VideoItem = (item) => {
             <div>
               <LinkButton pathname={"/watch"} query={id}>
                 <Title size={16} text={title} cut={true} />
-                <ViewUpload
-                  view={convertCount(
-                    ectData ? ectData.viewCount : item.statistics.viewCount
-                  )}
-                  date={publishedAt.slice(0, 19)}
-                  convert={true}
-                />
               </LinkButton>
               <LinkButton pathname={"/channel"} query={id}>
                 <SubTitle text={channelTitle} />
               </LinkButton>
-
+              <ViewUpload
+                view={convertCount(
+                  ectData ? ectData.viewCount : item.statistics.viewCount
+                )}
+                date={publishedAt.slice(0, 19)}
+                convert={true}
+              />
               {/* 실시간 배지 */}
               {liveBroadcastContent === "live" && (
                 <Live>

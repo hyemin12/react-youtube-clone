@@ -14,7 +14,7 @@ const Description = ({ des }) => {
             sentence === "" ? (
               <br key={idx} />
             ) : (
-              <p key={`${sentence}${idx}`}>{sentence}</p>
+              <P key={`${sentence}${idx}`}>{sentence}</P>
             )
           )}
       </DesContainer>
@@ -44,6 +44,10 @@ const DesContainer = styled.div`
 `;
 const Btn = styled.div`
   padding-top: 1em;
+  font-size: 0.9em;
   cursor: pointer;
+`;
+const P = styled.p`
+  font-size: 0.9em;
 `;
 export default React.memo(Description);

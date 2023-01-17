@@ -23,7 +23,7 @@ import LinkButton from "../components/LinkButton";
 import Description from "../components/Description";
 import Row from "../components/FlexRow";
 import CommentItem from "../components/CommentItem";
-import ViewUpload from "../components/ViewUpload";
+import ViewUpload, { DateTitle } from "../components/ViewUpload";
 
 const Video = () => {
   console.log("비디오페이지");
@@ -155,26 +155,18 @@ const Video = () => {
                       <Button type={"copy"} text={"공유하기"} id={id} />
                     </BtnGroup>
                   </Row>
+
                   {/* 영상 설명 */}
                   <Descriptions>
-                    <ChannelContainer>
-                      <ViewUpload
-                        view={parseInt(
-                          data.statistics.viewCount
-                        ).toLocaleString()}
-                        date={data.snippet.publishedAt.slice(0, 10)}
-                        convert={false}
-                      />
-                      <p>
-                        조회수:{" "}
+                    <Row gap={14}>
+                      <P>
+                        조회수{" "}
                         {parseInt(data.statistics.viewCount).toLocaleString()}
-                      </p>
-                      <p>업로드: {data.snippet.publishedAt.slice(0, 10)} </p>
-                    </ChannelContainer>
+                      </P>
+                      <Date>{data.snippet.publishedAt.slice(0, 10)}</Date>
+                    </Row>
 
                     <Description des={data.snippet.description} />
-
-                    <br />
                   </Descriptions>
                   {/* 댓글 목록 */}
 
@@ -233,7 +225,9 @@ const BtnGroup = styled.div`
 const Descriptions = styled.div`
   background-color: #eee;
   border-radius: 10px;
-  padding: 4px 16px;
+  padding: 16px;
+  color: #333 !important;
+  font-size: 1em !important;
   line-height: 1.4;
   @media screen and (min-width: 1541px) {
     width: 67 vw;
@@ -250,6 +244,20 @@ const Input = styled.input`
   padding: 5px 0;
   border-bottom: 1px solid #555;
   font-size: 1em;
+`;
+const P = styled.p`
+  color: #111;
+  font-size: 0.9em;
+`;
+const Date = styled(DateTitle)`
+  padding: 0;
+  color: #111;
+  font-size: 0.9em;
+  &::before {
+    background-color: #333;
+    top: 8px;
+    left: -8px;
+  }
 `;
 
 export default Video;

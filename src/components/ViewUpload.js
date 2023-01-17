@@ -15,7 +15,7 @@ const ViewUpload = ({ view, date, convert }) => {
   );
 };
 
-const DateTitle = styled.p`
+export const DateTitle = styled.p`
   margin: 0;
   padding: 2px 0;
   color: #777;

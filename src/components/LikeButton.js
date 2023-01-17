@@ -10,7 +10,7 @@ import Row from "./FlexRow";
 import styled from "styled-components";
 
 // 좋아요 버튼
-const LikeButton = ({ num, unit, mode, bg }) => {
+const LikeButton = ({ num, bg }) => {
   const [isAlert, setIsAlert] = useAlert();
 
   const [plusLike, setPlusLike] = useState({
@@ -18,9 +18,11 @@ const LikeButton = ({ num, unit, mode, bg }) => {
     number: typeof num ? num : parseInt(num),
   });
 
+  const { isLike, number } = plusLike;
+
   // 좋아요 활성화/비활성화
   const toggleLike = () => {
-    if (plusLike.isLike) {
+    if (isLike) {
       setPlusLike({
         isLike: false,
         number: plusLike.number - 1,
@@ -36,10 +38,10 @@ const LikeButton = ({ num, unit, mode, bg }) => {
 
   return (
     <>
-      <LikeBtn onClick={toggleLike} bg={bg} isLike={plusLike.isLike}>
-        <Row gap={5} align={"center"}>
+      <LikeBtn onClick={toggleLike} isLike={isLike}>
+        <Row gap={5} align={"center"} justify={"center"}>
           <FaHeart />
-          <p>{plusLike.number !== 0 && convertCount(plusLike.number)}</p>
+          <p>{number > 0 && convertCount(number)}</p>
         </Row>
         {isAlert && <Alert text={"좋아요🧡"} position={"top"} />}
       </LikeBtn>
@@ -48,7 +50,8 @@ const LikeButton = ({ num, unit, mode, bg }) => {
 };
 
 const LikeBtn = styled(Btn)`
-  background-color: ${(props) => (props.isLike ? "tomato" : props.bg)};
+  min-width: 70px;
+  background-color: ${(props) => (props.isLike ? "tomato" : "#eee")};
   color: ${(props) => (props.isLike ? "#fff" : "#111")};
 `;
 
