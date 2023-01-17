@@ -23,6 +23,7 @@ const Img = styled.img`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: 10px;
+  object-fit: cover;
 `;
 
 export default Thumbnail;

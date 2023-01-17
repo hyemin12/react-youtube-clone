@@ -50,7 +50,7 @@ const RecommendItem = ({ item, channelTitle }) => {
             <Thumbnail
               width={"200px"}
               height={`${200 * (9 / 16)}px`}
-              size={"medium"}
+              url={thumbnails.medium.url}
               title={title}
               duration={statsData.videolength}
             />

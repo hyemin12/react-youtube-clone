@@ -12,6 +12,8 @@ import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
+import { Link } from "react-router-dom";
+import LinkButton from "./LinkButton";
 
 const SearchItem = (data) => {
   const { videoId } = data.id;
@@ -35,7 +37,7 @@ const SearchItem = (data) => {
       const channelRes = await requestChannelThumb(channelId);
 
       setChannel({
-        thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+        thumbnail: channelRes.data.items[0].snippet.thumbnails.medium.url,
         customUrl: channelRes.data.items[0].snippet.customUrl,
       });
 
@@ -58,34 +60,38 @@ const SearchItem = (data) => {
       {loading ? (
         <Loading />
       ) : (
-        <ItemContainer>
-          <Row gap={20}>
-            <Thumbnail
-              size={"medium"}
-              title={title}
-              duration={ectData.duration}
-            />
-            <div>
-              <Title text={title} />
-              <ViewUpload
-                view={convertCount(ectData.viewCount)}
-                date={publishedAt}
-                convert={true}
+        <LinkButton pathname={"/watch"} query={videoId}>
+          <ItemContainer>
+            <Row gap={20}>
+              <Thumbnail
+                width={"320px"}
+                height={"180px"}
+                url={channel.thumbnail}
+                title={title}
+                duration={ectData.duration}
               />
-              <div style={{ padding: "14px 0" }}>
-                <Row gap={10} align={"center"}>
-                  <ChannelThumbnail
-                    title={channelTitle}
-                    url={channel.thumbnail}
-                    size={30}
-                  />
-                  <SubTitle text={channelTitle} />
-                </Row>
+              <div>
+                <Title text={title} />
+                <ViewUpload
+                  view={convertCount(ectData.viewCount)}
+                  date={publishedAt}
+                  convert={true}
+                />
+                <div style={{ padding: "14px 0" }}>
+                  <Row gap={10} align={"center"}>
+                    <ChannelThumbnail
+                      title={channelTitle}
+                      url={channel.thumbnail}
+                      size={30}
+                    />
+                    <SubTitle text={channelTitle} />
+                  </Row>
+                </div>
+                <SubTitle text={description} />
               </div>
-              <SubTitle text={description} />
-            </div>
-          </Row>
-        </ItemContainer>
+            </Row>
+          </ItemContainer>
+        </LinkButton>
       )}
     </>
   );
