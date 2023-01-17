@@ -38,6 +38,7 @@ const Home = () => {
   /** 영상 목록 가져오는 함수 */
   const getData = useCallback(async () => {
     const current = keywords[currentIndex];
+
     try {
       if (currentIndex === 0) {
         // 인기 키워드
@@ -45,7 +46,8 @@ const Home = () => {
         setResult(res.data.items);
       } else if (typeof current.category === "number") {
         // 카테고리 아이디가 있는 경우
-        const res = requestPopularVideos(current.category);
+        const res = await requestPopularVideos(current.category);
+
         setResult(res.data.items);
       } else {
         // 카테고리 아이디가 없는 경우

@@ -23,10 +23,11 @@ import LinkButton from "../components/LinkButton";
 import Description from "../components/Description";
 import Row from "../components/FlexRow";
 import CommentItem from "../components/CommentItem";
-import ViewUpload, { DateTitle } from "../components/ViewUpload";
+import { DateTitle } from "../components/ViewUpload";
 
 const Video = () => {
   console.log("비디오페이지");
+
   const { search } = useLocation();
   const id = search.replace("?", "");
 
@@ -95,8 +96,9 @@ const Video = () => {
 
   const handleIndex = (e) => {
     setCurrentValue(e.target.value);
+    getComment();
   };
-  console.log(currentValue);
+
   const getComment = async () => {
     const commentThr = await requestAxios("commentThreads", {
       params: {

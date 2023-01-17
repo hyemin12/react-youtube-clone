@@ -6,20 +6,26 @@ import RecommendItem from "./RecommendItem";
 // 추천 영상 목록 (리스트)
 const RecommendTabs = ({ data, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  console.log(data);
   return (
-    <div>
+    <div className="recommend">
+      {/* 탭 메뉴 */}
       {data.map(({ title, list }, idx) => (
-        <TabTitle
-          key={title}
-          className={currentIndex === idx ? "active" : ""}
-          onClick={() => {
-            setCurrentIndex(idx);
-          }}
-        >
-          {list.length > 0 && title}
-        </TabTitle>
+        <>
+          {list.length > 0 && (
+            <TabTitle
+              key={title}
+              className={currentIndex === idx ? "active" : ""}
+              onClick={() => {
+                setCurrentIndex(idx);
+              }}
+            >
+              {title}
+            </TabTitle>
+          )}
+        </>
       ))}
+      {/* 영상목록 */}
       {data &&
         data[currentIndex].list
           .filter(

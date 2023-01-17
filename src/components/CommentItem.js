@@ -8,7 +8,6 @@ import LikeButton from "./LikeButton";
 import SubTitle from "./SubTitle";
 
 const CommentItem = (comment) => {
-  // console.log(comment);
   const {
     authorChannelUrl,
     authorDisplayName,
@@ -52,6 +51,7 @@ const TextContainer = styled.div`
 `;
 const P = styled.p`
   padding-top: 4px;
+  padding-right: 40px;
   color: #555;
   font-size: 0.9em;
 `;

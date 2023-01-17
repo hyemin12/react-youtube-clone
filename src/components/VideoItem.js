@@ -103,13 +103,6 @@ const VideoItem = (item) => {
                 date={publishedAt.slice(0, 19)}
                 convert={true}
               />
-              {/* 실시간 배지 */}
-              {liveBroadcastContent === "live" && (
-                <Live>
-                  <FaBroadcastTower />
-                  실시간
-                </Live>
-              )}
             </div>
           </VideoRow>
         </ItemContainer>
