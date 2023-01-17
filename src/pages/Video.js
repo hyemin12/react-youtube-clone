@@ -23,6 +23,7 @@ import LinkButton from "../components/LinkButton";
 import Description from "../components/Description";
 import Row from "../components/FlexRow";
 import CommentItem from "../components/CommentItem";
+import ViewUpload from "../components/ViewUpload";
 
 const Video = () => {
   console.log("비디오페이지");
@@ -125,6 +126,7 @@ const Video = () => {
 
                 <div style={{ width: "100%" }}>
                   <Title size={20} text={data.snippet.title} cut={false} />
+
                   <Row gap={10} justify={"space-between"} align={"center"}>
                     <LinkButton
                       pathname={"/channel"}
@@ -150,19 +152,22 @@ const Video = () => {
                     {/* 채널 정보 옆 버튼그룹 */}
                     <BtnGroup>
                       <LikeButton num={data.statistics.likeCount} />
-                      <Button type={"link"} text={"Youtube에서 보기"} id={id} />
                       <Button type={"copy"} text={"공유하기"} id={id} />
                     </BtnGroup>
                   </Row>
                   {/* 영상 설명 */}
                   <Descriptions>
                     <ChannelContainer>
+                      <ViewUpload
+                        view={parseInt(
+                          data.statistics.viewCount
+                        ).toLocaleString()}
+                        date={data.snippet.publishedAt.slice(0, 10)}
+                        convert={false}
+                      />
                       <p>
-                        조회수:
-                        {data.statistics.viewCount.replace(
-                          /\B(?=(\d{3})+(?!\d))/g,
-                          ","
-                        )}
+                        조회수:{" "}
+                        {parseInt(data.statistics.viewCount).toLocaleString()}
                       </p>
                       <p>업로드: {data.snippet.publishedAt.slice(0, 10)} </p>
                     </ChannelContainer>
@@ -228,7 +233,7 @@ const BtnGroup = styled.div`
 const Descriptions = styled.div`
   background-color: #eee;
   border-radius: 10px;
-  padding: 16px;
+  padding: 4px 16px;
   line-height: 1.4;
   @media screen and (min-width: 1541px) {
     width: 67 vw;

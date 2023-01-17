@@ -59,7 +59,7 @@ const Button = ({ id, type, text, func }) => {
 };
 export const Btn = styled.button`
   height: 100%;
-  background-color: ${(props) => (props.bg ? "transparent" : props.bg)};
+  background-color: #eee;
   padding: 10px;
   border: none;
   border-radius: 20px;
@@ -68,6 +68,7 @@ export const Btn = styled.button`
   cursor: pointer;
   &:hover {
     background-color: #ccc;
+    color: #111;
   }
 `;
 

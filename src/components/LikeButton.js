@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
+import { FaThumbsUp, FaHeart } from "react-icons/fa";
 
 import useAlert from "../hooks/useAlert";
 import { convertCount } from "../hooks/convertCount";
@@ -7,17 +7,19 @@ import { convertCount } from "../hooks/convertCount";
 import Alert from "./Alert";
 import { Btn } from "./Button";
 import Row from "./FlexRow";
+import styled from "styled-components";
 
 // 좋아요 버튼
 const LikeButton = ({ num, unit, mode, bg }) => {
+  const [isAlert, setIsAlert] = useAlert();
+
   const [plusLike, setPlusLike] = useState({
     isLike: false,
     number: typeof num ? num : parseInt(num),
   });
-  const [isAlert, setIsAlert] = useAlert();
 
   // 좋아요 활성화/비활성화
-  const clickLike = () => {
+  const toggleLike = () => {
     if (plusLike.isLike) {
       setPlusLike({
         isLike: false,
@@ -31,17 +33,23 @@ const LikeButton = ({ num, unit, mode, bg }) => {
       setIsAlert(true);
     }
   };
+
   return (
     <>
-      <Btn onClick={clickLike} bg={bg}>
+      <LikeBtn onClick={toggleLike} bg={bg} isLike={plusLike.isLike}>
         <Row gap={5} align={"center"}>
-          <FaThumbsUp style={{ color: plusLike.isLike ? "tomato" : "#111" }} />
+          <FaHeart />
           <p>{plusLike.number !== 0 && convertCount(plusLike.number)}</p>
         </Row>
         {isAlert && <Alert text={"좋아요🧡"} position={"top"} />}
-      </Btn>
+      </LikeBtn>
     </>
   );
 };
+
+const LikeBtn = styled(Btn)`
+  background-color: ${(props) => (props.isLike ? "tomato" : props.bg)};
+  color: ${(props) => (props.isLike ? "#fff" : "#111")};
+`;
 
 export default LikeButton;

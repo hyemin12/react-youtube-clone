@@ -26,16 +26,18 @@ const CommentItem = (comment) => {
           url={authorProfileImageUrl}
           size={36}
         />
-        <div>
-          <Row gap={10}>
-            <p>{authorDisplayName}</p>
-            <SubTitle text={calcDate(publishedAt)} />
-          </Row>
-          <p>{textOriginal}</p>
-          <BtnGroup>
+        <TextContainer>
+          <Row align={"center"} justify={"space-between"}>
+            <div>
+              <Row gap={10}>
+                <p>{authorDisplayName}</p>
+                <SubTitle text={calcDate(publishedAt)} />
+              </Row>
+              <p>{textOriginal}</p>
+            </div>
             <LikeButton num={likeCount ? likeCount : 0} bg={"none"} />
-          </BtnGroup>
-        </div>
+          </Row>
+        </TextContainer>
       </Row>
     </Item>
   );
@@ -44,10 +46,8 @@ const Item = styled.div`
   margin: 20px 0;
   line-height: 1.4;
 `;
-const BtnGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 5px 0;
+
+const TextContainer = styled.div`
+  flex-grow: 1;
 `;
 export default CommentItem;
