@@ -1,12 +1,12 @@
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
+import { useSearchContext } from "../hooks/searchContext";
 import Home from "../pages/Home";
 import Video from "../pages/Video";
 import Search from "../pages/Search";
-
-import { useSearchContext } from "../hooks/searchContext";
-import NotFound from "../pages/NotFound";
 import Channel from "../pages/Channel";
+import HistoryPage from "../pages/History";
+import NotFound from "../pages/NotFound";
 
 const Router = () => {
   const { searchQuery } = useSearchContext();
@@ -18,6 +18,7 @@ const Router = () => {
         path={`/results/:search=${searchQuery.q}`}
         element={<Search />}
       ></Route>
+      <Route path={"/history"} element={<HistoryPage />}></Route>
 
       <Route path="/watch" element={<Video />}></Route>
       <Route exact path="/" element={<Home />}></Route>

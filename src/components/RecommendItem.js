@@ -48,10 +48,10 @@ const RecommendItem = ({ item, channelTitle }) => {
         <LinkButton pathname={"/watch"} query={id}>
           <Row gap={10}>
             <Thumbnail
-              width={200}
-              height={200 * (9 / 16)}
+              width={"200px"}
+              height={`${200 * (9 / 16)}px`}
+              size={"medium"}
               title={title}
-              url={thumbnails.medium.url}
               duration={statsData.videolength}
             />
 

@@ -5,13 +5,19 @@ import { useSearchContext } from "../hooks/searchContext";
 
 import Layout from "../components/Layout";
 import Title from "../components/Title";
-import VideoList from "../components/VideoList";
 import SearchItem from "../components/SearchItem";
 
 const Search = () => {
   const { searchQuery } = useSearchContext();
-
+  console.log(searchQuery);
   const { q, result } = searchQuery;
+  if (!searchQuery.q) {
+    return (
+      <Layout aside={true}>
+        <Title text={"검색어를 입력하세요"} />
+      </Layout>
+    );
+  }
   return (
     <Layout aside={true}>
       <SearchContainer>

@@ -35,6 +35,7 @@ const Video = () => {
 
   // result : 영상 기본 정보 , statistic : 조회수, 좋아요 수 등
   const [data, setData] = useState({ result: {}, statistic: {} });
+  //"https://i.ytimg.com/vi/xDBN4GfY6lo/maxresdefault.jpg"
 
   const [channel, setChannel] = useState();
 
@@ -83,13 +84,13 @@ const Video = () => {
           { ...recommend[1], list: sameChannel.data.items },
         ]);
       }
-
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   }, [id]);
 
+  console.log(data);
   useEffect(() => {
     getData();
   }, [id]);

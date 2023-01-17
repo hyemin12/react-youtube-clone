@@ -35,11 +35,12 @@ const ChannelVideoItem = (item) => {
   return (
     <>
       {!loading && (
-        <ItemContainer width={`245`}>
+        <ItemContainer width={"245"}>
           <LinkButton pathname={"/watch"} query={videoId}>
             <Thumbnail
-              width={245}
-              height={245 * (9 / 16)}
+              width={"245px"}
+              height={`${245 * (9 / 16)}px`}
+              size={"medium"}
               url={thumbnails.medium.url}
               duration={statsData.videolength}
             />

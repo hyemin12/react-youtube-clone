@@ -54,6 +54,7 @@ const Home = () => {
         const res = await requestSearchVideos(current.keyword);
         setResult(res.data.items);
       }
+
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -85,9 +86,6 @@ const Home = () => {
         <Loading />
       ) : (
         <Layout aside={true}>
-          <aside>
-            <Nav />
-          </aside>
           <div id="main">
             <KeywordContainer style={{ display: "flex" }}>
               <Row ref={keywordRef}>

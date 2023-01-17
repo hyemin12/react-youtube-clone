@@ -28,7 +28,8 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 20px;
+  padding: 0 20px;
+  margin-bottom: 26px;
   &:hover {
   }
 `;

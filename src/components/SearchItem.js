@@ -61,9 +61,7 @@ const SearchItem = (data) => {
         <ItemContainer>
           <Row gap={20}>
             <Thumbnail
-              width={thumbnails.medium.width ? thumbnails.medium.width : 320}
-              height={thumbnails.medium.height ? thumbnails.medium.height : 180}
-              url={thumbnails.medium.url}
+              size={"medium"}
               title={title}
               duration={ectData.duration}
             />

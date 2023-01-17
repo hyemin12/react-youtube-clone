@@ -1,13 +1,15 @@
+import React, { useEffect, useState } from "react";
+
 import styled from "styled-components";
 
 import VideoItem from "./VideoItem";
 
 // 영상 목록 (리스트)
-const VideoList = ({ videos }) => {
+const VideoList = ({ videos, browserWidth }) => {
   return (
     <ListContainer>
       {videos.map((item) => (
-        <VideoItem {...item} key={item.etag} />
+        <VideoItem {...item} key={item.etag} browserWidth={browserWidth} />
       ))}
     </ListContainer>
   );
@@ -16,9 +18,11 @@ const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  width: calc(100vw - 150px);
+  width: calc(100vw - 230px);
   margin: 0 auto;
   padding: 20px 0;
 `;
+// 전체 컨테이너 10px * 2
+// Nav 20px
 
 export default VideoList;

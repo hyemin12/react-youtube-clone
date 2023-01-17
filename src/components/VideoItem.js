@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { FaBroadcastTower } from "react-icons/fa";
 
 import { convertCount } from "../hooks/convertCount";
 
@@ -20,6 +19,23 @@ import {
 const VideoItem = (item) => {
   const id = typeof item.id === "object" ? item.id.videoId : item.id;
 
+  const [browserWidth, setBrowserWidth] = useState(window.innerWidth);
+
+  const windowResize = () => {
+    window.innerWidth < 1499
+      ? setBrowserWidth(1500)
+      : setBrowserWidth(window.innerWidth);
+  };
+
+  console.log(browserWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", windowResize);
+    return () => window.removeEventListener("resize", windowResize);
+  }, []);
+
+  const itemWidth = (browserWidth - 296) / 4;
+  // console.log(browserWidth);
   const {
     thumbnails,
     title,
@@ -41,6 +57,7 @@ const VideoItem = (item) => {
         thumbnail: res.data.items[0].snippet.thumbnails.default.url,
         customUrl: res.data.items[0].snippet.customUrl,
       });
+
       // 조회수, 영상길이 데이터가 넘어오지 않았을 때 데이터 가져오는 함수 (검색해서 가져온 데이터)
       if (item.kind === "youtube#searchResult") {
         const res = await requestContentDetails(id);
@@ -58,17 +75,17 @@ const VideoItem = (item) => {
   useEffect(() => {
     getData();
   }, [channelId]);
-
+  console.log(thumbnails);
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
-        <ItemContainer width={`${thumbnails.medium.width}`}>
+        <ItemContainer width={itemWidth}>
           <LinkButton pathname={"/watch"} query={id}>
             <Thumbnail
-              width={thumbnails.medium.width ? thumbnails.medium.width : 320}
-              height={thumbnails.medium.height ? thumbnails.medium.height : 180}
+              width={"100%"}
+              height={"100%"}
               url={thumbnails.medium.url}
               title={title}
               duration={

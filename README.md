@@ -256,17 +256,9 @@ https://beta.reactjs.org/reference/react/useContext
 
 ### 할일
 
-1. api 연결하기 https://developers.google.com/youtube/v3/getting-started?hl=ko
-2. 메인페이지 UI 만들기 (스타일드 컴포넌트 사용해서 스타일링하기)
-3. 인기동영상 데이터 가져와서 출력하기
-4. 검색 기능 만들기
-5. 페이지네이션 or 무한스크롤 구현하기
-   ->검색결과 nextPageToken 사용해서 가져오면 됨
-
 6. 키워드 클릭 시 해당 키워드 관련 영상 데이터 가져오기
 7. 컴포넌트 정리하기...
 
-- 유튜브로 이동하는 버튼
 - 공유하기 버튼 만들기 (https://www.delftstack.com/ko/howto/react/react-copy-to-clipboard/)
 
 ---
@@ -293,10 +285,6 @@ https://www.youtube.com/embed?
 ```
 
 2. start 변수 사용하면 특정 시간 이후 동영상 재생을 시작!
-
-3. 댓글 필터 데이터 가져오기 (최신순에서 다시 인기순으로 변경이 안됨...)
-
-4. 좋아요. 싫어요 버튼 <- 버튼 클릭시 반대되는 버튼 state 값을 변경... 변경은 잘 되는데 화면에서는 변경이 안됨... <- 왜지?
 
 const axios_list = [dataRes, channelRes, sameChannel, sameCategory];
 

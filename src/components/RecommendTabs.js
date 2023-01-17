@@ -6,7 +6,6 @@ import RecommendItem from "./RecommendItem";
 // 추천 영상 목록 (리스트)
 const RecommendTabs = ({ data, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(data);
   return (
     <div className="recommend">
       {/* 탭 메뉴 */}
@@ -25,6 +24,12 @@ const RecommendTabs = ({ data, id }) => {
           )}
         </>
       ))}
+      "[안방1열 풀캠4K] 뉴진스 'OMG' (NewJeans FullCam)│@SBS Inkigayo
+      230115\n\n#인기가요 #뉴진스 #NewJeans_OMG
+      \n--------------------------------------------------------------------------------------\n\n☞
+      MORE ＂SBS KPOP＂\n\nTwitter : https://twitter.com/kpop_sbs\nFacebook :
+      https://www.facebook.com/sbskpop\nInstagram :
+      https://instagram.com/sbskpop_official"
       {/* 영상목록 */}
       {data &&
         data[currentIndex].list
