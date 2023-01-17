@@ -7,19 +7,20 @@ import Row from "./FlexRow";
 
 const Layout = ({ children, aside }) => {
   return (
-    <Container>
-      <Header />
-      <Row gap={20}>
-        {aside && (
-          <aside>
-            <Nav />
-          </aside>
-        )}
-        <MainContent>{children}</MainContent>
-      </Row>
-
+    <>
+      <Container>
+        <Header />
+        <Row gap={20}>
+          {aside && (
+            <aside>
+              <Nav />
+            </aside>
+          )}
+          <MainContent>{children}</MainContent>
+        </Row>
+      </Container>
       <Footer />
-    </Container>
+    </>
   );
 };
 const Container = styled.div`

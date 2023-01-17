@@ -40,7 +40,6 @@ const ChannelVideoItem = (item) => {
             <Thumbnail
               width={"245px"}
               height={`${245 * (9 / 16)}px`}
-              size={"medium"}
               url={thumbnails.medium.url}
               duration={statsData.videolength}
             />
