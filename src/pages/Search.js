@@ -9,7 +9,7 @@ import SearchItem from "../components/SearchItem";
 
 const Search = () => {
   const { searchQuery } = useSearchContext();
-  console.log(searchQuery);
+
   const { q, result } = searchQuery;
   if (!searchQuery.q) {
     return (
@@ -30,17 +30,16 @@ const Search = () => {
         />
 
         {result && (
-          <ListContainer>
+          <div>
             {result.map((item) => (
               <SearchItem {...item} key={item.etag} />
             ))}
-          </ListContainer>
+          </div>
         )}
       </SearchContainer>
     </Layout>
   );
 };
-const ListContainer = styled.div``;
 
 const SearchContainer = styled.div`
   margin: 0 auto;

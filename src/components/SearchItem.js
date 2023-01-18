@@ -87,7 +87,7 @@ const SearchItem = (data) => {
                     <SubTitle text={channelTitle} />
                   </Row>
                 </div>
-                <SubTitle text={description} />
+                <SubTitle text={description} cut={true} />
               </div>
             </Row>
           </ItemContainer>

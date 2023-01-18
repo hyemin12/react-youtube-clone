@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Row from "../components/FlexRow";
 import Layout from "../components/Layout";
 import Loading from "../components/Loading";
 import SearchItem from "../components/SearchItem";
@@ -32,7 +33,7 @@ const HistoryPage = () => {
       <Layout aside={true}>
         <div>
           <Title text={"시청기록"} size={24} />
-          <Container list={storageD}>
+          <Container list={true}>
             <p>시청 기록이 없습니다.</p>
           </Container>
         </div>
@@ -45,11 +46,14 @@ const HistoryPage = () => {
       {loading ? (
         <Loading />
       ) : (
-        <Container>
-          {list.map((item) => (
-            <SearchItem {...item} />
-          ))}
-        </Container>
+        <Row gap={20}>
+          <Container list={storageD}>
+            {list.map((item) => (
+              <SearchItem {...item} />
+            ))}
+          </Container>
+          <DeleteBtn>시청 기록 삭제</DeleteBtn>
+        </Row>
       )}
     </Layout>
   );
@@ -57,5 +61,10 @@ const HistoryPage = () => {
 const Container = styled.div`
   height: ${(props) => (props.list ? "100%" : `calc(100vh - 258px)`)};
   padding: 20px 0;
+`;
+const DeleteBtn = styled.p`
+  flex-shrink: 0;
+  padding: 0 20px;
+  cursor: pointer;
 `;
 export default HistoryPage;
