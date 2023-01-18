@@ -25,7 +25,7 @@ const Layout = ({ children, aside }) => {
 };
 const Container = styled.div`
   min-width: 1500px;
-  padding: 16px 10px;
+  padding: 16px 30px;
 `;
 
 export default Layout;

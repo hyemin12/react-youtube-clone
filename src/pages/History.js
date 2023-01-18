@@ -1,18 +1,33 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Row from "../components/FlexRow";
-import Layout from "../components/Layout";
+
+import { requestAxios } from "../hooks/requestAxios";
+
 import Loading from "../components/Loading";
+import Layout from "../components/Layout";
+import Row from "../components/FlexRow";
 import SearchItem from "../components/SearchItem";
 import Title from "../components/Title";
-import { requestAxios } from "../hooks/requestAxios";
+
+import { FaTrashAlt, FaSearch } from "react-icons/fa";
 
 const HistoryPage = () => {
   const storageD = JSON.parse(localStorage.getItem("YT_History")) || null;
-  console.log(storageD);
+
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState();
 
+  const [query, setQuery] = useState("");
+
+  const onChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSearch = () => {
+    list.filter((item) => item.snippet.title.includes(query));
+  };
+
+  // id를 바탕으로 영상 정보 가져오기
   const getData = async () => {
     let arr = [];
     for (let i = 0; i < storageD.length; i++) {
@@ -27,8 +42,8 @@ const HistoryPage = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(list);
-  if (!storageD) {
+
+  if (!storageD || !list) {
     return (
       <Layout aside={true}>
         <div>
@@ -40,19 +55,35 @@ const HistoryPage = () => {
       </Layout>
     );
   }
+
   return (
     <Layout aside={true}>
-      <Title text={"시청기록"} />
+      <Title text={"시청기록"} size={24} />
       {loading ? (
         <Loading />
       ) : (
         <Row gap={20}>
           <Container list={storageD}>
             {list.map((item) => (
-              <SearchItem {...item} />
+              <SearchItem {...item} key={item.id} />
             ))}
           </Container>
-          <DeleteBtn>시청 기록 삭제</DeleteBtn>
+          <div>
+            <SideRow>
+              <form onSubmit={handleSearch}>
+                <FaSearch />
+                <Input
+                  placeholder="시청 기록 검색"
+                  value={query}
+                  onChange={onChange}
+                />
+              </form>
+            </SideRow>
+            <DeleteBtn>
+              <FaTrashAlt />
+              <p>시청 기록 지우기</p>
+            </DeleteBtn>
+          </div>
         </Row>
       )}
     </Layout>
@@ -62,9 +93,21 @@ const Container = styled.div`
   height: ${(props) => (props.list ? "100%" : `calc(100vh - 258px)`)};
   padding: 20px 0;
 `;
-const DeleteBtn = styled.p`
+const SideRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+`;
+const Input = styled.input`
+  border: none;
+  border-bottom: 1px solid #333;
+  padding-bottom: 4px;
+  font-size: 1em;
+`;
+const DeleteBtn = styled(SideRow)`
+  width: 14vw;
   flex-shrink: 0;
-  padding: 0 20px;
   cursor: pointer;
 `;
 export default HistoryPage;

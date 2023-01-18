@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { FaSearch } from "react-icons/fa";
 
 import { useSearchContext } from "../hooks/searchContext";
 import { requestSearchVideos } from "../hooks/requestAxios";
+
+import { FaSearch } from "react-icons/fa";
 
 // 검색 컴포넌트 (input)
 const Search = () => {
