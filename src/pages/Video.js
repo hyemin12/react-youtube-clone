@@ -9,6 +9,7 @@ import {
   requestPopularVideos,
   requestVideos,
 } from "../hooks/requestAxios";
+import { today } from "../hooks/convertDate";
 
 import Loading from "../components/Loading";
 import Layout from "../components/Layout";
@@ -35,7 +36,6 @@ const Video = () => {
 
   // result : 영상 기본 정보 , statistic : 조회수, 좋아요 수 등
   const [data, setData] = useState({ result: {}, statistic: {} });
-  //"https://i.ytimg.com/vi/xDBN4GfY6lo/maxresdefault.jpg"
 
   const [channel, setChannel] = useState();
 
@@ -72,7 +72,6 @@ const Video = () => {
           dataRes.data.items[0].snippet.categoryId,
           15
         );
-
         setData(dataRes.data.items[0]);
         setChannel({
           subscribe: channelRes.data.items[0].statistics.subscriberCount,
@@ -88,19 +87,34 @@ const Video = () => {
     } catch (err) {
       console.log(err);
     }
+  }, []);
+
+  // 시청 기록 저장
+  const recordHistory = useCallback(() => {
+    const storageH = localStorage.getItem("YT_History")
+      ? JSON.parse(localStorage.getItem("YT_History"))
+      : [];
+    const now = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(today.getDate()).padStart(2, "0")}`;
+    const historyArr = [...new Set(storageH.concat({ date: now, id: id }))];
+
+    localStorage.setItem("YT_History", JSON.stringify(historyArr));
   }, [id]);
 
-  console.log(data);
   useEffect(() => {
     getData();
+    recordHistory();
   }, [id]);
 
+  // 댓글 목록 가져오기
   const handleIndex = (e) => {
     setCurrentValue(e.target.value);
     getComment();
   };
-
-  const getComment = async () => {
+  // 댓글 목록 가져오기
+  const getComment = useCallback(async () => {
     const commentThr = await requestAxios("commentThreads", {
       params: {
         videoId: id,
@@ -110,7 +124,7 @@ const Video = () => {
       },
     });
     setCommentList(commentThr.data.items);
-  };
+  }, [currentValue]);
 
   useEffect(() => {
     getComment(currentValue);

@@ -16,7 +16,7 @@ const Layout = ({ children, aside }) => {
               <Nav />
             </aside>
           )}
-          <MainContent>{children}</MainContent>
+          <div>{children}</div>
         </Row>
       </Container>
       <Footer />
@@ -26,10 +26,6 @@ const Layout = ({ children, aside }) => {
 const Container = styled.div`
   min-width: 1500px;
   padding: 16px 10px;
-`;
-const MainContent = styled.div`
-  display: flex;
-  gap: 20px;
 `;
 
 export default Layout;

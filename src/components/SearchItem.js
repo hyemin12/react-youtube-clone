@@ -12,11 +12,11 @@ import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
-import { Link } from "react-router-dom";
 import LinkButton from "./LinkButton";
 
 const SearchItem = (data) => {
-  const { videoId } = data.id;
+  const videoId = typeof data.id === "object" ? data.id.videoId : data.id;
+
   const {
     thumbnails,
     title,
@@ -30,7 +30,7 @@ const SearchItem = (data) => {
   const [channel, setChannel] = useState({ thumbnail: "", customUrl: "" });
 
   const [ectData, setEctData] = useState();
-  console.log(channel);
+
   // 채널 썸네일 가져오기
   const getData = async () => {
     try {
@@ -66,7 +66,7 @@ const SearchItem = (data) => {
               <Thumbnail
                 width={"320px"}
                 height={"180px"}
-                url={channel.thumbnail}
+                url={thumbnails.medium.url}
                 title={title}
                 duration={ectData.duration}
               />

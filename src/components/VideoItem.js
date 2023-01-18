@@ -19,23 +19,6 @@ import {
 const VideoItem = (item) => {
   const id = typeof item.id === "object" ? item.id.videoId : item.id;
 
-  const [browserWidth, setBrowserWidth] = useState(window.innerWidth);
-
-  const windowResize = () => {
-    window.innerWidth < 1499
-      ? setBrowserWidth(1500)
-      : setBrowserWidth(window.innerWidth);
-  };
-
-  console.log(browserWidth);
-
-  useEffect(() => {
-    window.addEventListener("resize", windowResize);
-    return () => window.removeEventListener("resize", windowResize);
-  }, []);
-
-  const itemWidth = (browserWidth - 296) / 4;
-  // console.log(browserWidth);
   const {
     thumbnails,
     title,
@@ -75,7 +58,23 @@ const VideoItem = (item) => {
   useEffect(() => {
     getData();
   }, [channelId]);
-  console.log(thumbnails);
+
+  /** 브라우저 크기가 변하면 item 크기 변경시키기 */
+  const [browserWidth, setBrowserWidth] = useState(window.innerWidth);
+
+  const windowResize = () => {
+    window.innerWidth < 1499
+      ? setBrowserWidth(1500)
+      : setBrowserWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", windowResize);
+    return () => window.removeEventListener("resize", windowResize);
+  }, []);
+
+  const itemWidth = (browserWidth - 296) / 4;
+
   return (
     <>
       {loading ? (

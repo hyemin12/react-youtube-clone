@@ -36,7 +36,7 @@ const RecommendTabs = ({ data, id }) => {
           )
           .map((item) => (
             <RecommendItem
-              key={item.snippet.title}
+              key={item.id}
               item={item}
               channelTitle={item.snippet.channelTitle}
             />

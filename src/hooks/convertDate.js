@@ -1,8 +1,8 @@
 // 업로드 날짜 변환
-export const calcDate = (d) => {
-  const today = new Date();
-  const upload = new Date(d);
+export const today = new Date();
 
+export const calcDate = (d) => {
+  const upload = new Date(d);
   const yGap = today.getFullYear() - upload.getFullYear();
   const mGap = today.getMonth() - upload.getMonth();
   const dGap = today.getDate() - upload.getDate();
