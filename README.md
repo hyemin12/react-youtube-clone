@@ -20,6 +20,7 @@
   - channel => 영상을 업로드한 채널 관련 정보 {subscribe: 구독자 수 등 ,thumbnail: 채널 썸네일 정보}
   - recommend => 추천 영상 목록
     {channel: 채널에서 업로드한 다른 영상 목록들, category: 해당 영상의 카테고리id가 같은 영상 목록들}
+- 비디오 설명 부분 더보기 버튼을 누르면 설명이 모두 표시되고, 간략히 버튼을 누르면 3줄만 보여줌
 
 ## 3. Search Page
 
@@ -34,6 +35,9 @@
 - 홈, 동영상, 정보 탭으로 구성되어 있으며, 동영상 더 보기 버튼을 누르면 추가로 데이터를 얻어옴
 
 ## 5. History Page (시청기록)
+
+- video 페이지에 들어갔을 때 자동으로 localStorage에 시청 내역이 저장되고, 그 저장 내역을 확인하는 페이지
+- 시청 기록 삭제할 수 있는 버튼과 시청 기록 중 원하는 콘텐츠를 검색할 수 있는 검색창이 우측에 위치하고 있음
 
 ## . Not Found Page
 
@@ -75,7 +79,7 @@
 
 ```js
 export const convertCount = (num) => {
-  if (1000 > num) return `${num}회`;
+  if (1000 > num) return `${num}`;
 
   if (1000 < num && num < 10000)
     return num % 1000 === 0
@@ -91,6 +95,74 @@ export const convertCount = (num) => {
 
 [ect]  
  convertCount를 사용하지 않고, 그대로 출력할 때에는 .toLocaleString()를 사용해서 천단위마다 , 를 찍어줌
+
+---
+
+### @ convertDate
+
+업로드 영상을 현재 날짜 기준으로 언제 업로드 되었는지 변환해주는 훅<br>
+년 월 일 시간 분 초 순으로 조건에 맞는 값을 반환하도록 설정<Br>
+
+조건
+
+```js
+// 업로드 날짜가 12월일 경우 날짜차로 계산
+if (yGap === 1 && dGap < 7 && upload.getMonth() + 1 === "12")
+  return `${today.getDate() + 31 - upload.getDate()}일전`;
+
+if (0 < yGap) return `${yGap}년전`;
+if (0 < mGap && mGap < 12) return `${mGap}달전`;
+if (8 <= dGap && dGap <= 31) return `${Math.floor(dGap / 7)}주전`;
+if (0 < dGap && dGap < 8) return `${dGap}일전`;
+if (0 < hGap) return `${hGap}시간전`;
+if (0 < minGap) return `${minGap}분전`;
+if (0 < secGap) return `${secGap}초전`;
+```
+
+---
+
+### @ convertCountry
+
+채널페이지 - 정보탭에서 위치 정보를 나타낼 때 사용
+<Br>
+
+- countries-list api를 사용
+- 객체를 정렬로 변환, filter를 이용해서 특정 데이터 찾아서 리턴
+
+```js
+export const convertCountry = (code) => {
+  // countries.code
+  if (!code) {
+    return;
+  }
+  const arr = Object.entries(countries);
+  const result = arr.filter((country) => country[0] === code)[0][1];
+
+  // result 객체내용
+  // captial: 수도
+  // currency: 화폐단위
+  // name: 나라 이름(영어)
+  // native: 나라명
+  // phone: 국가코드 (전화)
+
+  return result.native;
+};
+```
+
+하단 코드들은 왜 안되는건지...?
+
+```js
+// code: 데이터에서 받아온 코드 정보
+// countries: api에서 가져온 국가정보 (객체)
+
+code = "kr";
+
+// 안됨
+countries[code];
+
+// 됨
+countries[kr];
+```
 
 ---
 
