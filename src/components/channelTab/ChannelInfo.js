@@ -3,7 +3,6 @@ import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 
 import { convertCountry } from "../../hooks/convertCountry";
 
-import Description from "../../components/Description";
 import Row from "../FlexRow";
 
 const ChannelInfo = (channelData) => {
@@ -13,7 +12,17 @@ const ChannelInfo = (channelData) => {
         <div style={{ width: "69vw" }}>
           <H4>설명</H4>
           {channelData.description ? (
-            <Description des={channelData.description} />
+            <>
+              {channelData.description
+                .split("\n")
+                .map((sentence, idx) =>
+                  sentence === "" ? (
+                    <br key={idx} />
+                  ) : (
+                    <P key={`${sentence}${idx}`}>{sentence}</P>
+                  )
+                )}
+            </>
           ) : (
             <p>등록된 설명이 없습니다.</p>
           )}

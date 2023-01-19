@@ -72,7 +72,7 @@ const Channel = () => {
       {loading ? (
         <Loading />
       ) : (
-        <Layout>
+        <Layout aside={true}>
           {channelData && (
             <Container>
               {channelData.bannerImg && (
