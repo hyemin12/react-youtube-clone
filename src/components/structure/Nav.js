@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import styled from "styled-components";
 import { FaHome, FaHistory } from "react-icons/fa";
-import Row from "./FlexRow";
+import Row from "../FlexRow";
 
 const Nav = () => {
   const navs = [

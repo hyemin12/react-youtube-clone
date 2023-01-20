@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-import useAlert from "../hooks/useAlert";
+import useAlert from "../../hooks/useAlert";
 
 import Logo from "./Logo";
-import Search from "./Search";
-import Alert from "./Alert";
+import Search from "../Search";
+import Alert from "../Alert";
 
 const Header = () => {
   const [isAlert, setIsAlert] = useAlert();

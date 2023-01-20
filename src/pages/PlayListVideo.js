@@ -6,7 +6,7 @@ import { requestAxios } from "../hooks/requestAxios";
 import Row from "../components/FlexRow";
 import Iframe from "../components/Iframe";
 import Title from "../components/Title";
-import Layout from "../components/Layout";
+import Layout from "../components/structure/Layout";
 import Loading from "../components/Loading";
 import Thumbnail from "../components/Thumbnail";
 

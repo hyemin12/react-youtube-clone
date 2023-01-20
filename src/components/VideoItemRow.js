@@ -14,7 +14,7 @@ import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
-import LinkButton from "./LinkButton";
+import LinkButton from "./Button/LinkButton";
 import Loading from "./Loading";
 
 // 영상 아이템 - 가로

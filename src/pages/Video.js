@@ -12,19 +12,20 @@ import {
 import { today } from "../hooks/convertDate";
 
 import Loading from "../components/Loading";
-import Layout from "../components/Layout";
+import Layout from "../components/structure/Layout";
 import Iframe from "../components/Iframe";
 import Title from "../components/Title";
 import SubTitle from "../components/SubTitle";
 import ChannelThumbnail from "../components/ChannelThumbnail";
 import RecommendTabs from "../components/RecommendTabs";
-import Button from "../components/Button";
-import LikeButton from "../components/LikeButton";
-import LinkButton from "../components/LinkButton";
+import CopyButton from "../components/Button/CopyButton";
+import LikeButton from "../components/Button/LikeButton";
+import LinkButton from "../components/Button/LinkButton";
 import Description from "../components/Description";
 import Row from "../components/FlexRow";
 import CommentItem from "../components/CommentItem";
 import { DateTitle } from "../components/ViewUpload";
+import VideoDetail from "../components/VideoDetail";
 
 const Video = () => {
   console.log("비디오페이지");
@@ -37,7 +38,7 @@ const Video = () => {
   // result : 영상 기본 정보 , statistic : 조회수, 좋아요 수 등
   const [data, setData] = useState({ result: {}, statistic: {} });
 
-  const [channel, setChannel] = useState();
+  const [channelData, setChannelData] = useState();
 
   const [recommend, setRecommend] = useState([
     { title: "비슷한 영상", list: [] },
@@ -73,7 +74,7 @@ const Video = () => {
           15
         );
         setData(dataRes.data.items[0]);
-        setChannel({
+        setChannelData({
           subscribe: channelRes.data.items[0].statistics.subscriberCount,
           thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
           customUrl: channelRes.data.items[0].snippet.customUrl,
@@ -140,78 +141,7 @@ const Video = () => {
             <Container>
               <div>
                 <Iframe id={id} width={920} height={517.5} />
-
-                <div style={{ width: "100%" }}>
-                  <Title size={20} text={data.snippet.title} cut={false} />
-
-                  <Row gap={10} justify={"space-between"} align={"center"}>
-                    <LinkButton
-                      pathname={"/channel"}
-                      query={channel.customUrl}
-                      id={data.snippet.channelId}
-                    >
-                      <ChannelContainer>
-                        <ChannelThumbnail
-                          size={40}
-                          url={channel.thumbnail}
-                          title={data.snippet.channelTitle}
-                        />
-                        <div>
-                          <p>{data.snippet.channelTitle}</p>
-
-                          <SubTitle
-                            text={`구독자 ${convertCount(channel.subscribe)}`}
-                          />
-                        </div>
-                      </ChannelContainer>
-                    </LinkButton>
-
-                    {/* 채널 정보 옆 버튼그룹 */}
-                    <BtnGroup>
-                      <LikeButton num={data.statistics.likeCount} />
-                      <Button type={"copy"} text={"공유하기"} id={id} />
-                    </BtnGroup>
-                  </Row>
-
-                  {/* 영상 설명 */}
-                  <Descriptions>
-                    <Row gap={14}>
-                      <P>
-                        조회수{" "}
-                        {parseInt(data.statistics.viewCount).toLocaleString()}
-                      </P>
-                      <Date>{data.snippet.publishedAt.slice(0, 10)}</Date>
-                    </Row>
-
-                    <Description des={data.snippet.description} />
-                  </Descriptions>
-                  {/* 댓글 목록 */}
-
-                  <Row align={"center"} gap={10}>
-                    <h4 style={{ padding: "20px 0" }}>댓글</h4>
-                    <select onChange={handleIndex}>
-                      <option value="relevance">인기댓글순</option>
-                      <option value="time">최신순</option>
-                    </select>
-                  </Row>
-                  <Row align={"center"} gap={12}>
-                    <ChannelThumbnail title={"unknown-user"} size={40} />
-                    <Input placeholder="댓글 추가 기능을 준비중입니다." />
-                  </Row>
-
-                  <CommentContainer>
-                    {commentList.map((comment) => {
-                      const commentItem =
-                        comment.snippet.topLevelComment.snippet;
-                      return (
-                        <CommentItem
-                          {...commentItem}
-                          key={`${commentItem.authorDisplayName}-${commentItem.textOriginal}`}
-                        />
-                      );
-                    })}
-                  </CommentContainer>
-                </div>
+                <VideoDetail {...data} {...channelData} />
               </div>
               {/* 추천 동영상 */}
               {recommend && <RecommendTabs data={recommend} id={id} />}

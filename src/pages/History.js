@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { requestAxios } from "../hooks/requestAxios";
 
 import Loading from "../components/Loading";
-import Layout from "../components/Layout";
+import Layout from "../components/structure/Layout";
 import Row from "../components/FlexRow";
 import VideoItemRow from "../components/VideoItemRow";
 import Title from "../components/Title";

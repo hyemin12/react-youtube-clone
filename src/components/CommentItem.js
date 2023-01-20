@@ -4,12 +4,11 @@ import { calcDate } from "../hooks/convertDate";
 
 import ChannelThumbnail from "./ChannelThumbnail";
 import Row from "./FlexRow";
-import LikeButton from "./LikeButton";
+import LikeButton from "./Button/LikeButton";
 import SubTitle from "./SubTitle";
 
 const CommentItem = (comment) => {
   const {
-    authorChannelUrl,
     authorDisplayName,
     authorProfileImageUrl,
     publishedAt,

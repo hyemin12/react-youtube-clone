@@ -7,7 +7,7 @@ import { requestVideos, requestChannel } from "../hooks/requestAxios";
 import Loading from "../components/Loading";
 import ChannelThumbnail from "../components/ChannelThumbnail";
 import Title from "../components/Title";
-import Layout from "../components/Layout";
+import Layout from "../components/structure/Layout";
 
 import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";

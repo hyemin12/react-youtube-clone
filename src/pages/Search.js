@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useSearchContext } from "../hooks/searchContext";
 
-import Layout from "../components/Layout";
+import Layout from "../components/structure/Layout";
 import Title from "../components/Title";
 import VideoItemRow from "../components/VideoItemRow";
 

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { convertCount } from "../hooks/convertCount";
 import { requestContentDetails } from "../hooks/requestAxios";
 
-import LinkButton from "./LinkButton";
+import LinkButton from "./Button/LinkButton";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";

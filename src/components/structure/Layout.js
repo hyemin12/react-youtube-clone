@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Header from "./Header";
 import Footer from "./Footer";
 import Nav from "./Nav";
-import Row from "./FlexRow";
+import Row from "../FlexRow";
 
 const Layout = ({ children, aside }) => {
   return (
@@ -26,6 +26,9 @@ const Layout = ({ children, aside }) => {
 const Container = styled.div`
   min-width: 1500px;
   padding: 16px 30px;
+  @media screen and (min-width: 1500px) {
+    overflow-x: hidden;
+  }
 `;
 
 export default Layout;

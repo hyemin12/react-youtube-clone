@@ -8,10 +8,10 @@ import {
   requestSearchVideos,
 } from "../hooks/requestAxios";
 
-import Layout from "../components/Layout";
+import Layout from "../components/structure/Layout";
 import Loading from "../components/Loading";
 import VideoList from "../components/VideoList";
-import Nav from "../components/Nav";
+import Nav from "../components/structure/Nav";
 
 const Home = () => {
   const keywordRef = useRef(null);

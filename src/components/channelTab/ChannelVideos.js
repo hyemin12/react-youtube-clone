@@ -3,7 +3,7 @@ import { requestVideos } from "../../hooks/requestAxios";
 
 import Loading from "../Loading";
 import ChannelVideoItem from "../ChannelVideoItem";
-import { Btn } from "../Button";
+import { Btn } from "../Button/CopyButton";
 import styled from "styled-components";
 
 const ChannelVideos = (videoData) => {

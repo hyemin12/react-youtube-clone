@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import SubTitle from "./SubTitle";
+import SubTitle from "../SubTitle";
 
 const Footer = () => {
   const year = new Date().getFullYear();

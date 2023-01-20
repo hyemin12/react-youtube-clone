@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { FaThumbsUp, FaHeart } from "react-icons/fa";
 
-import useAlert from "../hooks/useAlert";
-import { convertCount } from "../hooks/convertCount";
+import useAlert from "../../hooks/useAlert";
+import { convertCount } from "../../hooks/convertCount";
 
-import Alert from "./Alert";
-import { Btn } from "./Button";
-import Row from "./FlexRow";
+import Alert from "../Alert";
+import { Btn } from "./CopyButton";
+import Row from "../FlexRow";
 import styled from "styled-components";
 
 // 좋아요 버튼

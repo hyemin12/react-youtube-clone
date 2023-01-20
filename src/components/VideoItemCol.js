@@ -5,7 +5,7 @@ import { convertCount } from "../hooks/convertCount";
 
 import Loading from "./Loading";
 import Thumbnail from "./Thumbnail";
-import LinkButton from "./LinkButton";
+import LinkButton from "./Button/LinkButton";
 import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ChannelThumbnail from "./ChannelThumbnail";
