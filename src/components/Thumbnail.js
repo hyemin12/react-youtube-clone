@@ -14,7 +14,7 @@ const Thumbnail = ({ width, height, url, title, duration }) => {
   return (
     <div style={{ position: "relative" }}>
       <Img width={width} height={height} src={url} alt={title} />
-      <VideoLength time={duration} />
+      {duration && <VideoLength time={duration} />}
     </div>
   );
 };

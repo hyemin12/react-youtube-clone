@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 // 유튜브 영상 (iframe)
-const Iframe = ({ id, width, height }) => {
+const Iframe = ({ id, type, index, width, height }) => {
   return (
     <IframeContainer width={width} height={height}>
       <iframe
@@ -9,7 +9,11 @@ const Iframe = ({ id, width, height }) => {
         type="text/html"
         width={"100%"}
         height={"100%"}
-        src={`https://www.youtube.com/embed/${id}`}
+        src={
+          type === "list"
+            ? `https://www.youtube.com/embed?listType=playlist&list=${id}&index=${index}`
+            : `https://www.youtube.com/embed/${id}`
+        }
         frameborder="0"
         title={id}
         allowfullscreen
