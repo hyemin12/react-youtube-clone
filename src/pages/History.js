@@ -6,7 +6,7 @@ import { requestAxios } from "../hooks/requestAxios";
 import Loading from "../components/Loading";
 import Layout from "../components/Layout";
 import Row from "../components/FlexRow";
-import SearchItem from "../components/SearchItem";
+import VideoItemRow from "../components/VideoItemRow";
 import Title from "../components/Title";
 
 import { FaTrashAlt, FaSearch } from "react-icons/fa";
@@ -72,7 +72,7 @@ const HistoryPage = () => {
         <Row gap={20}>
           <Container height={"100%"}>
             {list.map((item) => (
-              <SearchItem {...item} key={item.id} />
+              <VideoItemRow {...item} key={item.id} />
             ))}
           </Container>
           <div>

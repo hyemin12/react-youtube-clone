@@ -5,7 +5,7 @@ import { useSearchContext } from "../hooks/searchContext";
 
 import Layout from "../components/Layout";
 import Title from "../components/Title";
-import SearchItem from "../components/SearchItem";
+import VideoItemRow from "../components/VideoItemRow";
 
 const Search = () => {
   const { searchQuery } = useSearchContext();
@@ -32,7 +32,7 @@ const Search = () => {
         {result && (
           <div>
             {result.map((item) => (
-              <SearchItem {...item} key={item.etag} />
+              <VideoItemRow {...item} key={item.etag} />
             ))}
           </div>
         )}

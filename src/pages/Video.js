@@ -139,7 +139,7 @@ const Video = () => {
           <Layout Layout aside={false}>
             <Container>
               <div>
-                <Iframe id={id} width={"920"} height={"517.5"} />
+                <Iframe id={id} width={920} height={517.5} />
 
                 <div style={{ width: "100%" }}>
                   <Title size={20} text={data.snippet.title} cut={false} />

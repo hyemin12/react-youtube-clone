@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { convertCount } from "../hooks/convertCount";
 import {
   requestChannelThumb,
   requestContentDetails,
 } from "../hooks/requestAxios";
+
+import styled from "styled-components";
+
+import { convertCount } from "../hooks/convertCount";
+
 import ChannelThumbnail from "./ChannelThumbnail";
-import Loading from "./Loading";
 import Row from "./FlexRow";
 import SubTitle from "./SubTitle";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import ViewUpload from "./ViewUpload";
 import LinkButton from "./LinkButton";
+import Loading from "./Loading";
 
-const SearchItem = (data) => {
+// 영상 아이템 - 가로
+const VideoItemRow = (data) => {
   const videoId = typeof data.id === "object" ? data.id.videoId : data.id;
 
-  const {
-    thumbnails,
-    title,
-    channelTitle,
-    channelId,
-    publishedAt,
-    description,
-  } = data.snippet;
+  const { channelId } = data.snippet;
 
   const [loading, setLoading] = useState(true);
-  const [channel, setChannel] = useState({ thumbnail: "", customUrl: "" });
+  const [channelData, setChannelData] = useState({
+    thumbnail: "",
+    customUrl: "",
+  });
 
   const [ectData, setEctData] = useState();
 
@@ -36,7 +36,7 @@ const SearchItem = (data) => {
     try {
       const channelRes = await requestChannelThumb(channelId);
 
-      setChannel({
+      setChannelData({
         thumbnail: channelRes.data.items[0].snippet.thumbnails.medium.url,
         customUrl: channelRes.data.items[0].snippet.customUrl,
       });
@@ -55,6 +55,10 @@ const SearchItem = (data) => {
   useEffect(() => {
     getData();
   }, [channelId]);
+
+  const { thumbnails, title, channelTitle, publishedAt, description } =
+    data.snippet;
+
   return (
     <>
       {loading ? (
@@ -81,7 +85,7 @@ const SearchItem = (data) => {
                   <Row gap={10} align={"center"}>
                     <ChannelThumbnail
                       title={channelTitle}
-                      url={channel.thumbnail}
+                      url={channelData.thumbnail}
                       size={30}
                     />
                     <SubTitle text={channelTitle} />
@@ -101,4 +105,4 @@ const ItemContainer = styled.div`
   margin: 20px 0;
 `;
 
-export default SearchItem;
+export default VideoItemRow;

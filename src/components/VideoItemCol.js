@@ -15,18 +15,12 @@ import {
   requestContentDetails,
 } from "../hooks/requestAxios";
 
-// 영상목록 - 영상 (아이템)
-const VideoItem = (item) => {
+// 아이템 - 세로방향
+const VideoItemCol = (item) => {
   const id = typeof item.id === "object" ? item.id.videoId : item.id;
 
-  const {
-    thumbnails,
-    title,
-    channelTitle,
-    channelId,
-    publishedAt,
-    liveBroadcastContent,
-  } = item.snippet;
+  const { thumbnails, title, channelTitle, channelId, publishedAt } =
+    item.snippet;
 
   const [loading, setLoading] = useState(true);
   const [channel, setChannel] = useState({ thumbnail: "", customUrl: "" });
@@ -139,4 +133,4 @@ const Live = styled.p`
   background-color: tomato;
 `;
 
-export default React.memo(VideoItem);
+export default React.memo(VideoItemCol);

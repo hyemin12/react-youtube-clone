@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
-import VideoItem from "./VideoItem";
+import VideoItem from "./VideoItemCol";
 
 // 영상 목록 (리스트)
 const VideoList = ({ videos, browserWidth }) => {
