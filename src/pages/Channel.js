@@ -13,6 +13,7 @@ import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
 import Row from "../components/FlexRow";
+import ChannelPL from "../components/channelTab/ChannelPL";
 
 const Channel = () => {
   console.log("채널컴포넌트");
@@ -23,6 +24,7 @@ const Channel = () => {
   const [loading, setLoading] = useState(true);
   const [channelData, setChannelData] = useState();
   const [videoData, setVideoData] = useState();
+  const [playlists, setPlaylists] = useState();
 
   const tabs = [
     { tabTitle: "홈", tabContent: <ChannelHome /> },
@@ -30,6 +32,7 @@ const Channel = () => {
       tabTitle: "동영상",
       tabContent: <ChannelVideos {...videoData} />,
     },
+    { tabTitle: "플레이리스트", tabContent: <ChannelPL /> },
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
   const [currentIdx, setCurrentIndex] = useState(0);
@@ -45,6 +48,8 @@ const Channel = () => {
         nextPage: resVideos.data.nextPageToken,
         totalResults: resVideos.data.pageInfo.totalResults,
       });
+      setPlaylists();
+      console.log(resChannel.data.items);
       const item = resChannel.data.items[0];
       setChannelData({
         thumbnail: item.snippet.thumbnails,

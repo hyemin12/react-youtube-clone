@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { requestAxios } from "../hooks/requestAxios";
+import { requestAxios, requestChannel } from "../hooks/requestAxios";
 
 import Row from "../components/FlexRow";
-import Iframe from "../components/Iframe";
+import VideoDetail from "../components/VideoDetail";
 import Title from "../components/Title";
 import Layout from "../components/structure/Layout";
 import Loading from "../components/Loading";
@@ -13,23 +14,60 @@ import Thumbnail from "../components/Thumbnail";
 import { FaPlay } from "react-icons/fa";
 
 const PlayListVideo = () => {
+  const { search } = useLocation();
+  const path = search.split("&");
+  const id = path[0].replace("?", "");
+  const playlistId = path[1].replace("list=", "");
+
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [list, setList] = useState();
+  const [videoData, setVideoData] = useState();
+  const [channelData, setChannelData] = useState();
   const getListItem = async () => {
-    const res = await requestAxios.get("playlistItems", {
-      params: {
-        part: "snippet,contentDetails,status",
-        playlistId: "PLrEETNyrDftPhOWlsXeSkz1CbnWzu63ES",
-      },
-    });
-    setList(res.data.items);
-    setLoading(false);
-    console.log(res.data.items);
+    try {
+      const plRes = await requestAxios.get("playlistItems", {
+        params: {
+          part: "snippet,contentDetails,status",
+          playlistId: "PLrEETNyrDftPhOWlsXeSkz1CbnWzu63ES",
+        },
+      });
+      console.log(plRes.data.items);
+      const channelRes = await requestChannel(
+        plRes.data.items[0].snippet.channelId
+      );
+      setList(plRes.data.items);
+      setChannelData({
+        subscribe: channelRes.data.items[0].statistics.subscriberCount,
+        thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+        customUrl: channelRes.data.items[0].snippet.customUrl,
+      });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getListItem();
   }, []);
+  console.log(list[0]);
+  const getVideoData = async () => {
+    try {
+      const res = await requestAxios.get("videos", {
+        params: {
+          part: "snippet,statistics",
+          id: list[currentIndex].contentDetails.videoId,
+        },
+      });
+      setVideoData(res.data.items[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    // getVideoData();
+  }, [currentIndex]);
+
   console.log(currentIndex);
   return (
     <>
@@ -95,7 +133,7 @@ const PlayListVideo = () => {
                 );
               })}
             </ListContainer>
-            <div></div>
+            <VideoDetail {...videoData} {...channelData} />
           </Contanier>
         </Layout>
       )}
