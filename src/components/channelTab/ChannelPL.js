@@ -7,12 +7,13 @@ import LinkButton from "../Button/LinkButton";
 import { FaList } from "react-icons/fa";
 
 const ChannelPL = ({ lists }) => {
+  console.log(lists);
   return (
     <VideoRow>
       {lists.map((item) => {
         const { title, thumbnails } = item.snippet;
         return (
-          <LinkButton>
+          <LinkButton pathname={"/watchPL"} query={item.id} key={item.id}>
             <ItemContainer>
               <ThumbnailContainer>
                 <Thumbnail

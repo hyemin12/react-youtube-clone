@@ -20,7 +20,7 @@ const Router = () => {
         element={<Search />}
       ></Route>
       <Route path={"/history"} element={<HistoryPage />}></Route>
-      <Route path="/playlist" element={<PlayListVideo />}></Route>
+      <Route path="/watchPL" element={<PlayListVideo />}></Route>
       <Route path="/watch" element={<Video />}></Route>
       <Route exact path="/" element={<Home />}></Route>
       <Route path="*" element={<NotFound />}></Route>

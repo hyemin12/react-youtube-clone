@@ -15,12 +15,12 @@ import { FaPlay } from "react-icons/fa";
 
 const PlayListVideo = () => {
   const { search } = useLocation();
-  const path = search.split("&");
-  const id = path[0].replace("?", "");
-  const playlistId = path[1].replace("list=", "");
-
+  // const path = search.split("&");
+  const id = search.replace("?", "");
+  // const playlistId = path[1].replace("list=", "");
+  console.log(id);
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
   const [list, setList] = useState();
   const [videoData, setVideoData] = useState();
   const [channelData, setChannelData] = useState();
@@ -29,19 +29,22 @@ const PlayListVideo = () => {
       const plRes = await requestAxios.get("playlistItems", {
         params: {
           part: "snippet,contentDetails,status",
-          playlistId: "PLrEETNyrDftPhOWlsXeSkz1CbnWzu63ES",
+          playlistId: id,
+          maxResults: 50,
         },
       });
       console.log(plRes.data.items);
-      const channelRes = await requestChannel(
-        plRes.data.items[0].snippet.channelId
-      );
+
+      // const channelRes = await requestChannel(
+      //   plRes.data.items[0].snippet.channelId
+      // );
+
       setList(plRes.data.items);
-      setChannelData({
-        subscribe: channelRes.data.items[0].statistics.subscriberCount,
-        thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
-        customUrl: channelRes.data.items[0].snippet.customUrl,
-      });
+      // setChannelData({
+      //   subscribe: channelRes.data.items[0].statistics.subscriberCount,
+      //   thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+      //   customUrl: channelRes.data.items[0].snippet.customUrl,
+      // });
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -50,25 +53,26 @@ const PlayListVideo = () => {
   useEffect(() => {
     getListItem();
   }, []);
-  console.log(list[0]);
+
   const getVideoData = async () => {
     try {
       const res = await requestAxios.get("videos", {
         params: {
           part: "snippet,statistics",
-          id: list[currentIndex].contentDetails.videoId,
+          id: list[currentIndex - 1].contentDetails.videoId,
         },
       });
+
       setVideoData(res.data.items[0]);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    // getVideoData();
+    getVideoData();
   }, [currentIndex]);
+  console.log(videoData);
 
-  console.log(currentIndex);
   return (
     <>
       {loading ? (
@@ -82,11 +86,12 @@ const PlayListVideo = () => {
                 type="text/html"
                 width={920}
                 height={517.5}
-                src={`https://www.youtube.com/embed?listType=playlist&list=PLrEETNyrDftPhOWlsXeSkz1CbnWzu63ES&index=${currentIndex}`}
+                src={`https://www.youtube.com/embed?listType=playlist&list=${id}&index=${currentIndex}`}
                 frameborder="0"
-                title={"아아테스트테스트"}
+                title={id}
                 allowfullscreen
               ></iframe>
+              <VideoDetail {...videoData} {...channelData} />
             </div>
             <ListContainer style={{ width: "360px" }}>
               <ListTitle>
@@ -110,7 +115,7 @@ const PlayListVideo = () => {
                   >
                     <Row gap={10} align={"center"}>
                       {currentIndex - 1 === idx ? (
-                        <FaPlay fontSize={20} />
+                        <FaPlay fontSize={10} />
                       ) : (
                         <p>{position + 1}</p>
                       )}
@@ -133,7 +138,6 @@ const PlayListVideo = () => {
                 );
               })}
             </ListContainer>
-            <VideoDetail {...videoData} {...channelData} />
           </Contanier>
         </Layout>
       )}

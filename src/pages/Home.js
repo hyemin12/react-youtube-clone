@@ -38,8 +38,7 @@ const Home = () => {
   /** 영상 목록 가져오는 함수 */
   const getData = useCallback(async () => {
     const current = keywords[currentIndex];
-    const rr = await requestSearchVideos("sims", 15, "videos,playlist");
-    console.log(rr.data.items);
+
     try {
       if (currentIndex === 0) {
         // 인기 키워드
