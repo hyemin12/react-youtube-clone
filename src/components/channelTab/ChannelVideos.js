@@ -39,9 +39,11 @@ const ChannelVideos = (videoData) => {
 
       <>
         <VideoRow>
-          {list.result.map((item, idx) => (
-            <ChannelVideoItem {...item} key={idx} />
-          ))}
+          {list.result
+            .filter((video) => video.contentDetails.upload !== undefined)
+            .map((item, idx) => (
+              <ChannelVideoItem {...item} key={idx} />
+            ))}
         </VideoRow>
         {loading ? (
           <div

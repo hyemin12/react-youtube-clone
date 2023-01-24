@@ -1,31 +1,31 @@
 import styled from "styled-components";
 
-import Row from "../FlexRow";
 import Thumbnail from "../Thumbnail";
 import Title from "../Title";
 import LinkButton from "../Button/LinkButton";
 
-import { FaList, FaPlay } from "react-icons/fa";
+import { FaList } from "react-icons/fa";
 
 const ChannelPL = ({ lists }) => {
-  console.log(lists);
   return (
     <VideoRow>
       {lists.map((item) => {
         const { title, thumbnails } = item.snippet;
         return (
           <LinkButton>
-            <ThumbnailContainer>
-              <Thumbnail
-                width="240px"
-                height="135px"
-                url={thumbnails.medium.url}
-              />
-              <Icon>
-                <FaList />
-              </Icon>
-            </ThumbnailContainer>
-            <Title text={title} />
+            <ItemContainer>
+              <ThumbnailContainer>
+                <Thumbnail
+                  width="240px"
+                  height="135px"
+                  url={thumbnails.medium.url}
+                />
+                <Icon>
+                  <FaList />
+                </Icon>
+              </ThumbnailContainer>
+              <Title text={title} cut={true} />
+            </ItemContainer>
           </LinkButton>
         );
       })}
@@ -38,7 +38,11 @@ const VideoRow = styled.div`
   gap: 20px;
   padding: 20px 0;
 `;
+const ItemContainer = styled.div`
+  width: 240px;
+`;
 const ThumbnailContainer = styled.div`
+  flex-grow: 0;
   width: 240px;
   height: 135px;
   border-radius: 10px;

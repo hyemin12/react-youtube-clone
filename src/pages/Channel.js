@@ -45,6 +45,7 @@ const Channel = () => {
     try {
       const resChannel = await requestChannel(id);
       const resVideos = await requestVideos(id);
+
       const resPlaylists = await requestAxios("playlists", {
         params: { part: "snippet", channelId: id, maxResults: 50 },
       });
@@ -55,7 +56,7 @@ const Channel = () => {
         totalResults: resVideos.data.pageInfo.totalResults,
       });
       setPlaylists(resPlaylists.data.items);
-      console.log(resChannel.data.items);
+
       const item = resChannel.data.items[0];
       setChannelData({
         thumbnail: item.snippet.thumbnails,
@@ -75,7 +76,6 @@ const Channel = () => {
       console.log(err);
     }
   }, [id]);
-  console.log(playlists);
 
   useEffect(() => {
     getData();

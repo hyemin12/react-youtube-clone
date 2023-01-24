@@ -11,6 +11,7 @@ import ViewUpload from "./ViewUpload";
 
 const ChannelVideoItem = (item) => {
   const { videoId } = item.contentDetails.upload;
+
   const { thumbnails, title, publishedAt } = item.snippet;
 
   const [loading, setLoading] = useState(true);
