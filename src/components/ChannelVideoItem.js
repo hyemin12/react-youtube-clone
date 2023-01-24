@@ -39,8 +39,8 @@ const ChannelVideoItem = (item) => {
         <ItemContainer width={"245"}>
           <LinkButton pathname={"/watch"} query={videoId}>
             <Thumbnail
-              width={"245px"}
-              height={`${245 * (9 / 16)}px`}
+              width="240px"
+              height="135px"
               url={thumbnails.medium.url}
               duration={statsData.videolength}
             />
