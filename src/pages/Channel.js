@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../hooks/convertCount";
-import { requestVideos, requestChannel } from "../hooks/requestAxios";
+import {
+  requestVideos,
+  requestChannel,
+  requestAxios,
+} from "../hooks/requestAxios";
 
 import Loading from "../components/Loading";
 import ChannelThumbnail from "../components/ChannelThumbnail";
@@ -32,7 +36,7 @@ const Channel = () => {
       tabTitle: "동영상",
       tabContent: <ChannelVideos {...videoData} />,
     },
-    { tabTitle: "플레이리스트", tabContent: <ChannelPL /> },
+    { tabTitle: "재생목록", tabContent: <ChannelPL lists={playlists} /> },
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
   const [currentIdx, setCurrentIndex] = useState(0);
@@ -41,14 +45,16 @@ const Channel = () => {
     try {
       const resChannel = await requestChannel(id);
       const resVideos = await requestVideos(id);
-
+      const resPlaylists = await requestAxios("playlists", {
+        params: { part: "snippet", channelId: id, maxResults: 50 },
+      });
       setVideoData({
         id: id,
         result: resVideos.data.items,
         nextPage: resVideos.data.nextPageToken,
         totalResults: resVideos.data.pageInfo.totalResults,
       });
-      setPlaylists();
+      setPlaylists(resPlaylists.data.items);
       console.log(resChannel.data.items);
       const item = resChannel.data.items[0];
       setChannelData({
@@ -60,13 +66,16 @@ const Channel = () => {
         country: item.snippet.country,
         subscriberCount: item.statistics.subscriberCount,
         viewCount: item.statistics.viewCount,
-        bannerImg: item.brandingSettings.image.bannerExternalUrl || null,
+        bannerImg: item.brandingSettings.image
+          ? item.brandingSettings.image.bannerExternalUrl
+          : null,
       });
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   }, [id]);
+  console.log(playlists);
 
   useEffect(() => {
     getData();

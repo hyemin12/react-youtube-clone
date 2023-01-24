@@ -26,12 +26,12 @@ const VideoDetail = (data) => {
   const [commentList, setCommentList] = useState([]);
   const [currentValue, setCurrentValue] = useState("relevance");
 
-  // 댓글 목록 가져오기
+  //  댓글 목록 가져오기
   const handleIndex = (e) => {
     setCurrentValue(e.target.value);
     getComment();
   };
-  // 댓글 목록 가져오기
+  //  댓글 목록 가져오기
   const getComment = useCallback(async () => {
     const commentThr = await requestAxios("commentThreads", {
       params: {
@@ -49,66 +49,65 @@ const VideoDetail = (data) => {
   }, [currentValue]);
 
   return (
-    <></>
-    // <div style={{ width: "100%" }}>
-    //   <Title size={20} text={title} cut={false} />
-    //   <Row gap={10} justify={"space-between"} align={"center"}>
-    //     <LinkButton pathname={"/channel"} query={customUrl} id={channelId}>
-    //       <ChannelContainer>
-    //         <ChannelThumbnail size={40} url={thumbnail} title={channelTitle} />
-    //         <div>
-    //           <p>{channelTitle}</p>
+    <div style={{ width: "100%" }}>
+      <Title size={20} text={title} cut={false} />
+      <Row gap={10} justify={"space-between"} align={"center"}>
+        <LinkButton pathname={"/channel"} query={customUrl} id={channelId}>
+          <ChannelContainer>
+            <ChannelThumbnail size={40} url={thumbnail} title={channelTitle} />
+            <div>
+              <p>{channelTitle}</p>
 
-    //           <SubTitle text={`구독자 ${convertCount(subscribe)}`} />
-    //         </div>
-    //       </ChannelContainer>
-    //     </LinkButton>
+              <SubTitle text={`구독자 ${convertCount(subscribe)}`} />
+            </div>
+          </ChannelContainer>
+        </LinkButton>
 
-    //     {/* 채널 정보 옆 버튼그룹 */}
-    //     <BtnGroup>
-    //       <LikeButton num={likeCount} />
-    //       <CopyButton text={"공유하기"} id={id} />
-    //     </BtnGroup>
-    //   </Row>
+        {/* 채널 정보 옆 버튼그룹 */}
+        <BtnGroup>
+          <LikeButton num={likeCount} />
+          <CopyButton text={"공유하기"} id={id} />
+        </BtnGroup>
+      </Row>
 
-    //   {/* 영상 설명 */}
-    //   <Descriptions>
-    //     <Row gap={14}>
-    //       <P>조회수 {parseInt(viewCount).toLocaleString()}</P>
-    //       <Date>{publishedAt.slice(0, 10)}</Date>
-    //     </Row>
+      {/* 영상 설명 */}
+      <Descriptions>
+        <Row gap={14}>
+          <P>조회수 {parseInt(viewCount).toLocaleString()}</P>
+          <Date>{publishedAt.slice(0, 10)}</Date>
+        </Row>
 
-    //     <Description des={description} />
-    //   </Descriptions>
-    //   {/* 댓글 목록 */}
+        <Description des={description} />
+      </Descriptions>
+      {/* 댓글 목록 */}
 
-    //   <Row align={"center"} gap={10}>
-    //     <h4 style={{ padding: "20px 0" }}>댓글</h4>
-    //     <select onChange={handleIndex}>
-    //       <option value="relevance">인기댓글순</option>
-    //       <option value="time">최신순</option>
-    //     </select>
-    //   </Row>
-    //   <Row align={"center"} gap={12}>
-    //     <ChannelThumbnail title={"unknown-user"} size={40} />
-    //     <Input placeholder="댓글 추가 기능을 준비중입니다." />
-    //   </Row>
+      <Row align={"center"} gap={10}>
+        <h4 style={{ padding: "20px 0" }}>댓글</h4>
+        <select onChange={handleIndex}>
+          <option value="relevance">인기댓글순</option>
+          <option value="time">최신순</option>
+        </select>
+      </Row>
+      <Row align={"center"} gap={12}>
+        <ChannelThumbnail title={"unknown-user"} size={40} />
+        <Input placeholder="댓글 추가 기능을 준비중입니다." />
+      </Row>
 
-    //   <CommentContainer>
-    //     {commentList.map((comment) => {
-    //       const commentItem = comment.snippet.topLevelComment.snippet;
-    //       return (
-    //         <CommentItem
-    //           {...commentItem}
-    //           key={`${commentItem.authorDisplayName}-${commentItem.textOriginal}`}
-    //         />
-    //       );
-    //     })}
-    //   </CommentContainer>
-    // </div>
+      <CommentContainer>
+        {commentList.map((comment) => {
+          const commentItem = comment.snippet.topLevelComment.snippet;
+          return (
+            <CommentItem
+              {...commentItem}
+              key={`${commentItem.authorDisplayName}-${commentItem.textOriginal}`}
+            />
+          );
+        })}
+      </CommentContainer>
+    </div>
   );
 };
-
+// <></>
 const ChannelContainer = styled.div`
   display: flex;
   align-items: center;
