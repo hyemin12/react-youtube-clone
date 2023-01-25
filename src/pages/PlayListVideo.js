@@ -16,13 +16,14 @@ import { FaPlay } from "react-icons/fa";
 const PlayListVideo = () => {
   const { search } = useLocation();
   const id = search.replace("?", "");
-  console.log(id);
+
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(1);
+
   const [list, setList] = useState();
   const [videoData, setVideoData] = useState();
-
   const [channelData, setChannelData] = useState();
+
   const getListItem = async () => {
     try {
       const plRes = await requestAxios.get("playlistItems", {
@@ -33,10 +34,16 @@ const PlayListVideo = () => {
         },
       });
       if (plRes.status === 200) {
-        const channelRes = await requestChannel(
-          plRes.data.items[0].snippet.channelId
-        );
-
+        const currentVideo = plRes.data.items[0];
+        const channelRes = await requestChannel(currentVideo.snippet.channelId);
+        const videoRes = await requestAxios.get("videos", {
+          params: {
+            part: "snippet,statistics",
+            id: currentVideo.contentDetails.videoId,
+          },
+        });
+        console.log(plRes, videoRes.data.items);
+        setVideoData(videoRes.data.items[0]);
         setChannelData({
           subscribe: channelRes.data.items[0].statistics.subscriberCount,
           thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
@@ -45,7 +52,6 @@ const PlayListVideo = () => {
       }
 
       setList(plRes.data.items);
-
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -55,24 +61,26 @@ const PlayListVideo = () => {
     getListItem();
   }, []);
 
-  const getVideoData = useCallback(async () => {
-    try {
-      const res = await requestAxios.get("videos", {
-        params: {
-          part: "snippet,statistics",
-          id: id,
-        },
-      });
-      console.log(res.data.items);
-      setVideoData(res.data.items[0]);
-    } catch (err) {
-      console.log(err);
-    }
-  }, [currentIndex]);
+  const handleIndex = useCallback(
+    async (idx) => {
+      setCurrentIndex(idx);
+      setLoading(true);
 
-  useEffect(() => {
-    // getVideoData();
-  }, [currentIndex]);
+      try {
+        const res = await requestAxios.get("videos", {
+          params: {
+            part: "snippet,statistics",
+            id: list[idx - 1].contentDetails.videoId,
+          },
+        });
+        setVideoData(res.data.items[0]);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [currentIndex]
+  );
 
   return (
     <>
@@ -92,7 +100,7 @@ const PlayListVideo = () => {
                 title={id}
                 allowfullscreen
               ></iframe>
-              {/* <VideoDetail {...videoData} {...channelData} /> */}
+              <VideoDetail {...videoData} {...channelData} />
             </div>
             <ListContainer style={{ width: "360px" }}>
               <ListTitle>
@@ -111,7 +119,7 @@ const PlayListVideo = () => {
                       key={position}
                       className={currentIndex - 1 === idx ? "active" : " "}
                       onClick={() => {
-                        setCurrentIndex(idx + 1);
+                        handleIndex(idx + 1);
                       }}
                     >
                       <Row gap={10} align={"center"}>

@@ -18,7 +18,7 @@ import { DateTitle } from "../components/ViewUpload";
 /** 비디오 콘텐츠
  * 비디오 설명, 채널 정보, 댓글목록 */
 const VideoDetail = (data) => {
-  console.log(data);
+  // console.log(data);
   const { customUrl, subscribe, thumbnail, id } = data;
   const { title, channelId, channelTitle, publishedAt, description } =
     data.snippet;
