@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -15,14 +15,13 @@ import { FaPlay } from "react-icons/fa";
 
 const PlayListVideo = () => {
   const { search } = useLocation();
-  // const path = search.split("&");
   const id = search.replace("?", "");
-  // const playlistId = path[1].replace("list=", "");
   console.log(id);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(1);
   const [list, setList] = useState();
   const [videoData, setVideoData] = useState();
+
   const [channelData, setChannelData] = useState();
   const getListItem = async () => {
     try {
@@ -33,18 +32,20 @@ const PlayListVideo = () => {
           maxResults: 50,
         },
       });
-      console.log(plRes.data.items);
+      if (plRes.status === 200) {
+        const channelRes = await requestChannel(
+          plRes.data.items[0].snippet.channelId
+        );
 
-      // const channelRes = await requestChannel(
-      //   plRes.data.items[0].snippet.channelId
-      // );
+        setChannelData({
+          subscribe: channelRes.data.items[0].statistics.subscriberCount,
+          thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+          customUrl: channelRes.data.items[0].snippet.customUrl,
+        });
+      }
 
       setList(plRes.data.items);
-      // setChannelData({
-      //   subscribe: channelRes.data.items[0].statistics.subscriberCount,
-      //   thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
-      //   customUrl: channelRes.data.items[0].snippet.customUrl,
-      // });
+
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -54,24 +55,24 @@ const PlayListVideo = () => {
     getListItem();
   }, []);
 
-  const getVideoData = async () => {
+  const getVideoData = useCallback(async () => {
     try {
       const res = await requestAxios.get("videos", {
         params: {
           part: "snippet,statistics",
-          id: list[currentIndex - 1].contentDetails.videoId,
+          id: id,
         },
       });
-
+      console.log(res.data.items);
       setVideoData(res.data.items[0]);
     } catch (err) {
       console.log(err);
     }
-  };
-  useEffect(() => {
-    getVideoData();
   }, [currentIndex]);
-  console.log(videoData);
+
+  useEffect(() => {
+    // getVideoData();
+  }, [currentIndex]);
 
   return (
     <>
@@ -91,7 +92,7 @@ const PlayListVideo = () => {
                 title={id}
                 allowfullscreen
               ></iframe>
-              <VideoDetail {...videoData} {...channelData} />
+              {/* <VideoDetail {...videoData} {...channelData} /> */}
             </div>
             <ListContainer style={{ width: "360px" }}>
               <ListTitle>
@@ -101,42 +102,43 @@ const PlayListVideo = () => {
                   {list.length}
                 </p>
               </ListTitle>
-
-              {list.map((item, idx) => {
-                const { position, thumbnails, title, channelTitle } =
-                  item.snippet;
-                return (
-                  <Item
-                    key={position}
-                    className={currentIndex - 1 === idx ? "active" : " "}
-                    onClick={() => {
-                      setCurrentIndex(idx + 1);
-                    }}
-                  >
-                    <Row gap={10} align={"center"}>
-                      {currentIndex - 1 === idx ? (
-                        <FaPlay fontSize={10} />
-                      ) : (
-                        <p>{position + 1}</p>
-                      )}
-                      <Thumbnail
-                        width={"120px"}
-                        height={"67px"}
-                        url={thumbnails.default.url}
-                      />
-                      <div>
-                        <Title
-                          text={title}
-                          size={14}
-                          cut={true}
-                          margin={"0 0 2px 0"}
+              <ItemsContainer>
+                {list.map((item, idx) => {
+                  const { position, thumbnails, title, channelTitle } =
+                    item.snippet;
+                  return (
+                    <Item
+                      key={position}
+                      className={currentIndex - 1 === idx ? "active" : " "}
+                      onClick={() => {
+                        setCurrentIndex(idx + 1);
+                      }}
+                    >
+                      <Row gap={10} align={"center"}>
+                        {currentIndex - 1 === idx ? (
+                          <FaPlay fontSize={10} />
+                        ) : (
+                          <p>{position + 1}</p>
+                        )}
+                        <Thumbnail
+                          width={"120px"}
+                          height={"67px"}
+                          url={thumbnails.default.url}
                         />
-                        <ChannelT>{channelTitle}</ChannelT>
-                      </div>
-                    </Row>
-                  </Item>
-                );
-              })}
+                        <div>
+                          <Title
+                            text={title}
+                            size={14}
+                            cut={true}
+                            margin={"0 0 2px 0"}
+                          />
+                          <ChannelT>{channelTitle}</ChannelT>
+                        </div>
+                      </Row>
+                    </Item>
+                  );
+                })}
+              </ItemsContainer>
             </ListContainer>
           </Contanier>
         </Layout>
@@ -151,6 +153,7 @@ const Contanier = styled.div`
 `;
 const ListContainer = styled.div`
   height: 100%;
+
   border: 1px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
@@ -158,6 +161,17 @@ const ListContainer = styled.div`
 const ListTitle = styled.div`
   padding: 14px;
   border-bottom: 1px solid #ccc;
+`;
+const ItemsContainer = styled.div`
+  max-height: 870px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 40%;
+    background-color: #bbb;
+  }
 `;
 const Item = styled.div`
   padding: 8px 14px;
