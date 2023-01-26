@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../hooks/convertCount";
-import { requestVideos, requestChannel } from "../hooks/requestAxios";
+import {
+  requestVideos,
+  requestChannel,
+  requestAxios,
+} from "../hooks/requestAxios";
 
 import Loading from "../components/Loading";
 import ChannelThumbnail from "../components/ChannelThumbnail";
@@ -13,9 +17,10 @@ import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
 import Row from "../components/FlexRow";
+import ChannelPL from "../components/channelTab/ChannelPL";
 
 const Channel = () => {
-  console.log("채널컴포넌트");
+  //console.log("채널컴포넌트");
 
   // 데이터를 가져올 "채널아이디"
   const id = localStorage.getItem("YT_ID");
@@ -23,6 +28,7 @@ const Channel = () => {
   const [loading, setLoading] = useState(true);
   const [channelData, setChannelData] = useState();
   const [videoData, setVideoData] = useState();
+  const [playlists, setPlaylists] = useState();
 
   const tabs = [
     { tabTitle: "홈", tabContent: <ChannelHome /> },
@@ -30,6 +36,7 @@ const Channel = () => {
       tabTitle: "동영상",
       tabContent: <ChannelVideos {...videoData} />,
     },
+    { tabTitle: "재생목록", tabContent: <ChannelPL lists={playlists} /> },
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
   const [currentIdx, setCurrentIndex] = useState(0);
@@ -39,12 +46,17 @@ const Channel = () => {
       const resChannel = await requestChannel(id);
       const resVideos = await requestVideos(id);
 
+      const resPlaylists = await requestAxios("playlists", {
+        params: { part: "snippet", channelId: id, maxResults: 50 },
+      });
       setVideoData({
         id: id,
         result: resVideos.data.items,
         nextPage: resVideos.data.nextPageToken,
         totalResults: resVideos.data.pageInfo.totalResults,
       });
+      setPlaylists(resPlaylists.data.items);
+
       const item = resChannel.data.items[0];
       setChannelData({
         thumbnail: item.snippet.thumbnails,
@@ -55,7 +67,9 @@ const Channel = () => {
         country: item.snippet.country,
         subscriberCount: item.statistics.subscriberCount,
         viewCount: item.statistics.viewCount,
-        bannerImg: item.brandingSettings.image.bannerExternalUrl || null,
+        bannerImg: item.brandingSettings.image
+          ? item.brandingSettings.image.bannerExternalUrl
+          : null,
       });
       setLoading(false);
     } catch (err) {

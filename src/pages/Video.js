@@ -15,11 +15,9 @@ import Layout from "../components/structure/Layout";
 import Iframe from "../components/Iframe";
 import VideoDetail from "../components/VideoDetail";
 import RecommendTabs from "../components/RecommendTabs";
-import { DateTitle } from "../components/ViewUpload";
 
+/** 비디오 페이지 */
 const Video = () => {
-  console.log("비디오페이지");
-
   const { search } = useLocation();
   const id = search.replace("?", "");
 

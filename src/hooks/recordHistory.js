@@ -17,5 +17,6 @@ export const recordHistory = (videoId) => {
       (element, i) =>
         storageHistory.findIndex((element2) => element.id === element2.id) === i
     );
+
   localStorage.setItem("YT_History", JSON.stringify(newHistoryArr));
 };

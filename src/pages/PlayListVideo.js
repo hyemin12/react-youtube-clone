@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { requestAxios } from "../hooks/requestAxios";
+import { requestAxios, requestChannel } from "../hooks/requestAxios";
 
 import Row from "../components/FlexRow";
-import Iframe from "../components/Iframe";
+import VideoDetail from "../components/VideoDetail";
 import Title from "../components/Title";
 import Layout from "../components/structure/Layout";
 import Loading from "../components/Loading";
@@ -13,24 +14,74 @@ import Thumbnail from "../components/Thumbnail";
 import { FaPlay } from "react-icons/fa";
 
 const PlayListVideo = () => {
+  const { search } = useLocation();
+  const id = search.replace("?", "");
+
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
+
   const [list, setList] = useState();
+  const [videoData, setVideoData] = useState();
+  const [channelData, setChannelData] = useState();
+
   const getListItem = async () => {
-    const res = await requestAxios.get("playlistItems", {
-      params: {
-        part: "snippet,contentDetails,status",
-        playlistId: "PLrEETNyrDftPhOWlsXeSkz1CbnWzu63ES",
-      },
-    });
-    setList(res.data.items);
-    setLoading(false);
-    console.log(res.data.items);
+    try {
+      const plRes = await requestAxios.get("playlistItems", {
+        params: {
+          part: "snippet,contentDetails,status",
+          playlistId: id,
+          maxResults: 50,
+        },
+      });
+      if (plRes.status === 200) {
+        const currentVideo = plRes.data.items[0];
+        const channelRes = await requestChannel(currentVideo.snippet.channelId);
+        const videoRes = await requestAxios.get("videos", {
+          params: {
+            part: "snippet,statistics",
+            id: currentVideo.contentDetails.videoId,
+          },
+        });
+        console.log(plRes, videoRes.data.items);
+        setVideoData(videoRes.data.items[0]);
+        setChannelData({
+          subscribe: channelRes.data.items[0].statistics.subscriberCount,
+          thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+          customUrl: channelRes.data.items[0].snippet.customUrl,
+        });
+      }
+
+      setList(plRes.data.items);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getListItem();
   }, []);
-  console.log(currentIndex);
+
+  const handleIndex = useCallback(
+    async (idx) => {
+      setCurrentIndex(idx);
+      setLoading(true);
+
+      try {
+        const res = await requestAxios.get("videos", {
+          params: {
+            part: "snippet,statistics",
+            id: list[idx - 1].contentDetails.videoId,
+          },
+        });
+        setVideoData(res.data.items[0]);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [currentIndex]
+  );
+
   return (
     <>
       {loading ? (
@@ -44,11 +95,12 @@ const PlayListVideo = () => {
                 type="text/html"
                 width={920}
                 height={517.5}
-                src={`https://www.youtube.com/embed?listType=playlist&list=PLrEETNyrDftPhOWlsXeSkz1CbnWzu63ES&index=${currentIndex}`}
+                src={`https://www.youtube.com/embed?listType=playlist&list=${id}&index=${currentIndex}`}
                 frameborder="0"
-                title={"아아테스트테스트"}
+                title={id}
                 allowfullscreen
               ></iframe>
+              <VideoDetail {...videoData} {...channelData} />
             </div>
             <ListContainer style={{ width: "360px" }}>
               <ListTitle>
@@ -58,44 +110,44 @@ const PlayListVideo = () => {
                   {list.length}
                 </p>
               </ListTitle>
-
-              {list.map((item, idx) => {
-                const { position, thumbnails, title, channelTitle } =
-                  item.snippet;
-                return (
-                  <Item
-                    key={position}
-                    className={currentIndex - 1 === idx ? "active" : " "}
-                    onClick={() => {
-                      setCurrentIndex(idx + 1);
-                    }}
-                  >
-                    <Row gap={10} align={"center"}>
-                      {currentIndex - 1 === idx ? (
-                        <FaPlay fontSize={20} />
-                      ) : (
-                        <p>{position + 1}</p>
-                      )}
-                      <Thumbnail
-                        width={"120px"}
-                        height={"67px"}
-                        url={thumbnails.default.url}
-                      />
-                      <div>
-                        <Title
-                          text={title}
-                          size={14}
-                          cut={true}
-                          margin={"0 0 2px 0"}
+              <ItemsContainer>
+                {list.map((item, idx) => {
+                  const { position, thumbnails, title, channelTitle } =
+                    item.snippet;
+                  return (
+                    <Item
+                      key={position}
+                      className={currentIndex - 1 === idx ? "active" : " "}
+                      onClick={() => {
+                        handleIndex(idx + 1);
+                      }}
+                    >
+                      <Row gap={10} align={"center"}>
+                        {currentIndex - 1 === idx ? (
+                          <FaPlay fontSize={10} />
+                        ) : (
+                          <p>{position + 1}</p>
+                        )}
+                        <Thumbnail
+                          width={"120px"}
+                          height={"67px"}
+                          url={thumbnails.default.url}
                         />
-                        <ChannelT>{channelTitle}</ChannelT>
-                      </div>
-                    </Row>
-                  </Item>
-                );
-              })}
+                        <div>
+                          <Title
+                            text={title}
+                            size={14}
+                            cut={true}
+                            margin={"0 0 2px 0"}
+                          />
+                          <ChannelT>{channelTitle}</ChannelT>
+                        </div>
+                      </Row>
+                    </Item>
+                  );
+                })}
+              </ItemsContainer>
             </ListContainer>
-            <div></div>
           </Contanier>
         </Layout>
       )}
@@ -109,6 +161,7 @@ const Contanier = styled.div`
 `;
 const ListContainer = styled.div`
   height: 100%;
+
   border: 1px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
@@ -116,6 +169,17 @@ const ListContainer = styled.div`
 const ListTitle = styled.div`
   padding: 14px;
   border-bottom: 1px solid #ccc;
+`;
+const ItemsContainer = styled.div`
+  max-height: 870px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 40%;
+    background-color: #bbb;
+  }
 `;
 const Item = styled.div`
   padding: 8px 14px;
