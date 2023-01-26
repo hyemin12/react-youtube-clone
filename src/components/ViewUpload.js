@@ -6,6 +6,7 @@ import Row from "./FlexRow";
 import SubTitle from "./SubTitle";
 
 // 조회수·업로드 날짜 컴포넌트
+// convert : 업로드 날짜 변환 여부
 const ViewUpload = ({ view, date, convert }) => {
   return (
     <Row gap={14}>

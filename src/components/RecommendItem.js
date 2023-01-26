@@ -5,12 +5,12 @@ import { convertCount } from "../hooks/convertCount";
 import { requestContentDetails } from "../hooks/requestAxios";
 
 import Loading from "./Loading";
+import Row from "./FlexRow";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 import LinkButton from "./Button/LinkButton";
-import Row from "./FlexRow";
 
 // 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {

@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 import { calcDate } from "../hooks/convertDate";
 
-import ChannelThumbnail from "./ChannelThumbnail";
-import Row from "./FlexRow";
 import LikeButton from "./Button/LikeButton";
+import Row from "./FlexRow";
+import ChannelThumbnail from "./ChannelThumbnail";
 import SubTitle from "./SubTitle";
 
 const CommentItem = (comment) => {

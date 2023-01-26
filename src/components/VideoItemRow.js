@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
 import {
   requestChannelThumb,
   requestContentDetails,
 } from "../hooks/requestAxios";
-
-import styled from "styled-components";
-
 import { convertCount } from "../hooks/convertCount";
 
-import ChannelThumbnail from "./ChannelThumbnail";
+import Loading from "./Loading";
 import Row from "./FlexRow";
-import SubTitle from "./SubTitle";
+import LinkButton from "./Button/LinkButton";
+import ChannelThumbnail from "./ChannelThumbnail";
 import Thumbnail from "./Thumbnail";
 import Title from "./Title";
+import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
-import LinkButton from "./Button/LinkButton";
-import Loading from "./Loading";
 
 // 영상 아이템 - 가로
 const VideoItemRow = (data) => {

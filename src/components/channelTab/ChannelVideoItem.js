@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { convertCount } from "../hooks/convertCount";
-import { requestContentDetails } from "../hooks/requestAxios";
+import { convertCount } from "../../hooks/convertCount";
+import { requestContentDetails } from "../../hooks/requestAxios";
 
-import LinkButton from "./Button/LinkButton";
-import Thumbnail from "./Thumbnail";
-import Title from "./Title";
-import ViewUpload from "./ViewUpload";
+import LinkButton from "../Button/LinkButton";
+import Thumbnail from "../Thumbnail";
+import Title from "../Title";
+import ViewUpload from "../ViewUpload";
 
+// 채널페이지 동영상 아이템
 const ChannelVideoItem = (item) => {
   const { videoId } = item.contentDetails.upload;
 
@@ -18,7 +19,7 @@ const ChannelVideoItem = (item) => {
   const [statsData, setStatsData] = useState();
 
   // 영상 조회수, 영상 길이 얻어오기
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       const res = await requestContentDetails(videoId);
       setStatsData({
@@ -29,10 +30,11 @@ const ChannelVideoItem = (item) => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [videoId]);
   useEffect(() => {
     getData();
-  }, [videoId]);
+  }, []);
+
   return (
     <>
       {!loading && (

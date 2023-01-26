@@ -32,6 +32,7 @@ const VideoDetail = (data) => {
     setCurrentValue(e.target.value);
     getComment();
   };
+
   //  댓글 목록 가져오기
   const getComment = useCallback(async () => {
     const commentThr = await requestAxios("commentThreads", {
@@ -80,6 +81,7 @@ const VideoDetail = (data) => {
 
         <Description des={description} />
       </Descriptions>
+
       {/* 댓글 탭 */}
       <Row align={"center"} gap={10}>
         <h4 style={{ padding: "20px 0" }}>댓글</h4>
@@ -88,11 +90,13 @@ const VideoDetail = (data) => {
           <option value="time">최신순</option>
         </select>
       </Row>
+
       {/* 댓글 작성 */}
       <Row align={"center"} gap={12}>
         <ChannelThumbnail title={"unknown-user"} size={40} />
         <Input placeholder="댓글 추가 기능을 준비중입니다." />
       </Row>
+
       {/* 댓글 목록 */}
       <CommentContainer>
         {commentList.map((comment) => {
@@ -108,7 +112,7 @@ const VideoDetail = (data) => {
     </div>
   );
 };
-// <></>
+
 const ChannelContainer = styled.div`
   display: flex;
   align-items: center;

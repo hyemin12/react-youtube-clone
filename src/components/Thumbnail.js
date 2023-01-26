@@ -10,7 +10,6 @@ const Thumbnail = ({ width, height, url, title, duration }) => {
    * standard: {  width: "640", height: "480" }
    * maxres: {  width: "1280", height: "720" }
    *  */
-
   return (
     <div style={{ position: "relative" }}>
       <Img width={width} height={height} src={url} alt={title} />

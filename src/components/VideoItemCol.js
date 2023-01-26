@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import {
+  requestChannelThumb,
+  requestContentDetails,
+} from "../hooks/requestAxios";
 import { convertCount } from "../hooks/convertCount";
 
 import Loading from "./Loading";
@@ -10,12 +14,8 @@ import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ChannelThumbnail from "./ChannelThumbnail";
 import ViewUpload from "./ViewUpload";
-import {
-  requestChannelThumb,
-  requestContentDetails,
-} from "../hooks/requestAxios";
 
-// 아이템 - 세로방향
+// 영상 아이템 - 세로
 const VideoItemCol = (item) => {
   const id = typeof item.id === "object" ? item.id.videoId : item.id;
 

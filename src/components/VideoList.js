@@ -20,7 +20,5 @@ const ListContainer = styled.div`
   margin: 0 auto;
   padding: 20px 0;
 `;
-// 전체 컨테이너 10px * 2
-// Nav 20px
 
 export default VideoList;

@@ -17,33 +17,12 @@ const VideoLength = ({ time }) => {
           : "00"
       )
       .join(":");
-
-    // if (t.includes("H")) {
-    //   const splitTime = t.split(/[MH]/g);
-    //   return splitTime
-    //     .map((t) =>
-    //       t.includes("M" || "S")
-    //         ? t.replace(/[PTS]/g, "").padStart(2, "0")
-    //         : "00"
-    //     )
-    //     .join(":");
-    // } else if (t.includes("M")) {
-    //   const splitTime = t.split("M");
-    //   min = splitTime[0].replace("PT", "").padStart(2, "0");
-    //   sec = splitTime[1].includes("S")
-    //     ? splitTime[1].replace("S", "").padStart(2, "0")
-    //     : "00";
-    //   return `${min}:${sec}`;
-    // } else {
-    //   sec = t.replaceAll(/[PTS]/g, "").padStart(2, "0");
-    //   return `00:${sec}`;
-    // }
   };
-  //
+
   return (
     <>
       {time === "P0D" ? (
-        <Live>스트리밍 중</Live>
+        <Live>스트리밍...</Live>
       ) : (
         <Time>{covertTime(time)}</Time>
       )}

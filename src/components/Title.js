@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// cut : 2줄 이상일 경우 말 줄임 여부
 const Title = ({ size, text, cut, margin }) => {
   return (
     <H4 size={size} className={cut ? "overflow" : ""} margin={margin}>

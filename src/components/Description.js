@@ -1,13 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
+// 설명 컴포넌트
 const Description = ({ des }) => {
-  const desRef = useRef(null);
   const [isSummary, setIsSummary] = useState(true);
 
   return (
     <div>
-      <DesContainer ref={desRef} className={isSummary ? "" : "clicked"}>
+      <DesContainer className={isSummary ? "" : "clicked"}>
         {des
           .split("\n")
           .map((sentence, idx) =>

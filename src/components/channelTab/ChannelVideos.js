@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { requestVideos } from "../../hooks/requestAxios";
 
 import Loading from "../Loading";
-import ChannelVideoItem from "../ChannelVideoItem";
+import ChannelVideoItem from "./ChannelVideoItem";
 import { Btn } from "../Button/CopyButton";
 
 const ChannelVideos = (videoData) => {
@@ -12,12 +12,12 @@ const ChannelVideos = (videoData) => {
   console.log(videoData);
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState(videoData);
+
   const getMoreData = async () => {
     setLoading(true);
     try {
       const res = await requestVideos(videoData.id, list.nextPage);
 
-      console.log(videoData.id, res.data);
       setList({
         result: list.result.concat(res.data.items),
         nextPage:
@@ -31,8 +31,7 @@ const ChannelVideos = (videoData) => {
       console.log(err);
     }
   };
-  console.log(list);
-  // list
+
   return (
     <div>
       <h4>동영상 · 전체 {videoData.totalResults}개</h4>
