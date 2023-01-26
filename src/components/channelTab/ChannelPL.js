@@ -6,8 +6,12 @@ import LinkButton from "../Button/LinkButton";
 
 import { FaList } from "react-icons/fa";
 
+// 채널 재생목록 탭
 const ChannelPL = ({ lists }) => {
-  console.log(lists);
+  // console.log(lists);
+  if (!lists) {
+    <p>재생목록이 없습니다.</p>;
+  }
   return (
     <VideoRow>
       {lists.map((item) => {

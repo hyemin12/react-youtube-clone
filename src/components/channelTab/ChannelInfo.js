@@ -27,7 +27,8 @@ const ChannelInfo = (channelData) => {
             <p>등록된 설명이 없습니다.</p>
           )}
         </div>
-        <div style={{ flexGrow: 1 }}>
+        {/* 오른쪽 사이드 */}
+        <aside style={{ flexGrow: 1 }}>
           <H4>추가정보</H4>
           <Row align={"center"} gap={16}>
             <FaInfoCircle />
@@ -43,7 +44,7 @@ const ChannelInfo = (channelData) => {
             <FaMapMarker />
             <P>위치: {convertCountry(channelData.country)}</P>
           </Row>
-        </div>
+        </aside>
       </Row>
     </div>
   );

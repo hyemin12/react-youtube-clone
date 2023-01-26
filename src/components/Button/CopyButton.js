@@ -1,13 +1,14 @@
 import { useRef } from "react";
 import styled from "styled-components";
 
-import { FaCopy } from "react-icons/fa";
-
 import useAlert from "../../hooks/useAlert";
 
 import Alert from "../Alert";
 import Row from "../FlexRow";
 
+import { FaCopy } from "react-icons/fa";
+
+// 복사하는 버튼
 const CopyButton = ({ id, text }) => {
   const urlRef = useRef(null);
 
