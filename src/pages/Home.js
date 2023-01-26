@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { FaAngleRight } from "react-icons/fa";
 
 import {
   requestPopularVideos,
@@ -11,14 +10,15 @@ import {
 import Layout from "../components/structure/Layout";
 import Loading from "../components/Loading";
 import VideoList from "../components/VideoList";
-import Nav from "../components/structure/Nav";
+
+import { FaAngleRight } from "react-icons/fa";
 
 const Home = () => {
   const keywordRef = useRef(null);
 
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
   const keywords = [
     { keyword: "인기", category: 0 },
@@ -37,17 +37,16 @@ const Home = () => {
 
   /** 영상 목록 가져오는 함수 */
   const getData = useCallback(async () => {
-    const current = keywords[currentIndex];
+    const current = keywords[currentTabIndex];
 
     try {
-      if (currentIndex === 0) {
+      if (currentTabIndex === 0) {
         // 인기 키워드
         const res = await requestPopularVideos();
         setResult(res.data.items);
       } else if (typeof current.category === "number") {
         // 카테고리 아이디가 있는 경우
         const res = await requestPopularVideos(current.category);
-
         setResult(res.data.items);
       } else {
         // 카테고리 아이디가 없는 경우
@@ -59,11 +58,11 @@ const Home = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [currentIndex]);
+  }, [currentTabIndex]);
 
   useEffect(() => {
     getData();
-  }, [currentIndex]);
+  }, [currentTabIndex]);
 
   /** 키워드 컨테이너 크기에 따라 overflow 상태 변경
    * keywordWidth: 키워드 컨테이너(고정값)
@@ -93,10 +92,10 @@ const Home = () => {
                   <Keyword
                     key={keyword}
                     onClick={() => {
-                      setCurrentIndex(idx);
+                      setCurrentTabIndex(idx);
                       setLoading(true);
                     }}
-                    className={idx === currentIndex ? "isActive" : ""}
+                    className={idx === currentTabIndex ? "isActive" : ""}
                   >
                     <p># {keyword}</p>
                   </Keyword>

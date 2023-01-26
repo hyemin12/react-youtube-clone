@@ -26,6 +26,7 @@ import Row from "../components/FlexRow";
 import CommentItem from "../components/CommentItem";
 import { DateTitle } from "../components/ViewUpload";
 import VideoDetail from "../components/VideoDetail";
+import { recordHistory } from "../hooks/recordHistory";
 
 const Video = () => {
   console.log("비디오페이지");
@@ -66,7 +67,7 @@ const Video = () => {
         const channelRes = await requestChannel(channelId);
 
         // 같은 채널 영상 목록
-        const sameChannel = await requestVideos(channelId);
+        const sameChannel = await requestVideos(channelId, null, 15);
 
         // 같은 카테고리 영상 목록
         const sameCategory = await requestPopularVideos(
@@ -90,23 +91,9 @@ const Video = () => {
     }
   }, []);
 
-  // 시청 기록 저장
-  const recordHistory = useCallback(() => {
-    const storageH = localStorage.getItem("YT_History")
-      ? JSON.parse(localStorage.getItem("YT_History"))
-      : [];
-    const now = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}-${String(today.getDate()).padStart(2, "0")}`;
-    const historyArr = [...new Set(storageH.concat({ date: now, id: id }))];
-
-    localStorage.setItem("YT_History", JSON.stringify(historyArr));
-  }, [id]);
-
   useEffect(() => {
     getData();
-    recordHistory();
+    recordHistory(id);
   }, [id]);
 
   // 댓글 목록 가져오기

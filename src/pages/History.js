@@ -26,13 +26,14 @@ const HistoryPage = () => {
   // id를 바탕으로 영상 정보 가져오기
   const getData = async () => {
     let arr = [];
-    for (let i = 0; i < storageD.length; i++) {
+
+    for (let storageItem of storageD) {
       const res = await requestAxios.get("videos", {
-        params: { part: "snippet,statistics", id: storageD[i].id },
+        params: { part: "snippet,statistics", id: storageItem.id },
       });
       arr.push(res.data.items[0]);
     }
-    setList(arr);
+    setList([...new Set(arr)]);
     setLoading(false);
   };
   useEffect(() => {
@@ -62,7 +63,7 @@ const HistoryPage = () => {
       </Layout>
     );
   }
-
+  console.log(list);
   return (
     <Layout aside={true}>
       <Title text={"시청기록"} size={24} />

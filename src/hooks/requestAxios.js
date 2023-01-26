@@ -58,12 +58,12 @@ export const requestChannelThumb = (channelId) =>
   });
 
 /** 채널아이디를 기반으로 영상 목록 가져오기 */
-export const requestVideos = (channelId, token) =>
+export const requestVideos = (channelId, token, maxResult = 50) =>
   requestAxios.get("activities", {
     params: {
       part: "snippet,contentDetails",
       channelId: channelId,
-      maxResults: 50,
+      maxResults: maxResult,
       pageToken: token && token,
     },
   });
