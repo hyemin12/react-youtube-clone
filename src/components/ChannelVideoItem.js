@@ -11,6 +11,7 @@ import ViewUpload from "./ViewUpload";
 
 const ChannelVideoItem = (item) => {
   const { videoId } = item.contentDetails.upload;
+
   const { thumbnails, title, publishedAt } = item.snippet;
 
   const [loading, setLoading] = useState(true);
@@ -38,8 +39,8 @@ const ChannelVideoItem = (item) => {
         <ItemContainer width={"245"}>
           <LinkButton pathname={"/watch"} query={videoId}>
             <Thumbnail
-              width={"245px"}
-              height={`${245 * (9 / 16)}px`}
+              width="240px"
+              height="135px"
               url={thumbnails.medium.url}
               duration={statsData.videolength}
             />

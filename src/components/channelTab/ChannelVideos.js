@@ -1,10 +1,11 @@
 import { useState } from "react";
+import styled from "styled-components";
+
 import { requestVideos } from "../../hooks/requestAxios";
 
 import Loading from "../Loading";
 import ChannelVideoItem from "../ChannelVideoItem";
 import { Btn } from "../Button/CopyButton";
-import styled from "styled-components";
 
 const ChannelVideos = (videoData) => {
   // 더보기 버튼 누르면 데이터 더 가져오는 함수
@@ -38,9 +39,11 @@ const ChannelVideos = (videoData) => {
 
       <>
         <VideoRow>
-          {list.result.map((item, idx) => (
-            <ChannelVideoItem {...item} key={idx} />
-          ))}
+          {list.result
+            .filter((video) => video.contentDetails.upload !== undefined)
+            .map((item, idx) => (
+              <ChannelVideoItem {...item} key={idx} />
+            ))}
         </VideoRow>
         {loading ? (
           <div

@@ -13,6 +13,7 @@ import { recordHistory } from "../hooks/recordHistory";
 import Loading from "../components/Loading";
 import Layout from "../components/structure/Layout";
 import Iframe from "../components/Iframe";
+
 import VideoDetail from "../components/VideoDetail";
 import RecommendTabs from "../components/RecommendTabs";
 
