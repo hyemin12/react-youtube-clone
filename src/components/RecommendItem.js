@@ -20,14 +20,14 @@ const RecommendItem = ({ item, channelTitle }) => {
     ? item.contentDetails.upload.videoId
     : item.id;
 
-  const [statsData, setStatsData] = useState({ viewNum: 0, length: "" });
   const [loading, setLoading] = useState(true);
+  const [statsData, setStatsData] = useState({ viewNum: 0, length: "" });
 
-  // 조회수 가져오는 함수
+  // 조회수,영상길이 가져오는 함수
   const getData = async () => {
     try {
       const res = await requestContentDetails(id);
-      console.log(id, res.data.items);
+
       setStatsData({
         viewNum: res.data.items[0].statistics
           ? res.data.items[0].statistics.viewCount

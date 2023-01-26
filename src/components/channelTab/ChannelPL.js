@@ -10,7 +10,7 @@ import { FaList } from "react-icons/fa";
 const ChannelPL = ({ lists }) => {
   // console.log(lists);
   if (!lists) {
-    <p>재생목록이 없습니다.</p>;
+    return <p>재생목록이 없습니다.</p>;
   }
   return (
     <VideoRow>
