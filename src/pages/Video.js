@@ -8,18 +8,17 @@ import {
   requestPopularVideos,
   requestVideos,
 } from "../hooks/requestAxios";
-import { today } from "../hooks/convertDate";
+import { recordHistory } from "../hooks/recordHistory";
 
 import Loading from "../components/Loading";
 import Layout from "../components/structure/Layout";
 import Iframe from "../components/Iframe";
-import RecommendTabs from "../components/RecommendTabs";
+
 import VideoDetail from "../components/VideoDetail";
-import { DateTitle } from "../components/ViewUpload";
+import RecommendTabs from "../components/RecommendTabs";
 
+/** 비디오 페이지 */
 const Video = () => {
-  console.log("비디오페이지");
-
   const { search } = useLocation();
   const id = search.replace("?", "");
 
@@ -30,7 +29,7 @@ const Video = () => {
 
   const [channelData, setChannelData] = useState();
 
-  const [recommend, setRecommend] = useState([
+  const [recommendList, setRecommendList] = useState([
     { title: "비슷한 영상", list: [] },
     { title: "같은 채널 다른 영상", list: [] },
   ]);
@@ -54,7 +53,7 @@ const Video = () => {
         const channelRes = await requestChannel(channelId);
 
         // 같은 채널 영상 목록
-        const sameChannel = await requestVideos(channelId);
+        const sameChannel = await requestVideos(channelId, null, 15);
 
         // 같은 카테고리 영상 목록
         const sameCategory = await requestPopularVideos(
@@ -67,9 +66,9 @@ const Video = () => {
           thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
           customUrl: channelRes.data.items[0].snippet.customUrl,
         });
-        setRecommend([
-          { ...recommend[0], list: sameCategory.data.items },
-          { ...recommend[1], list: sameChannel.data.items },
+        setRecommendList([
+          { ...recommendList[0], list: sameCategory.data.items },
+          { ...recommendList[1], list: sameChannel.data.items },
         ]);
       }
       setLoading(false);
@@ -78,23 +77,9 @@ const Video = () => {
     }
   }, []);
 
-  // 시청 기록 저장
-  const recordHistory = useCallback(() => {
-    const storageH = localStorage.getItem("YT_History")
-      ? JSON.parse(localStorage.getItem("YT_History"))
-      : [];
-    const now = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
-      2,
-      "0"
-    )}-${String(today.getDate()).padStart(2, "0")}`;
-    const historyArr = [...new Set(storageH.concat({ date: now, id: id }))];
-
-    localStorage.setItem("YT_History", JSON.stringify(historyArr));
-  }, [id]);
-
   useEffect(() => {
     getData();
-    recordHistory();
+    recordHistory(id);
   }, [id]);
 
   return (
@@ -109,8 +94,9 @@ const Video = () => {
                 <Iframe id={id} width={920} height={517.5} />
                 <VideoDetail {...data} {...channelData} />
               </div>
+
               {/* 추천 동영상 */}
-              {recommend && <RecommendTabs data={recommend} id={id} />}
+              {recommendList && <RecommendTabs data={recommendList} id={id} />}
             </Container>
           </Layout>
         )

@@ -27,10 +27,14 @@ const RecommendItem = ({ item, channelTitle }) => {
   const getData = async () => {
     try {
       const res = await requestContentDetails(id);
-
+      console.log(id, res.data.items);
       setStatsData({
-        viewNum: res.data.items[0].statistics.viewCount,
-        videolength: res.data.items[0].contentDetails.duration,
+        viewNum: res.data.items[0].statistics
+          ? res.data.items[0].statistics.viewCount
+          : 0,
+        videolength: res.data.items[0].contentDetails
+          ? res.data.items[0].contentDetails.duration
+          : 0,
       });
       setLoading(false);
     } catch (err) {

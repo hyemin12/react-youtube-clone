@@ -20,7 +20,7 @@ import Row from "../components/FlexRow";
 import ChannelPL from "../components/channelTab/ChannelPL";
 
 const Channel = () => {
-  console.log("채널컴포넌트");
+  //console.log("채널컴포넌트");
 
   // 데이터를 가져올 "채널아이디"
   const id = localStorage.getItem("YT_ID");
