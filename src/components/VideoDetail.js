@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { convertCount } from "../hooks/convertCount";
 import { requestAxios } from "../hooks/requestAxios";
 
+import Row from "../components/FlexRow";
 import Title from "../components/Title";
 import SubTitle from "../components/SubTitle";
 import ChannelThumbnail from "../components/ChannelThumbnail";
 import Description from "../components/Description";
-import Row from "../components/FlexRow";
 import CopyButton from "../components/Button/CopyButton";
 import LikeButton from "../components/Button/LikeButton";
 import LinkButton from "../components/Button/LinkButton";
@@ -80,8 +80,7 @@ const VideoDetail = (data) => {
 
         <Description des={description} />
       </Descriptions>
-      {/* 댓글 목록 */}
-
+      {/* 댓글 탭 */}
       <Row align={"center"} gap={10}>
         <h4 style={{ padding: "20px 0" }}>댓글</h4>
         <select onChange={handleIndex}>
@@ -89,11 +88,12 @@ const VideoDetail = (data) => {
           <option value="time">최신순</option>
         </select>
       </Row>
+      {/* 댓글 작성 */}
       <Row align={"center"} gap={12}>
         <ChannelThumbnail title={"unknown-user"} size={40} />
         <Input placeholder="댓글 추가 기능을 준비중입니다." />
       </Row>
-
+      {/* 댓글 목록 */}
       <CommentContainer>
         {commentList.map((comment) => {
           const commentItem = comment.snippet.topLevelComment.snippet;

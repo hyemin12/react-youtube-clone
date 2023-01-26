@@ -33,25 +33,29 @@ const PlayListVideo = () => {
           maxResults: 50,
         },
       });
+
+      setList(plRes.data.items);
+
       if (plRes.status === 200) {
         const currentVideo = plRes.data.items[0];
+
         const channelRes = await requestChannel(currentVideo.snippet.channelId);
+
         const videoRes = await requestAxios.get("videos", {
           params: {
             part: "snippet,statistics",
             id: currentVideo.contentDetails.videoId,
           },
         });
-        console.log(plRes, videoRes.data.items);
+
         setVideoData(videoRes.data.items[0]);
+
         setChannelData({
           subscribe: channelRes.data.items[0].statistics.subscriberCount,
           thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
           customUrl: channelRes.data.items[0].snippet.customUrl,
         });
       }
-
-      setList(plRes.data.items);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -61,11 +65,11 @@ const PlayListVideo = () => {
     getListItem();
   }, []);
 
-  const handleIndex = useCallback(
+  /** 재생 목록에 있는 영상 클릭하면 active 영상 변경하는 함수 */
+  const changeActiveVideo = useCallback(
     async (idx) => {
       setCurrentIndex(idx);
       setLoading(true);
-
       try {
         const res = await requestAxios.get("videos", {
           params: {
@@ -119,7 +123,7 @@ const PlayListVideo = () => {
                       key={position}
                       className={currentIndex - 1 === idx ? "active" : " "}
                       onClick={() => {
-                        handleIndex(idx + 1);
+                        changeActiveVideo(idx + 1);
                       }}
                     >
                       <Row gap={10} align={"center"}>

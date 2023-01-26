@@ -22,17 +22,13 @@ const Search = () => {
   const handleSearch = useCallback(
     async (e) => {
       e.preventDefault();
-
+      if (!query) return alert("검색어를 입력하세요");
       try {
-        if (!query) {
-          alert("검색어를 입력하세요");
-        } else {
-          const res = await requestSearchVideos(query);
+        const res = await requestSearchVideos(query);
 
-          setSearchQuery({ q: query, result: res.data.items });
+        setSearchQuery({ q: query, result: res.data.items });
 
-          navigate(`/results/search=${query}`);
-        }
+        navigate(`/results/search=${query}`);
       } catch (err) {
         console.log(err);
       }
