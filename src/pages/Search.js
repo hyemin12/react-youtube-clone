@@ -1,4 +1,3 @@
-// 검색 결과 페이지 path={`/results/:search=${searchQuery.q}`}
 import styled from "styled-components";
 
 import { useSearchContext } from "../hooks/searchContext";
@@ -7,10 +6,13 @@ import Layout from "../components/structure/Layout";
 import Title from "../components/Title";
 import VideoItemRow from "../components/VideoItemRow";
 
+// 검색 결과 페이지
+// path={`/results/:search=${searchQuery.q}`}
 const Search = () => {
   const { searchQuery } = useSearchContext();
 
   const { q, result } = searchQuery;
+
   if (!searchQuery.q) {
     return (
       <Layout aside={true}>
@@ -30,7 +32,7 @@ const Search = () => {
         />
 
         {result && (
-          <div>
+          <div style={{ width: "75vw" }}>
             {result.map((item) => (
               <VideoItemRow {...item} key={item.etag} />
             ))}
