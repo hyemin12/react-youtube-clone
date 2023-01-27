@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../../hooks/convertCount";
+import useGetStatistics from "../../hooks/getViewNumVideoLength";
 import { requestContentDetails } from "../../hooks/requestAxios";
 
 import LinkButton from "../Button/LinkButton";
@@ -16,39 +17,23 @@ const ChannelVideoItem = (item) => {
   const { thumbnails, title, publishedAt } = item.snippet;
 
   const [loading, setLoading] = useState(true);
-  const [statsData, setStatsData] = useState();
 
-  // 영상 조회수, 영상 길이 얻어오기
-  const getData = useCallback(async () => {
-    try {
-      const res = await requestContentDetails(videoId);
-      setStatsData({
-        viewNum: res.data.items[0].statistics.viewCount,
-        videolength: res.data.items[0].contentDetails.duration,
-      });
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  }, [videoId]);
-  useEffect(() => {
-    getData();
-  }, []);
+  const { statisticsData } = useGetStatistics(videoId, setLoading);
 
   return (
     <>
-      {!loading && (
+      {!loading && statisticsData && (
         <ItemContainer width={"245"}>
           <LinkButton pathname={"/watch"} query={videoId}>
             <Thumbnail
               width="240px"
               height="135px"
               url={thumbnails.medium.url}
-              duration={statsData.videolength}
+              duration={statisticsData.videoLength}
             />
             <Title text={title} cut={true} />
             <ViewUpload
-              view={convertCount(statsData.viewNum)}
+              view={convertCount(statisticsData.viewNum)}
               date={publishedAt.slice(0, 19)}
               convert={true}
             />

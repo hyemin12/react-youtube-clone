@@ -11,6 +11,7 @@ import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 import LinkButton from "./Button/LinkButton";
+import useGetStatistics from "../hooks/getViewNumVideoLength";
 
 // 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {
@@ -21,29 +22,9 @@ const RecommendItem = ({ item, channelTitle }) => {
     : item.id;
 
   const [loading, setLoading] = useState(true);
-  const [statsData, setStatsData] = useState({ viewNum: 0, length: "" });
 
-  // 조회수,영상길이 가져오는 함수
-  const getData = async () => {
-    try {
-      const res = await requestContentDetails(id);
+  const { statisticsData } = useGetStatistics(id, setLoading);
 
-      setStatsData({
-        viewNum: res.data.items[0].statistics
-          ? res.data.items[0].statistics.viewCount
-          : 0,
-        videolength: res.data.items[0].contentDetails
-          ? res.data.items[0].contentDetails.duration
-          : 0,
-      });
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <>
       {loading ? (
@@ -56,7 +37,7 @@ const RecommendItem = ({ item, channelTitle }) => {
               height={`${200 * (9 / 16)}px`}
               url={thumbnails.medium.url}
               title={title}
-              duration={statsData.videolength}
+              duration={statisticsData.videoLength}
             />
 
             <ContentText>
@@ -64,7 +45,7 @@ const RecommendItem = ({ item, channelTitle }) => {
               <SubTitle text={channelTitle} />
 
               <ViewUpload
-                view={convertCount(statsData.viewNum)}
+                view={convertCount(statisticsData.viewNum)}
                 date={publishedAt.slice(0, 19)}
                 convert={true}
               />

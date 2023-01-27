@@ -14,6 +14,7 @@ import LikeButton from "../components/Button/LikeButton";
 import LinkButton from "../components/Button/LinkButton";
 import CommentItem from "../components/CommentItem";
 import { DateTitle } from "../components/ViewUpload";
+import MoreToggle from "./MoreToggle";
 
 /** 비디오 콘텐츠
  * 비디오 설명, 채널 정보, 댓글목록 */
@@ -79,7 +80,9 @@ const VideoDetail = (data) => {
           <Date>{publishedAt.slice(0, 10)}</Date>
         </Row>
 
-        <Description des={description} />
+        <MoreToggle>
+          <Description des={description} />
+        </MoreToggle>
       </Descriptions>
 
       {/* 댓글 탭 */}

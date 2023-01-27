@@ -6,6 +6,7 @@ import LikeButton from "./Button/LikeButton";
 import Row from "./FlexRow";
 import ChannelThumbnail from "./ChannelThumbnail";
 import SubTitle from "./SubTitle";
+import MoreToggle from "./MoreToggle";
 
 const CommentItem = (comment) => {
   const {
@@ -31,7 +32,9 @@ const CommentItem = (comment) => {
                 <p>{authorDisplayName}</p>
                 <SubTitle text={calcDate(publishedAt)} />
               </Row>
-              <P>{textOriginal}</P>
+              <MoreToggle>
+                <P>{textOriginal}</P>
+              </MoreToggle>
             </div>
             <LikeButton num={likeCount ? likeCount : 0} />
           </Row>

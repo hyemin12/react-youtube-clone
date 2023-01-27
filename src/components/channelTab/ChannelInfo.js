@@ -4,6 +4,7 @@ import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 import { convertCountry } from "../../hooks/convertCountry";
 
 import Row from "../FlexRow";
+import Description from "../Description";
 
 const ChannelInfo = (channelData) => {
   return (
@@ -12,17 +13,7 @@ const ChannelInfo = (channelData) => {
         <div style={{ width: "69vw" }}>
           <H4>설명</H4>
           {channelData.description ? (
-            <>
-              {channelData.description
-                .split("\n")
-                .map((sentence, idx) =>
-                  sentence === "" ? (
-                    <br key={idx} />
-                  ) : (
-                    <P key={`${sentence}${idx}`}>{sentence}</P>
-                  )
-                )}
-            </>
+            <Description des={channelData.description} />
           ) : (
             <p>등록된 설명이 없습니다.</p>
           )}
