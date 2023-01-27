@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../hooks/convertCount";
+import useGetStatistics from "../hooks/getViewNumVideoLength";
 
 import Loading from "./Loading";
 import Row from "./FlexRow";
@@ -10,7 +11,6 @@ import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 import LinkButton from "./Button/LinkButton";
-import useGetStatistics from "../hooks/getViewNumVideoLength";
 
 // 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {

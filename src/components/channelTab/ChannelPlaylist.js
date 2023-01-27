@@ -7,7 +7,7 @@ import LinkButton from "../Button/LinkButton";
 import { FaList } from "react-icons/fa";
 
 // 채널 재생목록 탭
-const ChannelPL = ({ lists }) => {
+const ChannelPlaylist = ({ lists }) => {
   // console.log(lists);
   if (!lists) {
     return <p>재생목록이 없습니다.</p>;
@@ -82,4 +82,4 @@ const Icon = styled.p`
   top: 0;
   right: 0;
 `;
-export default ChannelPL;
+export default ChannelPlaylist;

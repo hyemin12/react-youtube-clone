@@ -8,11 +8,11 @@ import ChannelVideoItem from "./ChannelVideoItem";
 import { Btn } from "../Button/CopyButton";
 
 const ChannelVideos = (videoData) => {
-  // 더보기 버튼 누르면 데이터 더 가져오는 함수
-  console.log(videoData);
+  //console.log(videoData);
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState(videoData);
 
+  // 더보기 버튼 누르면 데이터 더 가져오는 함수
   const getMoreData = async () => {
     setLoading(true);
     try {
@@ -44,6 +44,7 @@ const ChannelVideos = (videoData) => {
               <ChannelVideoItem {...item} key={idx} />
             ))}
         </VideoRow>
+
         {loading ? (
           <div
             style={{

@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 
 import { convertCountry } from "../../hooks/convertCountry";
 
 import Row from "../FlexRow";
 import Description from "../Description";
+
+import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 
 const ChannelInfo = (channelData) => {
   return (
