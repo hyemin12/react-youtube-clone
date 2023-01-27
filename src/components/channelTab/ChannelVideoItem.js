@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../../hooks/convertCount";
 import useGetStatistics from "../../hooks/getViewNumVideoLength";
-import { requestContentDetails } from "../../hooks/requestAxios";
 
 import LinkButton from "../Button/LinkButton";
 import Thumbnail from "../Thumbnail";

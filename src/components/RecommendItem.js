@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../hooks/convertCount";
-import { requestContentDetails } from "../hooks/requestAxios";
 
 import Loading from "./Loading";
 import Row from "./FlexRow";
