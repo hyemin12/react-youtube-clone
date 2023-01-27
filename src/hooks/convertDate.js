@@ -3,21 +3,38 @@ export const today = new Date();
 
 export const calcDate = (d) => {
   const upload = new Date(d);
-  const yGap = today.getFullYear() - upload.getFullYear();
-  const mGap = today.getMonth() - upload.getMonth();
-  const dGap = today.getDate() - upload.getDate();
-  const hGap = today.getHours() - upload.getHours();
-  const minGap = today.getMinutes() - upload.getMinutes();
-  const secGap = today.getSeconds() - upload.getSeconds();
 
-  // 업로드 날짜가 12월일 경우 날짜차로 계산
-  if (yGap === 1 && dGap < 7 && upload.getMonth() + 1 === "12")
-    return `${today.getDate() + 31 - upload.getDate()}일전`;
-  if (0 < yGap) return `${yGap}년전`;
-  if (0 < mGap && mGap < 12) return `${mGap}달전`;
-  if (8 <= dGap && dGap <= 31) return `${Math.floor(dGap / 7)}주전`;
-  if (0 < dGap && dGap < 8) return `${dGap}일전`;
-  if (0 < hGap) return `${hGap}시간전`;
-  if (0 < minGap) return `${minGap}분전`;
-  if (0 < secGap) return `${secGap}초전`;
+  const todayT = today.getTime();
+  const uploadT = upload.getTime();
+  const timeGap = todayT - uploadT;
+
+  const minUnit = 1000 * 60;
+  const hourUnit = minUnit * 60;
+  const dayUnit = hourUnit * 24;
+  const monthUnit = dayUnit * 30;
+  const yearUnit = dayUnit * 365;
+
+  const mathFloor = (num) => {
+    return Math.floor(num);
+  };
+
+  const minGap = mathFloor(timeGap / minUnit);
+  const hourGap = mathFloor(timeGap / hourUnit);
+  const dayGap = mathFloor(timeGap / dayUnit);
+  const monthGap = mathFloor(timeGap / monthUnit);
+  const yearGap = mathFloor(timeGap / yearUnit);
+
+  if (yearGap > 0) return `${yearGap}년전`;
+  if (monthGap > 0) return `${monthGap}달전`;
+  if (dayGap > 0) return `${dayGap}일전`;
+  if (hourGap > 0) return `${hourGap}시간전`;
+  if (minGap > 0) return `${minGap}분전`;
+  return `${timeGap / 1000}초전`;
+
+  // 초 : 1000
+  // 분 : 1000 * 60
+  // 시 : 1000 * 60 * 60
+  // 일 : 1000 * 60 * 60 * 24
+  // 월 : 1000 * 60 * 60 * 24 * 30
+  // 년 : 1000 * 60 * 60 * 24 * 365
 };

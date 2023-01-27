@@ -17,7 +17,7 @@ import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
 import Row from "../components/FlexRow";
-import ChannelPL from "../components/channelTab/ChannelPL";
+import ChannelPlaylist from "../components/channelTab/ChannelPlaylist";
 
 const Channel = () => {
   //console.log("채널컴포넌트");
@@ -31,12 +31,12 @@ const Channel = () => {
   const [playlists, setPlaylists] = useState();
 
   const tabs = [
-    { tabTitle: "홈", tabContent: <ChannelHome /> },
+    { tabTitle: "홈", tabContent: <ChannelHome videos={videoData} /> },
     {
       tabTitle: "동영상",
       tabContent: <ChannelVideos {...videoData} />,
     },
-    { tabTitle: "재생목록", tabContent: <ChannelPL lists={playlists} /> },
+    { tabTitle: "재생목록", tabContent: <ChannelPlaylist lists={playlists} /> },
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
   const [currentIdx, setCurrentIndex] = useState(0);
@@ -45,7 +45,7 @@ const Channel = () => {
     try {
       const resChannel = await requestChannel(id);
       const resVideos = await requestVideos(id);
-
+      // console.log(resChannel.data);
       const resPlaylists = await requestAxios("playlists", {
         params: { part: "snippet", channelId: id, maxResults: 50 },
       });
