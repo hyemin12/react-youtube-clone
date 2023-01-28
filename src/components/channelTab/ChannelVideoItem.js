@@ -11,7 +11,9 @@ import ViewUpload from "../ViewUpload";
 
 // 채널페이지 동영상 아이템
 const ChannelVideoItem = (item) => {
-  const { videoId } = item.contentDetails.upload;
+  const videoId = item.contentDetails.upload
+    ? item.contentDetails.upload.videoId
+    : item.contentDetails.playlistItem.resourceId.videoId;
 
   const { thumbnails, title, publishedAt } = item.snippet;
 

@@ -27,11 +27,12 @@ const Channel = () => {
 
   const [loading, setLoading] = useState(true);
   const [channelData, setChannelData] = useState();
+  const [homeData, setHomeData] = useState({ recent: "", videos: [] });
   const [videoData, setVideoData] = useState();
   const [playlists, setPlaylists] = useState();
-
+  console.log(videoData.result);
   const tabs = [
-    { tabTitle: "홈", tabContent: <ChannelHome videos={videoData} /> },
+    { tabTitle: "홈", tabContent: <ChannelHome {...homeData} /> },
     {
       tabTitle: "동영상",
       tabContent: <ChannelVideos {...videoData} />,
@@ -54,6 +55,10 @@ const Channel = () => {
         result: resVideos.data.items,
         nextPage: resVideos.data.nextPageToken,
         totalResults: resVideos.data.pageInfo.totalResults,
+      });
+      setHomeData({
+        recent: resVideos.data.items[0],
+        videos: resVideos.data.items,
       });
       setPlaylists(resPlaylists.data.items);
 

@@ -22,6 +22,7 @@ const Iframe = ({ id, type, index, width, height }) => {
   );
 };
 const IframeContainer = styled.div`
+  flex-shrink: 0;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
   margin-bottom: 14px;

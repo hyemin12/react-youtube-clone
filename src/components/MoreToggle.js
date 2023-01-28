@@ -11,7 +11,7 @@ const MoreToggle = ({ children }) => {
     <>
       <Container className={isSummary ? "" : "clicked"}>{children}</Container>
 
-      {children.props.des || children.props.children.length > 400 ? (
+      {children.props.des || children.props.children.length > 266 ? (
         <Btn
           onClick={() => {
             setIsSummary(!isSummary);

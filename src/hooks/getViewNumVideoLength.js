@@ -15,7 +15,7 @@ const useGetStatistics = (videoId, setLoading) => {
         viewNum: res.data.items[0].statistics.viewCount,
         videoLength: res.data.items[0].contentDetails.duration,
       });
-      setLoading(false);
+      setLoading && setLoading(false);
     } catch (err) {
       return console.log(err);
     }
