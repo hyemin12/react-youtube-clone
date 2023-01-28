@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { requestAxios, requestChannel } from "../hooks/requestAxios";
+import {
+  requestAxios,
+  requestChannel,
+  requestPlaylistItem,
+} from "../hooks/requestAxios";
 
 import Row from "../components/FlexRow";
 import VideoDetail from "../components/VideoDetail";
@@ -26,14 +30,7 @@ const PlayListVideo = () => {
 
   const getListItem = async () => {
     try {
-      const plRes = await requestAxios.get("playlistItems", {
-        params: {
-          part: "snippet,contentDetails,status",
-          playlistId: id,
-          maxResults: 50,
-        },
-      });
-
+      const plRes = await requestPlaylistItem(id);
       setList(plRes.data.items);
 
       if (plRes.status === 200) {

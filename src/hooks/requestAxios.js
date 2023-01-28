@@ -67,3 +67,13 @@ export const requestVideos = (channelId, token, maxResult = 50) =>
       pageToken: token && token,
     },
   });
+
+/** 플레이리스트 아이디로 재생목록 가져오기 */
+export const requestPlaylistItem = (playlistId, maxResult = 50) =>
+  requestAxios.get("playlistItems", {
+    params: {
+      part: "snippet,contentDetails,status",
+      playlistId: playlistId,
+      maxResults: maxResult,
+    },
+  });

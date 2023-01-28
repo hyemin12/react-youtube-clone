@@ -1,6 +1,8 @@
+import { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 
 import getViewNumVideoLength from "../../hooks/getViewNumVideoLength";
+import { requestAxios, requestPlaylistItem } from "../../hooks/requestAxios";
 
 import LinkButton from "../Button/LinkButton";
 import Description from "../Description";
@@ -10,38 +12,71 @@ import Title from "../Title";
 import ViewUpload from "../ViewUpload";
 import ChannelVideoItem from "./ChannelVideoItem";
 
-const ChannelHome = (data) => {
-  // const recentVideo = videos.result[0];
-  const { recent, videos } = data;
-  console.log(videos);
-  const recentVideoId = recent.contentDetails.upload
-    ? recent.contentDetails.upload.videoId
-    : recent.contentDetails.playlistItem.resourceId.videoId;
+const ChannelHome = (videoData) => {
+  console.log(videoData);
+  const [loading, setLoading] = useState(true);
+  const { recentVideo, videos } = videoData;
 
+  const recentVideoId = recentVideo.contentDetails.upload
+    ? recentVideo.contentDetails.upload.videoId
+    : recentVideo.contentDetails.playlistItem.resourceId.videoId;
+
+  // 조회수, 영상길이
   const { statisticsData } = getViewNumVideoLength(recentVideoId);
 
+  // 플레이 리스트
+  const [playlist, setPlaylists] = useState({ title: "", list: "" });
+  const playlistIndex = videos.findIndex(
+    (element) => !element.contentDetails.upload
+  );
+
+  const getPlaylistItems = useCallback(async () => {
+    const playlistId =
+      videos[playlistIndex].contentDetails.playlistItem.playlistId;
+
+    try {
+      const resPLTitle = await requestAxios("playlists", {
+        params: { part: "snippet", id: playlistId },
+      });
+
+      const resPlaylist = await requestPlaylistItem(playlistId, 10);
+
+      setPlaylists({
+        title: resPLTitle.data.items[0].snippet.title,
+        list: resPlaylist.data.items,
+      });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [playlistIndex]);
+  console.log(playlist);
+
+  useEffect(() => {
+    getPlaylistItems();
+  }, [playlistIndex]);
   return (
     <div>
       {statisticsData && (
         <Row gap={30}>
           <Iframe
             id={recentVideoId}
-            title={recent.snippet.title}
+            title={recentVideo.snippet.title}
             width="640"
             height="360"
           />
           <div>
             <LinkButton pathname={"/watch"} query={recentVideoId}>
-              <Title text={recent.snippet.title} size={18} />
+              <Title text={recentVideo.snippet.title} size={18} />
             </LinkButton>
             <ViewUpload
               view={parseInt(statisticsData.viewNum).toLocaleString()}
-              date={recent.snippet.publishedAt}
+              date={recentVideo.snippet.publishedAt}
               convert={true}
             />
 
             <DesContainer>
-              <Description des={recent.snippet.description} />
+              <Description des={recentVideo.snippet.description} />
             </DesContainer>
             <LinkButton pathname={"/watch"} query={recentVideoId}>
               자세히보기...
@@ -61,7 +96,14 @@ const ChannelHome = (data) => {
         </VideoRow>
       </Section>
       <Section>
-        <Title text="최근 업로드된 재생목록" size={18} />
+        <Title text={playlist.title} size={18} />
+        {!loading && (
+          <VideoRow>
+            {playlist.list.map((item) => (
+              <ChannelVideoItem {...item} key={item.etag} />
+            ))}
+          </VideoRow>
+        )}
       </Section>
     </div>
   );
@@ -78,8 +120,8 @@ const DesContainer = styled.div`
 `;
 const Section = styled.div`
   margin-top: 10px;
-  padding-top: 12px;
-  // border-top: 1px solid #ccc;
+  padding-top: 14px;
+  border-top: 2px solid #ccc;
 `;
 
 const VideoRow = styled.div`

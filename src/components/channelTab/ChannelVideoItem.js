@@ -13,7 +13,7 @@ import ViewUpload from "../ViewUpload";
 const ChannelVideoItem = (item) => {
   const videoId = item.contentDetails.upload
     ? item.contentDetails.upload.videoId
-    : item.contentDetails.playlistItem.resourceId.videoId;
+    : item.contentDetails.videoId;
 
   const { thumbnails, title, publishedAt } = item.snippet;
 
