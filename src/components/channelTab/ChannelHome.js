@@ -13,7 +13,6 @@ import ViewUpload from "../ViewUpload";
 import ChannelVideoItem from "./ChannelVideoItem";
 
 const ChannelHome = (videoData) => {
-  console.log(videoData);
   const [loading, setLoading] = useState(true);
   const { recentVideo, videos } = videoData;
 
@@ -50,7 +49,6 @@ const ChannelHome = (videoData) => {
       console.log(err);
     }
   }, [playlistIndex]);
-  console.log(playlist);
 
   useEffect(() => {
     getPlaylistItems();
