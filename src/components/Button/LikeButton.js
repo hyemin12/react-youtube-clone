@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { FaThumbsUp, FaHeart } from "react-icons/fa";
+import styled from "styled-components";
 
 import useAlert from "../../hooks/useAlert";
 import { convertCount } from "../../hooks/convertCount";
 
 import Alert from "../Alert";
-import { Btn } from "./CopyButton";
 import Row from "../FlexRow";
-import styled from "styled-components";
+import { Btn } from "./CopyButton";
+
+import { FaHeart } from "react-icons/fa";
 
 // 좋아요 버튼
 const LikeButton = ({ num, bg }) => {

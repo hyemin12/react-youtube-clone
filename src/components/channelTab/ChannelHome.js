@@ -59,7 +59,7 @@ const ChannelHome = ({ videos, playlist }) => {
             height="360"
           />
           <div>
-            <LinkButton pathname={"/watch"} query={recentVideo.data.id}>
+            <LinkButton pathname={"/watch"} query={recentVideo.id}>
               <Title text={recentVideo.data.title} size={18} />
             </LinkButton>
             <ViewUpload
