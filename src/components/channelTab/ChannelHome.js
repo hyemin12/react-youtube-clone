@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 
 import getViewNumVideoLength from "../../hooks/getViewNumVideoLength";
-import { requestAxios, requestPlaylistItem } from "../../hooks/requestAxios";
+import { requestPlaylistItem } from "../../hooks/requestAxios";
 
 import LinkButton from "../Button/LinkButton";
 import Description from "../Description";
@@ -12,71 +12,66 @@ import Title from "../Title";
 import ViewUpload from "../ViewUpload";
 import ChannelVideoItem from "./ChannelVideoItem";
 
-const ChannelHome = (videoData) => {
+const ChannelHome = ({ videos, playlist }) => {
   const [loading, setLoading] = useState(true);
-  const { recentVideo, videos } = videoData;
 
-  const recentVideoId = recentVideo.contentDetails.upload
-    ? recentVideo.contentDetails.upload.videoId
-    : recentVideo.contentDetails.playlistItem.resourceId.videoId;
+  const videolist = videos.result;
 
-  // 조회수, 영상길이
-  const { statisticsData } = getViewNumVideoLength(recentVideoId);
+  // 최근 비디오 정보
+  const recentVideo = {
+    data: videolist[0].snippet,
+    id: videolist[0].contentDetails.upload.videoId,
+  };
 
-  // 플레이 리스트
-  const [playlist, setPlaylists] = useState({ title: "", list: "" });
-  const playlistIndex = videos.findIndex(
-    (element) => !element.contentDetails.upload
-  );
+  // 조회수, 영상길이 가져오기
+  const { statisticsData } = getViewNumVideoLength(recentVideo.id);
+
+  // 플레이 리스트 정보 가져오기
+  const [recentPlaylist, setRecentPlaylist] = useState({ title: "", list: "" });
+
+  const playlistId = playlist[0].id;
 
   const getPlaylistItems = useCallback(async () => {
-    const playlistId =
-      videos[playlistIndex].contentDetails.playlistItem.playlistId;
-
     try {
-      const resPLTitle = await requestAxios("playlists", {
-        params: { part: "snippet", id: playlistId },
-      });
-
       const resPlaylist = await requestPlaylistItem(playlistId, 10);
 
-      setPlaylists({
-        title: resPLTitle.data.items[0].snippet.title,
+      setRecentPlaylist({
+        title: playlist[0].snippet.title,
         list: resPlaylist.data.items,
       });
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
-  }, [playlistIndex]);
+  }, [playlistId]);
 
   useEffect(() => {
     getPlaylistItems();
-  }, [playlistIndex]);
+  }, []);
   return (
     <div>
       {statisticsData && (
         <Row gap={30}>
           <Iframe
-            id={recentVideoId}
-            title={recentVideo.snippet.title}
+            id={recentVideo.id}
+            title={recentVideo.data.title}
             width="640"
             height="360"
           />
           <div>
-            <LinkButton pathname={"/watch"} query={recentVideoId}>
-              <Title text={recentVideo.snippet.title} size={18} />
+            <LinkButton pathname={"/watch"} query={recentVideo.data.id}>
+              <Title text={recentVideo.data.title} size={18} />
             </LinkButton>
             <ViewUpload
               view={parseInt(statisticsData.viewNum).toLocaleString()}
-              date={recentVideo.snippet.publishedAt}
+              date={recentVideo.data.publishedAt}
               convert={true}
             />
 
             <DesContainer>
-              <Description des={recentVideo.snippet.description} />
+              <Description des={recentVideo.data.description} />
             </DesContainer>
-            <LinkButton pathname={"/watch"} query={recentVideoId}>
+            <LinkButton pathname={"/watch"} query={recentVideo.id}>
               자세히보기...
             </LinkButton>
           </div>
@@ -85,19 +80,16 @@ const ChannelHome = (videoData) => {
       <Section>
         <Title text="동영상" size={18} />
         <VideoRow>
-          {videos
-            .filter((video) => video.contentDetails.upload !== undefined)
-            .slice(1, 11)
-            .map((video) => (
-              <ChannelVideoItem {...video} key={video.etag} />
-            ))}
+          {videolist.slice(1, 11).map((video) => (
+            <ChannelVideoItem {...video} key={video.etag} />
+          ))}
         </VideoRow>
       </Section>
       <Section>
-        <Title text={playlist.title} size={18} />
+        <Title text={recentPlaylist.title} size={18} />
         {!loading && (
           <VideoRow>
-            {playlist.list.map((item) => (
+            {recentPlaylist.list.map((item) => (
               <ChannelVideoItem {...item} key={item.etag} />
             ))}
           </VideoRow>

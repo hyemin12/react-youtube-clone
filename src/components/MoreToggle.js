@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 /** 더보기 간략하게 토글 버튼 컴포넌트
- * children.props.des: 비디오나 채널 설명정보에서 사용할때는 항상 사용
- * children.props.children.length: 댓글은 길이에 따라서 버튼 활성, 비활성
+ * textRef (내용) 높이에 따라 더보기/간략히 버튼 보여짐 여부 결정
  */
 const MoreToggle = ({ children }) => {
   const [isSummary, setIsSummary] = useState(true);

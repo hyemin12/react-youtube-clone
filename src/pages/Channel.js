@@ -27,55 +27,71 @@ const Channel = () => {
 
   const [loading, setLoading] = useState(true);
   const [channelData, setChannelData] = useState();
-  const [homeData, setHomeData] = useState({ recentVideo: "", videos: [] });
   const [videoData, setVideoData] = useState();
-  const [playlists, setPlaylists] = useState();
+  const [playlist, setPlaylist] = useState();
+  console.log(videoData);
+
+  const [currentTab, setCurrentTab] = useState(0);
 
   const tabs = [
-    { tabTitle: "홈", tabContent: <ChannelHome {...homeData} /> },
+    {
+      tabTitle: "홈",
+      tabContent: <ChannelHome videos={videoData} playlist={playlist} />,
+    },
     {
       tabTitle: "동영상",
-      tabContent: <ChannelVideos {...videoData} playlists={playlists} />,
+      tabContent: <ChannelVideos {...videoData} />,
     },
-    { tabTitle: "재생목록", tabContent: <ChannelPlaylist lists={playlists} /> },
+    { tabTitle: "재생목록", tabContent: <ChannelPlaylist lists={playlist} /> },
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
-  const [currentIdx, setCurrentIndex] = useState(0);
+
+  const getVideosData = async () => {
+    const resVideos = await requestVideos(id);
+
+    setVideoData({
+      id: id,
+      result: resVideos.data.items.filter(
+        (video) => video.contentDetails.upload !== undefined
+      ),
+      nextPage: resVideos.data.nextPageToken,
+    });
+  };
+
+  const getPlaylistData = async () => {
+    const resPlaylists = await requestAxios("playlists", {
+      params: { part: "snippet", channelId: id, maxResults: 50 },
+    });
+
+    setPlaylist(resPlaylists.data.items);
+  };
+
+  const getChannelData = async () => {
+    const resChannel = await requestChannel(id);
+
+    const item = resChannel.data.items[0];
+
+    setChannelData({
+      thumbnail: item.snippet.thumbnails,
+      title: item.snippet.title,
+      customUrl: item.snippet.customUrl,
+      description: item.snippet.description,
+      publishedAt: item.snippet.publishedAt,
+      country: item.snippet.country,
+      subscriberCount: item.statistics.subscriberCount,
+      viewCount: item.statistics.viewCount,
+      bannerImg: item.brandingSettings.image
+        ? item.brandingSettings.image.bannerExternalUrl
+        : null,
+    });
+  };
 
   const getData = useCallback(async () => {
     try {
-      const resChannel = await requestChannel(id);
-      const resVideos = await requestVideos(id);
-      // console.log(resChannel.data);
-      const resPlaylists = await requestAxios("playlists", {
-        params: { part: "snippet", channelId: id, maxResults: 50 },
-      });
-      setVideoData({
-        id: id,
-        result: resVideos.data.items,
-        nextPage: resVideos.data.nextPageToken,
-        totalResults: resVideos.data.pageInfo.totalResults,
-      });
-      setHomeData({
-        recentVideo: resVideos.data.items[0],
-        videos: resVideos.data.items,
-      });
-      setPlaylists(resPlaylists.data.items);
+      await getVideosData();
+      await getPlaylistData();
+      await getChannelData();
 
-      const item = resChannel.data.items[0];
-      setChannelData({
-        thumbnail: item.snippet.thumbnails,
-        title: item.snippet.title,
-        customUrl: item.snippet.customUrl,
-        description: item.snippet.description,
-        publishedAt: item.snippet.publishedAt,
-        country: item.snippet.country,
-        subscriberCount: item.statistics.subscriberCount,
-        viewCount: item.statistics.viewCount,
-        bannerImg: item.brandingSettings.image
-          ? item.brandingSettings.image.bannerExternalUrl
-          : null,
-      });
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -117,9 +133,9 @@ const Channel = () => {
                 {tabs.map(({ tabTitle }, idx) => (
                   <TabTitle
                     key={tabTitle}
-                    className={idx === currentIdx ? "active" : ""}
+                    className={idx === currentTab ? "active" : ""}
                     onClick={() => {
-                      setCurrentIndex(idx);
+                      setCurrentTab(idx);
                     }}
                   >
                     {tabTitle}
@@ -127,7 +143,7 @@ const Channel = () => {
                 ))}
               </TabTitleContainer>
 
-              {tabs[currentIdx].tabContent}
+              {tabs[currentTab].tabContent}
             </Container>
           )}
         </Layout>

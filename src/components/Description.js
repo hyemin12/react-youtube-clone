@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 
 // 설명 컴포넌트
 const Description = ({ des }) => {
@@ -18,7 +17,4 @@ const Description = ({ des }) => {
   );
 };
 
-const P = styled.p`
-  font-size: 0.9em;
-`;
 export default React.memo(Description);
