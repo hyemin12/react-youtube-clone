@@ -8,7 +8,6 @@ import ChannelVideoItem from "./ChannelVideoItem";
 import { Btn } from "../Button/CopyButton";
 
 const ChannelVideos = (videoData) => {
-  //console.log(videoData);
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState(videoData);
 
@@ -34,37 +33,33 @@ const ChannelVideos = (videoData) => {
 
   return (
     <div>
-      <h4>동영상 · 전체 {videoData.totalResults}개</h4>
+      <h4>전체 동영상</h4>
 
-      <>
-        <VideoRow>
-          {list.result
-            .filter((video) => video.contentDetails.upload !== undefined)
-            .map((item, idx) => (
-              <ChannelVideoItem {...item} key={idx} />
-            ))}
-        </VideoRow>
+      <VideoRow>
+        {list.result.map((item, idx) => (
+          <ChannelVideoItem {...item} key={idx} />
+        ))}
+      </VideoRow>
 
-        {loading ? (
-          <div
-            style={{
-              position: "relative",
-              height: "120px",
-              marginBottom: "50px",
-            }}
-          >
-            <Loading />
-          </div>
-        ) : (
-          <>
-            {list.nextPage !== "" && (
-              <BtnRow>
-                <Btn onClick={getMoreData}>더보기</Btn>
-              </BtnRow>
-            )}
-          </>
-        )}
-      </>
+      {loading ? (
+        <div
+          style={{
+            position: "relative",
+            height: "120px",
+            marginBottom: "50px",
+          }}
+        >
+          <Loading />
+        </div>
+      ) : (
+        <>
+          {list.nextPage !== "" && (
+            <BtnRow>
+              <Btn onClick={getMoreData}>더보기</Btn>
+            </BtnRow>
+          )}
+        </>
+      )}
     </div>
   );
 };

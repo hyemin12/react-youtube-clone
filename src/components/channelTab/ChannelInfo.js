@@ -19,7 +19,7 @@ const ChannelInfo = (channelData) => {
             <p>등록된 설명이 없습니다.</p>
           )}
         </div>
-        {/* 오른쪽 사이드 */}
+        {/* 오른쪽 사이드 - 추가정보 */}
         <aside style={{ flexGrow: 1 }}>
           <H4>추가정보</H4>
           <Row align={"center"} gap={16}>
