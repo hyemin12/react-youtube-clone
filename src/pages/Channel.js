@@ -9,19 +9,17 @@ import {
 } from "../hooks/requestAxios";
 
 import Loading from "../components/Loading";
+import Layout from "../components/structure/Layout";
+import Row from "../components/FlexRow";
 import ChannelThumbnail from "../components/ChannelThumbnail";
 import Title from "../components/Title";
-import Layout from "../components/structure/Layout";
 
 import ChannelHome from "../components/channelTab/ChannelHome";
 import ChannelInfo from "../components/channelTab/ChannelInfo";
 import ChannelVideos from "../components/channelTab/ChannelVideos";
-import Row from "../components/FlexRow";
 import ChannelPlaylist from "../components/channelTab/ChannelPlaylist";
 
 const Channel = () => {
-  //console.log("채널컴포넌트");
-
   // 데이터를 가져올 "채널아이디"
   const id = localStorage.getItem("YT_ID");
 
@@ -29,7 +27,6 @@ const Channel = () => {
   const [channelData, setChannelData] = useState();
   const [videoData, setVideoData] = useState();
   const [playlist, setPlaylist] = useState();
-  console.log(videoData);
 
   const [currentTab, setCurrentTab] = useState(0);
 
@@ -46,6 +43,7 @@ const Channel = () => {
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
 
+  /** 비디오 목록 가져오기 */
   const getVideosData = async () => {
     const resVideos = await requestVideos(id);
 
@@ -58,6 +56,7 @@ const Channel = () => {
     });
   };
 
+  /** 재생목록 리스트 가져오기 */
   const getPlaylistData = async () => {
     const resPlaylists = await requestAxios("playlists", {
       params: { part: "snippet", channelId: id, maxResults: 50 },
@@ -66,6 +65,7 @@ const Channel = () => {
     setPlaylist(resPlaylists.data.items);
   };
 
+  /** 현재 채널 정보 가져오기 */
   const getChannelData = async () => {
     const resChannel = await requestChannel(id);
 
