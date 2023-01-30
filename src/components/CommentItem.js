@@ -33,7 +33,17 @@ const CommentItem = (comment) => {
                 <SubTitle text={calcDate(publishedAt)} />
               </Row>
               <MoreToggle>
-                <P>{textOriginal}</P>
+                <P>
+                  {textOriginal
+                    .split("\n")
+                    .map((sentence, idx) =>
+                      sentence === "" ? (
+                        <br key={idx} />
+                      ) : (
+                        <P key={idx}>{sentence}</P>
+                      )
+                    )}
+                </P>
               </MoreToggle>
             </div>
             <LikeButton num={likeCount ? likeCount : 0} />

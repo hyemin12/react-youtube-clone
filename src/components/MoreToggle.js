@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 /** 더보기 간략하게 토글 버튼 컴포넌트
@@ -7,11 +7,23 @@ import styled from "styled-components";
  */
 const MoreToggle = ({ children }) => {
   const [isSummary, setIsSummary] = useState(true);
+
+  const textRef = useRef(null);
+  const [isOverflow, setIsOverflow] = useState(false);
+
+  useEffect(() => {
+    if (textRef.current) {
+      const containerHeight = textRef.current.clientHeight;
+      containerHeight > 64 && setIsOverflow(true);
+    }
+  }, []);
   return (
     <>
-      <Container className={isSummary ? "" : "clicked"}>{children}</Container>
+      <Container className={isSummary ? "" : "clicked"} ref={textRef}>
+        {children}
+      </Container>
 
-      {children.props.des || children.props.children.length > 266 ? (
+      {isOverflow && (
         <Btn
           onClick={() => {
             setIsSummary(!isSummary);
@@ -19,7 +31,7 @@ const MoreToggle = ({ children }) => {
         >
           {isSummary ? "더보기..." : "간략히..."}
         </Btn>
-      ) : null}
+      )}
     </>
   );
 };
