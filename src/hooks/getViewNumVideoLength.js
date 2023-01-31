@@ -6,15 +6,15 @@ import { requestContentDetails } from "./requestAxios";
  * duration: 영상길이
  */
 const useGetStatistics = (videoId, setLoading) => {
-  const [viewCount, setViewCount] = useState(0);
+  const [viewCount, setViewCount] = useState("");
   const [duration, setDuration] = useState("");
 
   const getViewCountDuration = async () => {
     try {
       const res = await requestContentDetails(videoId);
 
-      setDuration(res.data.items[0].statistics.viewCount);
-      setViewCount(res.data.items[0].contentDetails.duration);
+      setViewCount(res.data.items[0].statistics.viewCount);
+      setDuration(res.data.items[0].contentDetails.duration);
 
       setLoading && setLoading(false);
     } catch (err) {

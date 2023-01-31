@@ -13,6 +13,7 @@ import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
+import ChannelTitle from "./ChannelTitle";
 
 // 영상 아이템 - 가로
 const VideoItemRow = (data) => {
@@ -23,6 +24,7 @@ const VideoItemRow = (data) => {
   const { viewCount, duration } = useGetStatistics(videoId);
 
   const [loading, setLoading] = useState(true);
+
   const [channelData, setChannelData] = useState({
     thumbnail: "",
     customUrl: "",
@@ -75,11 +77,15 @@ const VideoItemRow = (data) => {
                 <div style={{ padding: "14px 0" }}>
                   <Row gap={10} align={"center"}>
                     <ChannelThumbnail
-                      title={channelTitle}
                       url={channelData.thumbnail}
-                      size={30}
+                      customUrl={channelData.customUrl}
+                      channelId={channelId}
                     />
-                    <SubTitle text={channelTitle} />
+                    <ChannelTitle
+                      text={channelTitle}
+                      customUrl={channelData.customUrl}
+                      channelId={channelId}
+                    />
                   </Row>
                 </div>
                 <SubTitle text={description} cut={true} />

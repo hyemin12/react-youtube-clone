@@ -23,7 +23,7 @@ const CommentItem = (comment) => {
         <ChannelThumbnail
           title={authorDisplayName}
           url={authorProfileImageUrl}
-          size={36}
+          type={"default"}
         />
         <TextContainer>
           <Row align={"center"} justify={"space-between"}>

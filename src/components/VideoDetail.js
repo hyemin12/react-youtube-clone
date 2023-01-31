@@ -8,10 +8,10 @@ import Row from "../components/FlexRow";
 import Title from "../components/Title";
 import SubTitle from "../components/SubTitle";
 import ChannelThumbnail from "../components/ChannelThumbnail";
+import ChannelTitle from "./ChannelTitle";
 import Description from "../components/Description";
 import CopyButton from "../components/Button/CopyButton";
 import LikeButton from "../components/Button/LikeButton";
-import LinkButton from "../components/Button/LinkButton";
 import CommentItem from "../components/CommentItem";
 import { DateTitle } from "../components/ViewUpload";
 import MoreToggle from "./MoreToggle";
@@ -19,7 +19,6 @@ import MoreToggle from "./MoreToggle";
 /** 비디오 콘텐츠
  * 비디오 설명, 채널 정보, 댓글목록 */
 const VideoDetail = (data) => {
-  // console.log(data);
   const { customUrl, subscribe, thumbnail, id } = data;
   const { title, channelId, channelTitle, publishedAt, description } =
     data.snippet;
@@ -55,16 +54,26 @@ const VideoDetail = (data) => {
     <div style={{ width: "100%" }}>
       <Title size={20} text={title} cut={false} />
       <Row gap={10} justify={"space-between"} align={"center"}>
-        <LinkButton pathname={"/channel"} query={customUrl} id={channelId}>
-          <ChannelContainer>
-            <ChannelThumbnail size={40} url={thumbnail} title={channelTitle} />
-            <div>
-              <p>{channelTitle}</p>
+        <ChannelContainer>
+          <ChannelThumbnail
+            size={40}
+            url={thumbnail}
+            title={channelTitle}
+            customUrl={customUrl}
+            id={channelId}
+          />
+          <div>
+            <ChannelTitle
+              text={channelTitle}
+              customUrl={customUrl}
+              id={channelId}
+              size={"1em"}
+              color={"#333"}
+            />
 
-              <SubTitle text={`구독자 ${convertCount(subscribe)}`} />
-            </div>
-          </ChannelContainer>
-        </LinkButton>
+            <SubTitle text={`구독자 ${convertCount(subscribe)}`} />
+          </div>
+        </ChannelContainer>
 
         {/* 채널 정보 옆 버튼그룹 */}
         <BtnGroup>

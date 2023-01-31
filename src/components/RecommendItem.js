@@ -6,11 +6,10 @@ import useGetStatistics from "../hooks/getViewNumVideoLength";
 
 import Loading from "./Loading";
 import Row from "./FlexRow";
-import Thumbnail from "./Thumbnail";
-import Title from "./Title";
+import VideoThumbnail from "./VideoThumbnail";
+import VideoTitle from "./VideoTitle";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
-import LinkButton from "./Button/LinkButton";
 
 // 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {
@@ -29,28 +28,28 @@ const RecommendItem = ({ item, channelTitle }) => {
       {loading ? (
         <Loading />
       ) : (
-        <LinkButton pathname={"/watch"} query={videoId}>
-          <Row gap={10}>
-            <Thumbnail
-              width={"200px"}
-              height={`${200 * (9 / 16)}px`}
-              url={thumbnails.medium.url}
-              title={title}
-              duration={duration}
+        <Row gap={10}>
+          <VideoThumbnail
+            width="200px"
+            height="112.5px"
+            url={thumbnails.medium.url}
+            title={title}
+            videoId={videoId}
+            duration={duration}
+          />
+
+          <ContentText>
+            <VideoTitle text={title} videoId={videoId} cut={true} />
+
+            <SubTitle text={channelTitle} />
+
+            <ViewUpload
+              view={convertCount(viewCount)}
+              date={publishedAt.slice(0, 19)}
+              convert={true}
             />
-
-            <ContentText>
-              <Title size={16} text={title} cut={true} />
-              <SubTitle text={channelTitle} />
-
-              <ViewUpload
-                view={convertCount(viewCount)}
-                date={publishedAt.slice(0, 19)}
-                convert={true}
-              />
-            </ContentText>
-          </Row>
-        </LinkButton>
+          </ContentText>
+        </Row>
       )}
     </>
   );

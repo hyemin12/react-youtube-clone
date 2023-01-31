@@ -117,7 +117,7 @@ const Channel = () => {
               <Row gap={16} align={"center"}>
                 <ChannelThumbnail
                   url={channelData.thumbnail.default.url}
-                  ize={channelData.thumbnail.default.width}
+                  size={channelData.thumbnail.default.width}
                   alt={channelData.title}
                   customUrl={channelData.customUrl}
                 />

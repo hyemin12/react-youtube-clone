@@ -17,7 +17,7 @@ const Home = () => {
   const keywordRef = useRef(null);
 
   const [loading, setLoading] = useState(true);
-  const [result, setResult] = useState([]);
+  const [videoList, setVideoList] = useState([]);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
   const keywords = [
@@ -37,21 +37,21 @@ const Home = () => {
 
   /** 영상 목록 가져오는 함수 */
   const getData = useCallback(async () => {
-    const current = keywords[currentTabIndex];
+    const { keyword, category } = keywords[currentTabIndex];
 
     try {
       if (currentTabIndex === 0) {
         // 인기 키워드
         const res = await requestPopularVideos();
-        setResult(res.data.items);
-      } else if (typeof current.category === "number") {
+        setVideoList(res.data.items);
+      } else if (typeof category === "number") {
         // 카테고리 아이디가 있는 경우
-        const res = await requestPopularVideos(current.category);
-        setResult(res.data.items);
+        const res = await requestPopularVideos(category);
+        setVideoList(res.data.items);
       } else {
         // 카테고리 아이디가 없는 경우
-        const res = await requestSearchVideos(current.keyword);
-        setResult(res.data.items);
+        const res = await requestSearchVideos(keyword);
+        setVideoList(res.data.items);
       }
 
       setLoading(false);
@@ -107,7 +107,7 @@ const Home = () => {
                 </NextBtn>
               )}
             </KeywordContainer>
-            <VideoList videos={result} />
+            <VideoList videos={videoList} />
           </div>
         </Layout>
       )}
@@ -143,7 +143,6 @@ const Keyword = styled(Link)`
     color: #fff;
   }
 `;
-
 const NextBtn = styled.button`
   diplay: flex;
   justify-content: center;

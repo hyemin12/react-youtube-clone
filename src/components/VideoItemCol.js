@@ -10,10 +10,11 @@ import { convertCount } from "../hooks/convertCount";
 import Loading from "./Loading";
 import Thumbnail from "./Thumbnail";
 import LinkButton from "./Button/LinkButton";
-import Title from "./Title";
-import SubTitle from "./SubTitle";
+import VideoTitle from "./VideoTitle";
 import ChannelThumbnail from "./ChannelThumbnail";
+import ChannelTitle from "./ChannelTitle";
 import ViewUpload from "./ViewUpload";
+import VideoThumbnail from "./VideoThumbnail";
 
 // 영상 아이템 - 세로
 const VideoItemCol = (item) => {
@@ -77,39 +78,35 @@ const VideoItemCol = (item) => {
         <Loading />
       ) : (
         <ItemContainer width={itemWidth}>
-          <LinkButton pathname={"/watch"} query={videoId}>
-            <Thumbnail
-              width={"100%"}
-              height={"100%"}
-              url={thumbnails.medium.url}
-              title={title}
-              duration={
-                statisticsData
-                  ? statisticsData.videoId
-                  : item.contentDetails.duration
-              }
-            />
-          </LinkButton>
+          <VideoThumbnail
+            width={"100%"}
+            height={"100%"}
+            url={thumbnails.medium.url}
+            title={title}
+            videoId={videoId}
+            duration={
+              statisticsData
+                ? statisticsData.duration
+                : item.contentDetails.duration
+            }
+          />
 
           <VideoRow>
-            <LinkButton
-              pathname={"/channel"}
-              query={channel.customUrl}
-              id={channelId}
-            >
-              <ChannelThumbnail
-                url={channel.thumbnail}
-                title={channelTitle}
-                size={34}
-              />
-            </LinkButton>
+            <ChannelThumbnail
+              customUrl={channel.customUrl}
+              channelId={channelId}
+              url={channel.thumbnail}
+              title={channelTitle}
+            />
+
             <div>
-              <LinkButton pathname={"/watch"} query={videoId}>
-                <Title size={16} text={title} cut={true} />
-              </LinkButton>
-              <LinkButton pathname={"/channel"} query={videoId}>
-                <SubTitle text={channelTitle} />
-              </LinkButton>
+              <VideoTitle videoId={videoId} size={16} text={title} cut={true} />
+              <ChannelTitle
+                channelId={channelId}
+                text={channelTitle}
+                customUrl={channel.customUrl}
+                id={channelId}
+              />
               <ViewUpload
                 view={convertCount(
                   statisticsData
