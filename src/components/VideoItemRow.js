@@ -9,11 +9,12 @@ import Loading from "./Loading";
 import Row from "./FlexRow";
 import LinkButton from "./Button/LinkButton";
 import ChannelThumbnail from "./ChannelThumbnail";
-import Thumbnail from "./Thumbnail";
 import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 import ChannelTitle from "./ChannelTitle";
+import VideoThumbnail from "./VideoThumbnail";
+import VideoTitle from "./VideoTitle";
 
 // 영상 아이템 - 가로
 const VideoItemRow = (data) => {
@@ -57,42 +58,44 @@ const VideoItemRow = (data) => {
       {loading ? (
         <Loading />
       ) : (
-        <LinkButton pathname={"/watch"} query={videoId}>
-          <ItemContainer>
-            <Row gap={20}>
-              <Thumbnail
-                width={"320px"}
-                height={"180px"}
-                url={thumbnails.medium.url}
-                title={title}
-                duration={duration}
+        <ItemContainer>
+          <Row gap={20}>
+            <VideoThumbnail
+              width={"320px"}
+              height={"180px"}
+              url={thumbnails.medium.url}
+              title={title}
+              videoId={videoId}
+              duration={duration}
+            />
+
+            <div>
+              <VideoTitle text={title} videoId={videoId} cut={true} />
+
+              <ViewUpload
+                view={convertCount(viewCount)}
+                date={publishedAt}
+                convert={true}
               />
-              <div>
-                <Title text={title} />
-                <ViewUpload
-                  view={convertCount(viewCount)}
-                  date={publishedAt}
-                  convert={true}
-                />
-                <div style={{ padding: "14px 0" }}>
-                  <Row gap={10} align={"center"}>
-                    <ChannelThumbnail
-                      url={channelData.thumbnail}
-                      customUrl={channelData.customUrl}
-                      channelId={channelId}
-                    />
-                    <ChannelTitle
-                      text={channelTitle}
-                      customUrl={channelData.customUrl}
-                      channelId={channelId}
-                    />
-                  </Row>
-                </div>
-                <SubTitle text={description} cut={true} />
+              <div style={{ padding: "14px 0" }}>
+                <Row gap={10} align={"center"}>
+                  <ChannelThumbnail
+                    title={title}
+                    url={channelData.thumbnail}
+                    channelId={channelId}
+                    customUrl={channelData.customUrl}
+                  />
+                  <ChannelTitle
+                    text={channelTitle}
+                    customUrl={channelData.customUrl}
+                    channelId={channelId}
+                  />
+                </Row>
               </div>
-            </Row>
-          </ItemContainer>
-        </LinkButton>
+              <SubTitle text={description} cut={true} />
+            </div>
+          </Row>
+        </ItemContainer>
       )}
     </>
   );

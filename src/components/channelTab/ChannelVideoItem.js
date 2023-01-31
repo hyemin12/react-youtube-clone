@@ -5,15 +5,27 @@ import { convertCount } from "../../hooks/convertCount";
 import useGetStatistics from "../../hooks/getViewNumVideoLength";
 
 import LinkButton from "../Button/LinkButton";
-import Thumbnail from "../Thumbnail";
+// import Thumbnail from "../Thumbnail";
 import Title from "../Title";
+import VideoThumbnail from "../VideoThumbnail";
+import VideoTitle from "../VideoTitle";
 import ViewUpload from "../ViewUpload";
 
 // 채널페이지 동영상 아이템
 const ChannelVideoItem = (item) => {
-  const videoId = item.contentDetails.upload
-    ? item.contentDetails.upload.videoId
-    : item.contentDetails.videoId;
+  // const videoId = item.contentDetails.upload
+  //   ? item.contentDetails.upload.videoId
+  //   : item.contentDetails.playlistItem.resourceId.videoId;
+  let videoId;
+  if (item.contentDetails.upload) {
+    videoId = item.contentDetails.upload;
+  } else if (item.contentDetails.playlistItem) {
+    videoId = item.contentDetails.playlistItem.resourceId.videoId;
+  } else {
+    videoId = item.contentDetails.videoId;
+  }
+
+  // console.log(videoId);
 
   const { thumbnails, title, publishedAt } = item.snippet;
 
@@ -25,20 +37,20 @@ const ChannelVideoItem = (item) => {
     <>
       {!loading && (
         <ItemContainer width={"245"}>
-          <LinkButton pathname={"/watch"} query={videoId}>
-            <Thumbnail
-              width="240px"
-              height="135px"
-              url={thumbnails.medium.url}
-              duration={duration}
-            />
-            <Title text={title} cut={true} />
-            <ViewUpload
-              view={convertCount(viewCount)}
-              date={publishedAt.slice(0, 19)}
-              convert={true}
-            />
-          </LinkButton>
+          <VideoThumbnail
+            width="240px"
+            height="135px"
+            url={thumbnails.medium.url}
+            videoId={videoId}
+            duration={duration}
+          />
+          <VideoTitle text={title} cut={true} videoId={videoId} />
+
+          <ViewUpload
+            view={convertCount(viewCount)}
+            date={publishedAt.slice(0, 19)}
+            convert={true}
+          />
         </ItemContainer>
       )}
     </>

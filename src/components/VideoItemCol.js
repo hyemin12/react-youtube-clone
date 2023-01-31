@@ -8,8 +8,6 @@ import {
 import { convertCount } from "../hooks/convertCount";
 
 import Loading from "./Loading";
-import Thumbnail from "./Thumbnail";
-import LinkButton from "./Button/LinkButton";
 import VideoTitle from "./VideoTitle";
 import ChannelThumbnail from "./ChannelThumbnail";
 import ChannelTitle from "./ChannelTitle";

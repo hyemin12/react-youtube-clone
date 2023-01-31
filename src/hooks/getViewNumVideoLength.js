@@ -21,6 +21,7 @@ const useGetStatistics = (videoId, setLoading) => {
       return console.log(err);
     }
   };
+
   useEffect(() => {
     getViewCountDuration();
   }, []);

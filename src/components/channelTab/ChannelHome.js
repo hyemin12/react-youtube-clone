@@ -16,15 +16,16 @@ const ChannelHome = ({ videos, playlist }) => {
   const [loading, setLoading] = useState(true);
 
   const videolist = videos.result;
-
   // 최근 비디오 정보
   const recentVideo = {
     data: videolist[0].snippet,
-    id: videolist[0].contentDetails.upload.videoId,
+    id: videolist[0].contentDetails.upload
+      ? videolist[0].contentDetails.upload.videoId
+      : videolist[0].contentDetails.playlistItem.resourceId.videoId,
   };
 
   // 조회수, 영상길이 가져오기
-  const { statisticsData } = getViewNumVideoLength(recentVideo.id);
+  const { viewCount } = getViewNumVideoLength(recentVideo.id);
 
   // 플레이 리스트 정보 가져오기
   const [recentPlaylist, setRecentPlaylist] = useState({ title: "", list: "" });
@@ -50,7 +51,7 @@ const ChannelHome = ({ videos, playlist }) => {
   }, []);
   return (
     <div>
-      {statisticsData && (
+      {viewCount && (
         <Row gap={30}>
           <Iframe
             id={recentVideo.id}
@@ -63,7 +64,7 @@ const ChannelHome = ({ videos, playlist }) => {
               <Title text={recentVideo.data.title} size={18} />
             </LinkButton>
             <ViewUpload
-              view={parseInt(statisticsData.viewNum).toLocaleString()}
+              view={parseInt(viewCount).toLocaleString()}
               date={recentVideo.data.publishedAt}
               convert={true}
             />

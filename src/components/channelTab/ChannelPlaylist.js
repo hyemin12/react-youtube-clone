@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-import Thumbnail from "../Thumbnail";
 import Title from "../Title";
 import LinkButton from "../Button/LinkButton";
 
 import { FaList } from "react-icons/fa";
+import VideoThumbnail from "../VideoThumbnail";
 
 // 채널 재생목록 탭
 const ChannelPlaylist = ({ lists }) => {
-  // console.log(lists);
+  console.log(lists);
   if (!lists) {
     return <p>재생목록이 없습니다.</p>;
   }
@@ -20,11 +20,8 @@ const ChannelPlaylist = ({ lists }) => {
           <LinkButton pathname={"/watchPL"} query={item.id} key={item.id}>
             <ItemContainer>
               <ThumbnailContainer>
-                <Thumbnail
-                  width="240px"
-                  height="135px"
-                  url={thumbnails.medium.url}
-                />
+                <Thumbnail src={thumbnails.medium.url} alt={title} />
+
                 <Icon>
                   <FaList />
                 </Icon>
@@ -54,7 +51,7 @@ const ThumbnailContainer = styled.div`
   margin-bottom: 4px;
   position: relative;
   overflow: hidden;
-
+  cursor: pointer;
   &:hover::before {
     content: "▶ 모두 재생";
     display: flex;
@@ -70,6 +67,11 @@ const ThumbnailContainer = styled.div`
     z-index: 1;
   }
 `;
+const Thumbnail = styled.img`
+  width: 240px;
+  height: 135px;
+`;
+
 const Icon = styled.p`
   display: flex;
   justify-content: center;

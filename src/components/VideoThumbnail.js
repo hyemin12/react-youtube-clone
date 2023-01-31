@@ -10,9 +10,20 @@ import VideoLength from "./VideoLength";
  * standard: {  width: "640", height: "480" }
  * maxres: {  width: "1280", height: "720" }
  *  */
-const VideoThumbnail = ({ width, height, url, title, duration, videoId }) => {
+const VideoThumbnail = ({
+  width,
+  height,
+  url,
+  title,
+  duration,
+  videoId,
+  type,
+}) => {
   return (
-    <LinkButton pathname={"/watch"} query={videoId}>
+    <LinkButton
+      pathname={type === "playlist" ? "/watchPL" : "/watch"}
+      query={videoId}
+    >
       <div style={{ position: "relative" }}>
         <Img width={width} height={height} src={url} alt={title} />
         {duration && <VideoLength time={duration} />}
@@ -26,6 +37,7 @@ const Img = styled.img`
   height: ${(props) => props.height};
   border-radius: 10px;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 export default VideoThumbnail;

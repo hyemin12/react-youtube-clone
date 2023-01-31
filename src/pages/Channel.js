@@ -44,20 +44,21 @@ const Channel = () => {
   ];
 
   /** 비디오 목록 가져오기 */
-  const getVideosData = async () => {
+  const getVideosData = async (id) => {
     const resVideos = await requestVideos(id);
 
     setVideoData({
       id: id,
-      result: resVideos.data.items.filter(
-        (video) => video.contentDetails.upload !== undefined
-      ),
+      result: resVideos.data.items,
+      // .filter(
+      //   (video) => video.contentDetails.upload !== undefined
+      // ),
       nextPage: resVideos.data.nextPageToken,
     });
   };
 
   /** 재생목록 리스트 가져오기 */
-  const getPlaylistData = async () => {
+  const getPlaylistData = async (id) => {
     const resPlaylists = await requestAxios("playlists", {
       params: { part: "snippet", channelId: id, maxResults: 50 },
     });
@@ -66,7 +67,7 @@ const Channel = () => {
   };
 
   /** 현재 채널 정보 가져오기 */
-  const getChannelData = async () => {
+  const getChannelData = async (id) => {
     const resChannel = await requestChannel(id);
 
     const item = resChannel.data.items[0];
@@ -88,9 +89,9 @@ const Channel = () => {
 
   const getData = useCallback(async () => {
     try {
-      await getVideosData();
-      await getPlaylistData();
-      await getChannelData();
+      await getVideosData(id);
+      await getPlaylistData(id);
+      await getChannelData(id);
 
       setLoading(false);
     } catch (err) {

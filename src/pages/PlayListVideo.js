@@ -13,9 +13,9 @@ import VideoDetail from "../components/VideoDetail";
 import Title from "../components/Title";
 import Layout from "../components/structure/Layout";
 import Loading from "../components/Loading";
-import Thumbnail from "../components/Thumbnail";
 
 import { FaPlay } from "react-icons/fa";
+import VideoThumbnail from "../components/VideoThumbnail";
 
 const PlayListVideo = () => {
   const { search } = useLocation();
@@ -82,6 +82,7 @@ const PlayListVideo = () => {
     },
     [currentIndex]
   );
+  console.log(list);
 
   return (
     <>
@@ -129,11 +130,15 @@ const PlayListVideo = () => {
                         ) : (
                           <p>{position + 1}</p>
                         )}
-                        <Thumbnail
+                        <VideoThumbnail
                           width={"120px"}
                           height={"67px"}
                           url={thumbnails.default.url}
+                          title={title}
                         />
+                        {/* <Thumbnail
+                         
+                        /> */}
                         <div>
                           <Title
                             text={title}
