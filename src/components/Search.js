@@ -36,47 +36,46 @@ const Search = () => {
     [query]
   );
   return (
-    <SearchContainer>
-      <form onSubmit={handleSearch}>
-        <SearchInput
-          type="text"
-          placeholder="검색"
-          onChange={onChange}
-          defaultValue={query}
-        />
-        <SearchBtn>
-          <FaSearch />
-        </SearchBtn>
-      </form>
-    </SearchContainer>
+    <Form onSubmit={handleSearch}>
+      <SearchInput
+        type="text"
+        placeholder="검색"
+        onChange={onChange}
+        defaultValue={query}
+      />
+      <SearchBtn onClick={handleSearch}>
+        <FaSearch />
+      </SearchBtn>
+    </Form>
   );
 };
 
-const SearchContainer = styled.div`
+const Form = styled.form`
+  display: flex;
   height: 40px;
 `;
 const SearchInput = styled.input`
   width: 540px;
   height: 40px;
   border: 2px solid #ccc;
+  border-right: none;
   border-radius: 20px 0 0 20px;
   padding: 0 10px;
-  margin-top: 1px;
   font-size: 1em;
-  box-sizing: border-box;
+  outline: none;
   &:focus {
-    outline: none;
     border: 2px solid navy;
     box-shadow: inset 3px 3px 3px #eee;
   }
 `;
-const SearchBtn = styled.button`
+const SearchBtn = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 60px;
   height: 40px;
   background-color: #eee;
-  padding: 10px;
   border: 2px solid #ccc;
-  border-left: none;
   border-radius: 0 20px 20px 0;
   cursor: pointer;
   &:hover {

@@ -13,7 +13,7 @@ const MoreToggle = ({ children }) => {
   useEffect(() => {
     if (textRef.current) {
       const containerHeight = textRef.current.clientHeight;
-      containerHeight > 64 && setIsOverflow(true);
+      if (containerHeight > 64) setIsOverflow(true);
     }
   }, []);
   return (
