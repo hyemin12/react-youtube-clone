@@ -19,22 +19,22 @@ const ChannelVideoItem = (item) => {
 
   const [loading, setLoading] = useState(true);
 
-  const { statisticsData } = useGetStatistics(videoId, setLoading);
+  const { viewCount, duration } = useGetStatistics(videoId, setLoading);
 
   return (
     <>
-      {!loading && statisticsData && (
+      {!loading && (
         <ItemContainer width={"245"}>
           <LinkButton pathname={"/watch"} query={videoId}>
             <Thumbnail
               width="240px"
               height="135px"
               url={thumbnails.medium.url}
-              duration={statisticsData.videoLength}
+              duration={duration}
             />
             <Title text={title} cut={true} />
             <ViewUpload
-              view={convertCount(statisticsData.viewNum)}
+              view={convertCount(viewCount)}
               date={publishedAt.slice(0, 19)}
               convert={true}
             />

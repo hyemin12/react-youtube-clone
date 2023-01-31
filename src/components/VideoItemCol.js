@@ -17,14 +17,16 @@ import ViewUpload from "./ViewUpload";
 
 // 영상 아이템 - 세로
 const VideoItemCol = (item) => {
-  const id = typeof item.id === "object" ? item.id.videoId : item.id;
+  const [loading, setLoading] = useState(true);
+
+  const videoId = typeof item.id === "object" ? item.id.videoId : item.id;
 
   const { thumbnails, title, channelTitle, channelId, publishedAt } =
     item.snippet;
 
-  const [loading, setLoading] = useState(true);
   const [channel, setChannel] = useState({ thumbnail: "", customUrl: "" });
-  const [ectData, setEctData] = useState();
+
+  const [statisticsData, setStatisticData] = useState();
 
   // 채널 썸네일 가져오기
   const getData = async () => {
@@ -37,9 +39,9 @@ const VideoItemCol = (item) => {
 
       // 조회수, 영상길이 데이터가 넘어오지 않았을 때 데이터 가져오는 함수 (검색해서 가져온 데이터)
       if (item.kind === "youtube#searchResult") {
-        const res = await requestContentDetails(id);
+        const res = await requestContentDetails(videoId);
 
-        setEctData({
+        setStatisticData({
           viewCount: res.data.items[0].statistics.viewCount,
           duration: res.data.items[0].contentDetails.duration,
         });
@@ -75,14 +77,16 @@ const VideoItemCol = (item) => {
         <Loading />
       ) : (
         <ItemContainer width={itemWidth}>
-          <LinkButton pathname={"/watch"} query={id}>
+          <LinkButton pathname={"/watch"} query={videoId}>
             <Thumbnail
               width={"100%"}
               height={"100%"}
               url={thumbnails.medium.url}
               title={title}
               duration={
-                ectData ? ectData.duration : item.contentDetails.duration
+                statisticsData
+                  ? statisticsData.videoId
+                  : item.contentDetails.duration
               }
             />
           </LinkButton>
@@ -100,15 +104,17 @@ const VideoItemCol = (item) => {
               />
             </LinkButton>
             <div>
-              <LinkButton pathname={"/watch"} query={id}>
+              <LinkButton pathname={"/watch"} query={videoId}>
                 <Title size={16} text={title} cut={true} />
               </LinkButton>
-              <LinkButton pathname={"/channel"} query={id}>
+              <LinkButton pathname={"/channel"} query={videoId}>
                 <SubTitle text={channelTitle} />
               </LinkButton>
               <ViewUpload
                 view={convertCount(
-                  ectData ? ectData.viewCount : item.statistics.viewCount
+                  statisticsData
+                    ? statisticsData.viewCount
+                    : item.statistics.viewCount
                 )}
                 date={publishedAt.slice(0, 19)}
                 convert={true}
@@ -127,10 +133,6 @@ const VideoRow = styled.div`
   display: flex;
   gap: 14px;
   padding: 8px 4px;
-`;
-const Live = styled.p`
-  padding: 10px 20px;
-  background-color: tomato;
 `;
 
 export default React.memo(VideoItemCol);

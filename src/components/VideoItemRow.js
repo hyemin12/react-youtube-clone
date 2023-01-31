@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import {
-  requestChannelThumb,
-  requestContentDetails,
-} from "../hooks/requestAxios";
+import { requestChannelThumb } from "../hooks/requestAxios";
+import useGetStatistics from "../hooks/getViewNumVideoLength";
 import { convertCount } from "../hooks/convertCount";
 
 import Loading from "./Loading";
@@ -22,13 +20,13 @@ const VideoItemRow = (data) => {
 
   const { channelId } = data.snippet;
 
+  const { viewCount, duration } = useGetStatistics(videoId);
+
   const [loading, setLoading] = useState(true);
   const [channelData, setChannelData] = useState({
     thumbnail: "",
     customUrl: "",
   });
-
-  const [ectData, setEctData] = useState();
 
   // 채널 썸네일 가져오기
   const getData = async () => {
@@ -40,12 +38,6 @@ const VideoItemRow = (data) => {
         customUrl: channelRes.data.items[0].snippet.customUrl,
       });
 
-      const CountRes = await requestContentDetails(videoId);
-
-      setEctData({
-        viewCount: CountRes.data.items[0].statistics.viewCount,
-        duration: CountRes.data.items[0].contentDetails.duration,
-      });
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -71,12 +63,12 @@ const VideoItemRow = (data) => {
                 height={"180px"}
                 url={thumbnails.medium.url}
                 title={title}
-                duration={ectData.duration}
+                duration={duration}
               />
               <div>
                 <Title text={title} />
                 <ViewUpload
-                  view={convertCount(ectData.viewCount)}
+                  view={convertCount(viewCount)}
                   date={publishedAt}
                   convert={true}
                 />

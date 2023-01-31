@@ -16,27 +16,27 @@ import LinkButton from "./Button/LinkButton";
 const RecommendItem = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
 
-  const id = item.contentDetails.upload
+  const videoId = item.contentDetails.upload
     ? item.contentDetails.upload.videoId
     : item.id;
 
   const [loading, setLoading] = useState(true);
 
-  const { statisticsData } = useGetStatistics(id, setLoading);
+  const { viewCount, duration } = useGetStatistics(videoId, setLoading);
 
   return (
     <>
       {loading ? (
         <Loading />
       ) : (
-        <LinkButton pathname={"/watch"} query={id}>
+        <LinkButton pathname={"/watch"} query={videoId}>
           <Row gap={10}>
             <Thumbnail
               width={"200px"}
               height={`${200 * (9 / 16)}px`}
               url={thumbnails.medium.url}
               title={title}
-              duration={statisticsData.videoLength}
+              duration={duration}
             />
 
             <ContentText>
@@ -44,7 +44,7 @@ const RecommendItem = ({ item, channelTitle }) => {
               <SubTitle text={channelTitle} />
 
               <ViewUpload
-                view={convertCount(statisticsData.viewNum)}
+                view={convertCount(viewCount)}
                 date={publishedAt.slice(0, 19)}
                 convert={true}
               />
