@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 
-import getViewNumVideoLength from "../../hooks/getViewNumVideoLength";
 import { requestPlaylistItem } from "../../hooks/requestAxios";
+import useGetStatistics from "../../hooks/useGetStatistics";
 
 import LinkButton from "../Button/LinkButton";
 import Description from "../Description";
@@ -25,7 +25,7 @@ const ChannelHome = ({ videos, playlist }) => {
   };
 
   // 조회수, 영상길이 가져오기
-  const { viewCount } = getViewNumVideoLength(recentVideo.id);
+  const { viewCount } = useGetStatistics(recentVideo.id);
 
   // 플레이 리스트 정보 가져오기
   const [recentPlaylist, setRecentPlaylist] = useState({ title: "", list: "" });

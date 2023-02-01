@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { requestChannelThumb } from "../hooks/requestAxios";
-import useGetStatistics from "../hooks/getViewNumVideoLength";
+import useGetStatistics from "../hooks/useGetStatistics";
 import { convertCount } from "../hooks/convertCount";
 
 import Loading from "./Loading";
 import Row from "./FlexRow";
-import LinkButton from "./Button/LinkButton";
 import ChannelThumbnail from "./ChannelThumbnail";
-import Title from "./Title";
 import SubTitle from "./SubTitle";
 import ViewUpload from "./ViewUpload";
 import ChannelTitle from "./ChannelTitle";

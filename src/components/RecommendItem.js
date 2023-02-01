@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../hooks/convertCount";
-import useGetStatistics from "../hooks/getViewNumVideoLength";
+import useGetStatistics from "../hooks/useGetStatistics";
 
 import Loading from "./Loading";
 import Row from "./FlexRow";

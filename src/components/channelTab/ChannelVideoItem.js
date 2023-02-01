@@ -2,11 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../../hooks/convertCount";
-import useGetStatistics from "../../hooks/getViewNumVideoLength";
+import useGetStatistics from "../../hooks/useGetStatistics";
 
-import LinkButton from "../Button/LinkButton";
-// import Thumbnail from "../Thumbnail";
-import Title from "../Title";
 import VideoThumbnail from "../VideoThumbnail";
 import VideoTitle from "../VideoTitle";
 import ViewUpload from "../ViewUpload";

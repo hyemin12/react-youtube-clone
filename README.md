@@ -289,6 +289,42 @@ export const recordHistory = (videoId) => {
 
 ---
 
+### @useGetStatistics.js
+
+- 영상의 조회수, 영상 길이를 가져온 후 반환하는 훅
+
+- viewCount : 조회수
+- duration : 영상 길기
+- setLoading이 넘어오는 경우에는 loading false로 바꿔주기
+
+```js
+const useGetStatistics = (videoId, setLoading) => {
+  const [viewCount, setViewCount] = useState("");
+  const [duration, setDuration] = useState("");
+
+  const getViewCountDuration = async () => {
+    try {
+      const res = await requestContentDetails(videoId);
+
+      setViewCount(res.data.items[0].statistics.viewCount);
+      setDuration(res.data.items[0].contentDetails.duration);
+
+      setLoading && setLoading(false);
+    } catch (err) {
+      return console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getViewCountDuration();
+  }, []);
+
+  return { viewCount, duration };
+};
+```
+
+---
+
 ---
 
 #### - youtube timestamp
