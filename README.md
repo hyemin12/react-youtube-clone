@@ -1,5 +1,12 @@
 # youtube 클론 프로젝트
 
+목차
+
+- [Page](#1-main-page)
+- [훅](#hooks)
+
+# #페이지
+
 ## 1. Main Page
 
 - 인기동영상와 여러가지 키워드의 영상 목록을 확인할 수 있음
@@ -38,7 +45,7 @@
 
 - 특정 채널 정보 페이지
 - 채널 배널이 있는 경우 채널 타이틀 위에 배너가 나타나고, 없으면 출력되지 않음
-- 홈, 동영상, 정보 탭으로 구성되어 있으며, 동영상 더 보기 버튼을 누르면 추가로 데이터를 얻어옴
+- 홈, 동영상, 재생목록, 정보 탭으로 구성되어 있으며, 동영상 더 보기 버튼을 누르면 추가로 데이터를 얻어옴
 
 ## 6. History Page (시청기록)
 
@@ -54,26 +61,7 @@
 
 ---
 
-## #컴포넌트
-
-### ＞ Header
-
-- Logo, Search (검색창)으로 이루어진 컴포넌트
-
-### ＞ Loading
-
-- 데이터를 받아오는 시간동안 출력되는 컴포넌트
-
-### ＞ RecommendTabs / RecommendItem
-
-- RecommendTabs : 상단의 tab을 클릭한 경우, 활성화되는 콘텐츠를 출력하는 페이지
-- RecommendItem : 활성화된 콘텐츠 아이템 (동영상 썸네일, 동영상 타이틀, 채널정보, 조회수, 업로드 날짜로 구성)
-
-### ＞ Button / LikeButton
-
----
-
-## #Hooks
+# #Hooks
 
 ### @ convertCount
 
@@ -224,7 +212,11 @@ export const requestSearchVideos = (query, maxResult = 32) =>
 ```js
 // hooks/searchContext.js
 export const ContextProvier = ({ children }) => {
-  const [searchQuery, setSearchQuery] = useState({ q: "", result: [] });
+  const [searchQuery, setSearchQuery] = useState({
+    q: "",
+    result: [],
+    channel: [],
+  });
 
   const value = { searchQuery, setSearchQuery };
 
@@ -261,6 +253,41 @@ const Search = () => {
 - result가 있으면 "검색어 검색 결과" 출력
 - result가 없으면 "검색 결과 없습니다." 출력
 - result가 있을 때만 영상리스트 컴포넌트 출력
+
+---
+
+### @ recordHistory.js
+
+시청기록을 로컬스토리지에 저장하는 훅
+
+1. 로컬스토리지에 "YT_History" 데이터가 존재하는지 여부를 확인한 후 로컬스토리지 데이터 혹은 빈 배열을 저장
+
+2. 새로운 히스토리 내역을 로컬스토리지에 저장하기  
+   (영상 id 같은 것이 있다면 가장 최신 데이터 남기기)
+
+```js
+export const recordHistory = (videoId) => {
+  const storageHistory = localStorage.getItem("YT_History")
+    ? JSON.parse(localStorage.getItem("YT_History"))
+    : [];
+
+  const now = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(today.getDate()).padStart(2, "0")}`;
+
+  const newHistoryArr = storageHistory
+    .concat({ date: now, id: videoId })
+    .filter(
+      (element, i) =>
+        storageHistory.findIndex((element2) => element.id === element2.id) === i
+    );
+
+  localStorage.setItem("YT_History", JSON.stringify(newHistoryArr));
+};
+```
+
+---
 
 ---
 
