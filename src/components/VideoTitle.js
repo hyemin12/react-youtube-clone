@@ -6,7 +6,10 @@ const VideoTitle = ({ videoId, text, size, margin, cut }) => {
   return (
     <LinkButton pathname={"/watch"} query={videoId}>
       <H4 size={size} margin={margin} className={cut ? "overflow" : ""}>
-        {text.replace(/&#39;/g, "'").replace(/&quot;/g, "˝")}
+        {text
+          .replace(/&#39;/g, "'")
+          .replace(/&quot;/g, "˝")
+          .replace(/&amp;/g, "&")}
       </H4>
     </LinkButton>
   );

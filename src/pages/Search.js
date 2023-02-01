@@ -5,13 +5,15 @@ import { useSearchContext } from "../hooks/searchContext";
 import Layout from "../components/structure/Layout";
 import Title from "../components/Title";
 import VideoItemRow from "../components/VideoItemRow";
+import ChannelItem from "../components/ChannelItem";
 
 // 검색 결과 페이지
 // path={`/results/:search=${searchQuery.q}`}
 const Search = () => {
   const { searchQuery } = useSearchContext();
 
-  const { q, result } = searchQuery;
+  const { q, result, channel } = searchQuery;
+  console.log(channel);
 
   if (!searchQuery.q) {
     return (
@@ -22,7 +24,7 @@ const Search = () => {
   }
   return (
     <Layout aside={true}>
-      <SearchContainer>
+      <Section>
         <Title
           size={24}
           text={
@@ -33,18 +35,28 @@ const Search = () => {
 
         {result && (
           <div style={{ width: "75vw" }}>
+            {/* {channel.filter((element)=>element.snippet.channelTitle === q) } */}
             {result.map((item) => (
               <VideoItemRow {...item} key={item.etag} />
             ))}
+
+            <hr />
+            <Section>
+              <Title size={20} text={"추천채널"} />
+              {channel &&
+                channel.map((element) => (
+                  <ChannelItem item={element.snippet} />
+                ))}
+            </Section>
           </div>
         )}
-      </SearchContainer>
+      </Section>
     </Layout>
   );
 };
 
-const SearchContainer = styled.div`
-  margin: 0 auto;
+const Section = styled.div`
+  padding: 10px 0;
 `;
 
 export default Search;

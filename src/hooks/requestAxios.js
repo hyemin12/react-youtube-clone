@@ -29,7 +29,7 @@ export const requestContentDetails = (videoId) =>
   });
 
 /** 검색결과 (영상 리스트) */
-export const requestSearchVideos = (query, maxResult = 32, type = "video") =>
+export const requestSearchVideos = (query, maxResult = 10, type = "video") =>
   requestAxios.get("search", {
     params: {
       part: "snippet",

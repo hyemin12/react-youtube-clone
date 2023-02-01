@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { useSearchContext } from "../hooks/searchContext";
-import { requestSearchVideos } from "../hooks/requestAxios";
+import { requestAxios, requestSearchVideos } from "../hooks/requestAxios";
 
 import { FaSearch } from "react-icons/fa";
 
@@ -25,8 +25,19 @@ const Search = () => {
       if (!query) return alert("검색어를 입력하세요");
       try {
         const res = await requestSearchVideos(query);
+        const channelRes = await requestAxios.get("search", {
+          params: {
+            part: "snippet",
+            q: query,
+            type: "channel",
+          },
+        });
 
-        setSearchQuery({ q: query, result: res.data.items });
+        setSearchQuery({
+          q: query,
+          result: res.data.items,
+          channel: channelRes.data.items,
+        });
 
         navigate(`/results/search=${query}`);
       } catch (err) {

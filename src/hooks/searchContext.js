@@ -7,7 +7,11 @@ const MyContext = createContext();
  * result: 받아온 데이터 (결과 목록)
  */
 export const ContextProvier = ({ children }) => {
-  const [searchQuery, setSearchQuery] = useState({ q: "", result: [] });
+  const [searchQuery, setSearchQuery] = useState({
+    q: "",
+    result: [],
+    channel: [],
+  });
 
   const value = { searchQuery, setSearchQuery };
 
