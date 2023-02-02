@@ -4,12 +4,10 @@ import Title from "../Title";
 import LinkButton from "../Button/LinkButton";
 
 import { FaList } from "react-icons/fa";
-import VideoThumbnail from "../VideoThumbnail";
 
 // 채널 재생목록 탭
 const ChannelPlaylist = ({ lists }) => {
-  console.log(lists);
-  if (!lists) {
+  if (lists.length === 0) {
     return <p>재생목록이 없습니다.</p>;
   }
   return (

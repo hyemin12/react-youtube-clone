@@ -10,9 +10,6 @@ import ViewUpload from "../ViewUpload";
 
 // 채널페이지 동영상 아이템
 const ChannelVideoItem = (item) => {
-  // const videoId = item.contentDetails.upload
-  //   ? item.contentDetails.upload.videoId
-  //   : item.contentDetails.playlistItem.resourceId.videoId;
   let videoId;
   if (item.contentDetails.upload) {
     videoId = item.contentDetails.upload;
@@ -22,13 +19,14 @@ const ChannelVideoItem = (item) => {
     videoId = item.contentDetails.videoId;
   }
 
-  // console.log(videoId);
-
   const { thumbnails, title, publishedAt } = item.snippet;
 
   const [loading, setLoading] = useState(true);
 
-  const { viewCount, duration } = useGetStatistics(videoId, setLoading);
+  const { viewCount, duration } = useGetStatistics(
+    typeof videoId === "object" ? videoId.videoId : videoId,
+    setLoading
+  );
 
   return (
     <>

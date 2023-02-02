@@ -1,6 +1,5 @@
 import styled from "styled-components";
-
-import { convertCountry } from "../../hooks/convertCountry";
+import { countries } from "countries-list";
 
 import Row from "../FlexRow";
 import Description from "../Description";
@@ -8,6 +7,14 @@ import Description from "../Description";
 import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 
 const ChannelInfo = (channelData) => {
+  const convertCountry = () => {
+    const countriesArr = Object.entries(countries);
+    const countryCode = countriesArr.filter(
+      (country) => country[0] === channelData.country
+    )[0][1];
+    return countryCode.native;
+  };
+
   return (
     <div>
       <Row align={"start"} gap={30}>
@@ -34,7 +41,7 @@ const ChannelInfo = (channelData) => {
 
           <Row align={"center"} gap={16}>
             <FaMapMarker />
-            <P>위치: {convertCountry(channelData.country)}</P>
+            <P>위치: {convertCountry()}</P>
           </Row>
         </aside>
       </Row>

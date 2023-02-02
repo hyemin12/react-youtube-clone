@@ -13,6 +13,7 @@ import ViewUpload from "../ViewUpload";
 import ChannelVideoItem from "./ChannelVideoItem";
 
 const ChannelHome = ({ videos, playlist }) => {
+  console.log(videos, playlist);
   const [loading, setLoading] = useState(true);
 
   const videolist = videos.result;
@@ -30,16 +31,18 @@ const ChannelHome = ({ videos, playlist }) => {
   // 플레이 리스트 정보 가져오기
   const [recentPlaylist, setRecentPlaylist] = useState({ title: "", list: "" });
 
-  const playlistId = playlist[0].id;
+  const playlistId = playlist.length > 0 ? playlist[0].id : null;
 
   const getPlaylistItems = useCallback(async () => {
     try {
-      const resPlaylist = await requestPlaylistItem(playlistId, 10);
+      if (playlistId) {
+        const resPlaylist = await requestPlaylistItem(playlistId, 10);
 
-      setRecentPlaylist({
-        title: playlist[0].snippet.title,
-        list: resPlaylist.data.items,
-      });
+        setRecentPlaylist({
+          title: playlist[0].snippet.title,
+          list: resPlaylist.data.items,
+        });
+      }
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -86,16 +89,17 @@ const ChannelHome = ({ videos, playlist }) => {
           ))}
         </VideoRow>
       </Section>
-      <Section>
-        <Title text={recentPlaylist.title} size={18} />
-        {!loading && (
+      {!loading && playlistId && (
+        <Section>
+          <Title text={recentPlaylist.title} size={18} />
+
           <VideoRow>
             {recentPlaylist.list.map((item) => (
               <ChannelVideoItem {...item} key={item.etag} />
             ))}
           </VideoRow>
-        )}
-      </Section>
+        </Section>
+      )}
     </div>
   );
 };
