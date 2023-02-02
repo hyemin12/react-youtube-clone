@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import SubTitle from "../SubTitle";
 
-const Footer = ({ isShort }) => {
+const Footer = () => {
   const year = new Date().getFullYear();
-  console.log(isShort);
   // let documentHeight;
   // let htmlHeight;
   // const documentHeight = document.documentElement.clientHeight;
   // const htmlHeight = document.activeElement.clientHeight;
 
   return (
-    <FooterContainer className={isShort ? "short" : " "}>
+    <FooterContainer>
       <SubTitle text={"본 페이지는 공부용으로 제작된 페이지입니다."} />
       <SubTitle text={`copyright ${year}. Hyemin`} />
     </FooterContainer>

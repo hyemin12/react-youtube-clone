@@ -78,7 +78,7 @@ const VideoItemRow = (data) => {
               <div style={{ padding: "14px 0" }}>
                 <Row gap={10} align={"center"}>
                   <ChannelThumbnail
-                    title={title}
+                    title={channelTitle}
                     url={channelData.thumbnail}
                     channelId={channelId}
                     customUrl={channelData.customUrl}

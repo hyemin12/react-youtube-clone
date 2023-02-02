@@ -19,6 +19,7 @@ const ChannelThumbnail = ({ customUrl, channelId, title, url, size, type }) => {
 const Img = styled.img`
   width: ${(props) => (props.size ? props.size : 36)}px;
   height: ${(props) => (props.size ? props.size : 36)}px;
+
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid #f1f1f1;
