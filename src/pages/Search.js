@@ -35,7 +35,11 @@ const Search = () => {
 
         {result && (
           <div style={{ width: "75vw" }}>
-            {/* {channel.filter((element)=>element.snippet.channelTitle === q) } */}
+            {channel
+              .filter((element) => element.snippet.channelTitle === q)
+              .map((element) => (
+                <ChannelItem item={element.snippet} />
+              ))}
             {result.map((item) => (
               <VideoItemRow {...item} key={item.etag} />
             ))}
@@ -44,9 +48,9 @@ const Search = () => {
             <Section>
               <Title size={20} text={"추천채널"} />
               {channel &&
-                channel.map((element) => (
-                  <ChannelItem item={element.snippet} />
-                ))}
+                channel
+                  .filter((element) => element.snippet.channelTitle !== q)
+                  .map((element) => <ChannelItem item={element.snippet} />)}
             </Section>
           </div>
         )}
