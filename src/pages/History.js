@@ -54,7 +54,7 @@ const HistoryPage = () => {
     localStorage.removeItem("YT_History");
     setVideos(null);
   };
-  console.log(storageData);
+
   if (storageData.length === 0 || videos.length === 0) {
     return (
       <Layout aside={true}>

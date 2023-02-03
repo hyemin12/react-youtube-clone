@@ -10,9 +10,10 @@ import ChannelTitle from "../components/ChannelTitle";
 import SubTitle from "./SubTitle";
 
 const ChannelItem = ({ item }) => {
-  // console.log(item);
   const channelId = item.channelId;
+
   const [channelData, setChannelData] = useState({});
+
   const getChannelData = async () => {
     const res = await requestChannel(channelId);
 

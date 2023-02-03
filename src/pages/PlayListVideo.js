@@ -82,7 +82,6 @@ const PlayListVideo = () => {
     },
     [currentIndex]
   );
-  console.log(list);
 
   return (
     <>

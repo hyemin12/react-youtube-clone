@@ -13,7 +13,6 @@ import ViewUpload from "../ViewUpload";
 import ChannelVideoItem from "./ChannelVideoItem";
 
 const ChannelHome = ({ videos, playlist }) => {
-  console.log(videos, playlist);
   const [loading, setLoading] = useState(true);
 
   const videolist = videos.result;

@@ -20,11 +20,12 @@ const RecommendItem = ({ item, channelTitle }) => {
     videoId = item.contentDetails.upload;
   } else if (item.contentDetails.playlistItem) {
     videoId = item.contentDetails.playlistItem.resourceId.videoId;
-  } else {
+  } else if (item.contentDetails.videoId) {
     videoId = item.contentDetails.videoId;
+  } else {
+    videoId = item.id;
   }
 
-  console.log(item.contentDetails, videoId);
   const [loading, setLoading] = useState(true);
 
   const { viewCount, duration } = useGetStatistics(

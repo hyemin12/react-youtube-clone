@@ -13,7 +13,6 @@ const Search = () => {
   const { searchQuery } = useSearchContext();
 
   const { q, result, channel } = searchQuery;
-  console.log(channel);
 
   if (!searchQuery.q) {
     return (

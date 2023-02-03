@@ -6,7 +6,7 @@ import RecommendItem from "./RecommendItem";
 // 추천 영상 목록 (리스트)
 const RecommendTabs = ({ recommendList, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(recommendList);
+
   return (
     <div className="recommend">
       {/* 탭 메뉴 */}
