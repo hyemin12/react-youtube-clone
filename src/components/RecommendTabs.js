@@ -4,15 +4,15 @@ import styled from "styled-components";
 import RecommendItem from "./RecommendItem";
 
 // 추천 영상 목록 (리스트)
-const RecommendTabs = ({ data, id }) => {
+const RecommendTabs = ({ recommendList, id }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(data);
+  console.log(recommendList);
   return (
     <div className="recommend">
       {/* 탭 메뉴 */}
-      {data.map(({ title, list }, idx) => (
+      {recommendList.map(({ title, list }, idx) => (
         <>
-          {list.length > 0 && (
+          {recommendList.length > 0 && (
             <TabTitle
               key={title}
               className={currentIndex === idx ? "active" : ""}
@@ -27,8 +27,8 @@ const RecommendTabs = ({ data, id }) => {
       ))}
 
       {/* 영상목록 */}
-      {data &&
-        data[currentIndex].list
+      {recommendList &&
+        recommendList[currentIndex].list
           .filter(
             (item) =>
               (item.contentDetails.upload

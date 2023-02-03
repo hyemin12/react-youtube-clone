@@ -8,7 +8,7 @@ import { requestContentDetails } from "./requestAxios";
 const useGetStatistics = (videoId, setLoading) => {
   const [viewCount, setViewCount] = useState("");
   const [duration, setDuration] = useState("");
-
+  console.log(videoId);
   const getViewCountDuration = async () => {
     try {
       const res = await requestContentDetails(videoId);

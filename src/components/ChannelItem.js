@@ -26,7 +26,7 @@ const ChannelItem = ({ item }) => {
   useEffect(() => {
     getChannelData();
   }, [item]);
-  console.log(channelData);
+
   return (
     <ItemContainer>
       <Row gap={20} align={"center"}>

@@ -12,10 +12,10 @@ import Title from "../components/Title";
 import { FaTrashAlt, FaSearch } from "react-icons/fa";
 
 const HistoryPage = () => {
-  const storageD = JSON.parse(localStorage.getItem("YT_History")) || null;
+  const storageData = JSON.parse(localStorage.getItem("YT_History")) || null;
 
   const [loading, setLoading] = useState(true);
-  const [list, setList] = useState();
+  const [videos, setVideos] = useState();
 
   const [query, setQuery] = useState("");
 
@@ -27,43 +27,45 @@ const HistoryPage = () => {
   const getData = async () => {
     let arr = [];
 
-    for (let storageItem of storageD) {
+    for (let storageItem of storageData) {
       const res = await requestAxios.get("videos", {
         params: { part: "snippet,statistics", id: storageItem.id },
       });
       arr.push(res.data.items[0]);
     }
-    setList([...new Set(arr)]);
+    setVideos([...new Set(arr)]);
     setLoading(false);
   };
   useEffect(() => {
     getData();
   }, []);
 
-  // 리스트를 바탕으로 검색하기
+  // 재생목록 검색하기
   const handleSearch = () => {
-    list.filter((item) => item.snippet.title.includes(query));
+    const searchData = videos.filter((item) =>
+      item.snippet.title.includes(query)
+    );
+    console.log(searchData);
+    // searchData && setVideos(searchData[0])
   };
 
   // 시청 기록 지우기
   const removeHistory = () => {
     localStorage.removeItem("YT_History");
-    setList(null);
+    setVideos(null);
   };
-
-  if (!storageD || !list) {
+  console.log(storageData);
+  if (storageData.length === 0 || videos.length === 0) {
     return (
       <Layout aside={true}>
-        <div>
-          <Title text={"시청기록"} size={24} />
-          <Container height={"calc(100vh - 258px)"}>
-            <p>시청 기록이 없습니다.</p>
-          </Container>
-        </div>
+        <Title text={"시청기록"} size={24} />
+        <Container style={{ height: "calc(100vh-230px)" }}>
+          <p>시청 기록이 없습니다.</p>
+        </Container>
       </Layout>
     );
   }
-  console.log(list);
+
   return (
     <Layout aside={true}>
       <Title text={"시청기록"} size={24} />
@@ -72,7 +74,7 @@ const HistoryPage = () => {
       ) : (
         <Row gap={20}>
           <Container height={"100%"}>
-            {list.map((item) => (
+            {videos.map((item) => (
               <VideoItemRow {...item} key={item.id} />
             ))}
           </Container>
@@ -97,7 +99,6 @@ const HistoryPage = () => {
   );
 };
 const Container = styled.div`
-  height: ${(props) => props.height};
   padding: 20px 0;
 `;
 

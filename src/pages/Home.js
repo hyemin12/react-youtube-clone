@@ -69,13 +69,15 @@ const Home = () => {
    * fullWidth: 키워드 컨테이너 전체 width값
    */
   const [isOverflow, setIsOverflow] = useState(false);
+
   useEffect(() => {
     if (keywordRef.current) {
       const keywordWidth = keywordRef.current.clientWidth;
-      const fullWidth = keywordRef.current.scrollWidth;
-      if (keywordWidth < fullWidth) {
-        setIsOverflow(true);
-      }
+
+      const keywordSectionWidth =
+        document.documentElement.clientWidth - 60 - 140 - 20;
+
+      keywordSectionWidth < keywordWidth && setIsOverflow(true);
     }
   }, [isOverflow]);
 
@@ -108,7 +110,7 @@ const Home = () => {
                 </NextBtn>
               )}
             </KeywordContainer>
-            <VideoList videos={videoList} />
+            <VideoList videoList={videoList} />
           </div>
         </Layout>
       )}

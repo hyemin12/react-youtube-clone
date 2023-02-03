@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { convertCount } from "../hooks/convertCount";
@@ -21,38 +21,37 @@ import ChannelPlaylist from "../components/channelTab/ChannelPlaylist";
 
 const Channel = () => {
   // 데이터를 가져올 "채널아이디"
-  const id = localStorage.getItem("YT_ID");
+  const channelId = localStorage.getItem("YT_ID");
+  const bannerRef = useRef(null);
 
   const [loading, setLoading] = useState(true);
   const [channelData, setChannelData] = useState();
   const [videoData, setVideoData] = useState();
-  const [playlist, setPlaylist] = useState();
+  const [playlists, setPlaylists] = useState();
 
   const [currentTab, setCurrentTab] = useState(0);
 
   const tabs = [
     {
       tabTitle: "홈",
-      tabContent: <ChannelHome videos={videoData} playlist={playlist} />,
+      tabContent: <ChannelHome videos={videoData} playlist={playlists} />,
     },
     {
       tabTitle: "동영상",
       tabContent: <ChannelVideos {...videoData} />,
     },
-    { tabTitle: "재생목록", tabContent: <ChannelPlaylist lists={playlist} /> },
+    { tabTitle: "재생목록", tabContent: <ChannelPlaylist lists={playlists} /> },
+
     { tabTitle: "정보", tabContent: <ChannelInfo {...channelData} /> },
   ];
 
   /** 비디오 목록 가져오기 */
   const getVideosData = async (id) => {
-    const resVideos = await requestVideos(id);
+    const resVideos = await requestVideos(channelId);
 
     setVideoData({
       id: id,
       result: resVideos.data.items,
-      // .filter(
-      //   (video) => video.contentDetails.upload !== undefined
-      // ),
       nextPage: resVideos.data.nextPageToken,
     });
   };
@@ -63,7 +62,7 @@ const Channel = () => {
       params: { part: "snippet", channelId: id, maxResults: 50 },
     });
 
-    setPlaylist(resPlaylists.data.items);
+    setPlaylists(resPlaylists.data.items);
   };
 
   /** 현재 채널 정보 가져오기 */
@@ -89,19 +88,25 @@ const Channel = () => {
 
   const getData = useCallback(async () => {
     try {
-      await getVideosData(id);
-      await getPlaylistData(id);
-      await getChannelData(id);
+      await getVideosData(channelId);
+      await getPlaylistData(channelId);
+      await getChannelData(channelId);
 
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
-  }, [id]);
+  }, [channelId]);
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, [channelId]);
+
+  const handleImgError = () => {
+    if (bannerRef.current) {
+      bannerRef.current.style = "display:none";
+    }
+  };
 
   return (
     <>
@@ -112,7 +117,12 @@ const Channel = () => {
           {channelData && (
             <Container>
               {channelData.bannerImg && (
-                <Banner src={channelData.bannerImg} alt={"banner"} />
+                <Banner
+                  src={channelData.bannerImg}
+                  alt={"banner"}
+                  onError={handleImgError}
+                  ref={bannerRef}
+                />
               )}
 
               <Row gap={16} align={"center"}>
