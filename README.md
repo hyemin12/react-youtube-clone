@@ -337,6 +337,12 @@ const useGetStatistics = (videoId, setLoading) => {
 
 <img />onerror="alert('에러 발생')>
 
+- 인터넷 주소가 있으면 a태그로 변경하기 (정규표현식)
+
+```js
+const urlRegex = /(https?:\/\/[^ ]*)/;
+```
+
 ---
 
 ### #Youtube Data Api

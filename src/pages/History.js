@@ -42,11 +42,14 @@ const HistoryPage = () => {
 
   // 재생목록 검색하기
   const handleSearch = () => {
+    setLoading(true);
+
     const searchData = videos.filter((item) =>
       item.snippet.title.includes(query)
     );
-    console.log(searchData);
-    // searchData && setVideos(searchData[0])
+
+    setVideos(searchData.length > 0 ? searchData : null);
+    setLoading(false);
   };
 
   // 시청 기록 지우기
@@ -55,7 +58,7 @@ const HistoryPage = () => {
     setVideos(null);
   };
 
-  if (storageData.length === 0 || videos.length === 0) {
+  if (storageData.length === 0 || !videos) {
     return (
       <Layout aside={true}>
         <Title text={"시청기록"} size={24} />
