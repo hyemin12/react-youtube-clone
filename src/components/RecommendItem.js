@@ -14,6 +14,7 @@ import ViewUpload from "./ViewUpload";
 // 추천 영상 (아이템)
 const RecommendItem = ({ item, channelTitle }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
+  // console.log(item.contentDetails);
 
   let videoId;
   if (item.contentDetails.upload) {

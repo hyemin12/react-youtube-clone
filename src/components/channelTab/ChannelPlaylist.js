@@ -7,28 +7,32 @@ import { FaList } from "react-icons/fa";
 
 // 채널 재생목록 탭
 const ChannelPlaylist = ({ lists }) => {
+  console.log(lists);
   if (lists.length === 0) {
     return <p>재생목록이 없습니다.</p>;
   }
   return (
     <VideoRow>
-      {lists.map((item) => {
-        const { title, thumbnails } = item.snippet;
-        return (
-          <LinkButton pathname={"/watchPL"} query={item.id} key={item.id}>
-            <ItemContainer>
-              <ThumbnailContainer>
-                <Thumbnail src={thumbnails.medium.url} alt={title} />
+      {lists
+        .filter((item) => item.contentDetails.itemCount > 0)
+        .map((item) => {
+          const { title, thumbnails } = item.snippet;
+          return (
+            <LinkButton pathname={"/watchPL"} query={item.id} key={item.id}>
+              <ItemContainer>
+                <ThumbnailContainer>
+                  <Thumbnail src={thumbnails.medium.url} alt={title} />
 
-                <Icon>
-                  <FaList />
-                </Icon>
-              </ThumbnailContainer>
-              <Title text={title} cut={true} />
-            </ItemContainer>
-          </LinkButton>
-        );
-      })}
+                  <Icon>
+                    <p>{item.contentDetails.itemCount}</p>
+                    <FaList />
+                  </Icon>
+                </ThumbnailContainer>
+                <Title text={title} cut={true} />
+              </ItemContainer>
+            </LinkButton>
+          );
+        })}
     </VideoRow>
   );
 };
@@ -74,6 +78,8 @@ const Icon = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 8px;
   width: 100px;
   height: 135px;
   background-color: rgba(0, 0, 0, 0.8);

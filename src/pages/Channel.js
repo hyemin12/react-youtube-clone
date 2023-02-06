@@ -59,7 +59,7 @@ const Channel = () => {
   /** 재생목록 리스트 가져오기 */
   const getPlaylistData = async (id) => {
     const resPlaylists = await requestAxios("playlists", {
-      params: { part: "snippet", channelId: id, maxResults: 50 },
+      params: { part: "snippet,contentDetails", channelId: id, maxResults: 50 },
     });
 
     setPlaylists(resPlaylists.data.items);
