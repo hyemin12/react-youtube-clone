@@ -10,7 +10,7 @@ import { Btn } from "../Button/CopyButton";
 const ChannelVideos = (videoData) => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState(videoData);
-
+  console.log(list);
   // 더보기 버튼 누르면 데이터 더 가져오는 함수
   const getMoreData = async () => {
     setLoading(true);
@@ -36,9 +36,16 @@ const ChannelVideos = (videoData) => {
       <h4>전체 동영상</h4>
 
       <VideoRow>
-        {list.result.map((item, idx) => (
-          <ChannelVideoItem {...item} key={idx} />
-        ))}
+        {list.result
+          .filter(
+            (element, idx) =>
+              list.result.findIndex(
+                (element2) => element.snippet.title === element2.snippet.title
+              ) === idx
+          )
+          .map((item, idx) => (
+            <ChannelVideoItem {...item} key={idx} />
+          ))}
       </VideoRow>
 
       {loading ? (

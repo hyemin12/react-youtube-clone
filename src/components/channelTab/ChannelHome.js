@@ -16,6 +16,7 @@ const ChannelHome = ({ videos, playlist }) => {
   const [loading, setLoading] = useState(true);
 
   const videolist = videos.result;
+
   // 최근 비디오 정보
   const recentVideo = {
     data: videolist[0].snippet,
@@ -30,7 +31,10 @@ const ChannelHome = ({ videos, playlist }) => {
   // 플레이 리스트 정보 가져오기
   const [recentPlaylist, setRecentPlaylist] = useState({ title: "", list: "" });
 
-  const playlistId = playlist.length > 0 ? playlist[0].id : null;
+  const playlistId =
+    playlist.length > 0
+      ? playlist.filter((item) => item.contentDetails.itemCount > 0)[0].id
+      : null;
 
   const getPlaylistItems = useCallback(async () => {
     try {

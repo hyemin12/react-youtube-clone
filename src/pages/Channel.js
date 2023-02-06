@@ -51,7 +51,12 @@ const Channel = () => {
 
     setVideoData({
       id: id,
-      result: resVideos.data.items,
+      result: resVideos.data.items.filter(
+        (element, idx) =>
+          resVideos.data.items.findIndex(
+            (element2) => element.snippet.title === element2.snippet.title
+          ) === idx
+      ),
       nextPage: resVideos.data.nextPageToken,
     });
   };
