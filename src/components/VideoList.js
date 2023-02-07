@@ -3,11 +3,11 @@ import styled from "styled-components";
 import VideoItem from "./VideoItemCol";
 
 // 영상 목록 (리스트)
-const VideoList = ({ videoList, browserWidth }) => {
+const VideoList = ({ videos }) => {
   return (
     <ListContainer>
-      {videoList.map((item) => (
-        <VideoItem {...item} key={item.etag} browserWidth={browserWidth} />
+      {videos.map((item) => (
+        <VideoItem {...item} key={item.etag} />
       ))}
     </ListContainer>
   );

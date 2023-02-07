@@ -17,7 +17,7 @@ const Home = () => {
   const keywordRef = useRef(null);
 
   const [loading, setLoading] = useState(true);
-  const [videoList, setVideoList] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
   const keywords = [
@@ -43,15 +43,15 @@ const Home = () => {
       if (currentTabIndex === 0) {
         // 인기 키워드
         const res = await requestPopularVideos();
-        setVideoList(res.data.items);
+        setVideos(res.data.items);
       } else if (typeof category === "number") {
         // 카테고리 아이디가 있는 경우
         const res = await requestPopularVideos(category);
-        setVideoList(res.data.items);
+        setVideos(res.data.items);
       } else {
         // 카테고리 아이디가 없는 경우
         const res = await requestSearchVideos(keyword);
-        setVideoList(res.data.items);
+        setVideos(res.data.items);
       }
 
       setLoading(false);
@@ -110,7 +110,7 @@ const Home = () => {
                 </NextBtn>
               )}
             </KeywordContainer>
-            <VideoList videoList={videoList} />
+            <VideoList videos={videos} />
           </div>
         </Layout>
       )}

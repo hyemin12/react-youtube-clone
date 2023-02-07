@@ -7,18 +7,18 @@ import { convertCount } from "../hooks/convertCount";
 
 import Loading from "./Loading";
 import Row from "./FlexRow";
-import ChannelThumbnail from "./ChannelThumbnail";
-import SubTitle from "./SubTitle";
-import ViewUpload from "./ViewUpload";
-import ChannelTitle from "./ChannelTitle";
 import VideoThumbnail from "./VideoThumbnail";
 import VideoTitle from "./VideoTitle";
+import ChannelThumbnail from "./ChannelThumbnail";
+import ChannelTitle from "./ChannelTitle";
+import SubTitle from "./SubTitle";
+import ViewUpload from "./ViewUpload";
 
 // 영상 아이템 - 가로
-const VideoItemRow = (data) => {
-  const videoId = typeof data.id === "object" ? data.id.videoId : data.id;
+const VideoItemRow = (item) => {
+  const videoId = typeof item.id === "object" ? item.id.videoId : item.id;
 
-  const { channelId } = data.snippet;
+  const { channelId } = item.snippet;
 
   const { viewCount, duration } = useGetStatistics(videoId);
 
@@ -49,7 +49,7 @@ const VideoItemRow = (data) => {
   }, [channelId]);
 
   const { thumbnails, title, channelTitle, publishedAt, description } =
-    data.snippet;
+    item.snippet;
 
   return (
     <>

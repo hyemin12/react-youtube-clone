@@ -23,6 +23,8 @@ const VideoDetail = (data) => {
   const { title, channelId, channelTitle, publishedAt, description } =
     data.snippet;
   const { viewCount, likeCount } = data.statistics;
+  console.log(data);
+  console.log("detail페이지 채널아이디", channelId);
 
   const [commentList, setCommentList] = useState([]);
   const [currentValue, setCurrentValue] = useState("relevance");
@@ -60,13 +62,13 @@ const VideoDetail = (data) => {
             url={thumbnail}
             title={channelTitle}
             customUrl={customUrl}
-            id={channelId}
+            channelId={channelId}
           />
           <div>
             <ChannelTitle
               text={channelTitle}
               customUrl={customUrl}
-              id={channelId}
+              channelId={channelId}
               size={"1em"}
               color={"#333"}
             />

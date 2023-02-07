@@ -103,7 +103,6 @@ const VideoItemCol = (item) => {
                 channelId={channelId}
                 text={channelTitle}
                 customUrl={channel.customUrl}
-                id={channelId}
               />
               <ViewUpload
                 view={convertCount(

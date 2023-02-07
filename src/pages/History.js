@@ -33,7 +33,7 @@ const HistoryPage = () => {
       });
       arr.push(res.data.items[0]);
     }
-    setVideos([...new Set(arr)]);
+    arr !== [] ? setVideos(null) : setVideos([...new Set(arr)]);
     setLoading(false);
   };
   useEffect(() => {

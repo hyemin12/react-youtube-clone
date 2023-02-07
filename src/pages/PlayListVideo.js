@@ -135,9 +135,7 @@ const PlayListVideo = () => {
                           url={thumbnails.default.url}
                           title={title}
                         />
-                        {/* <Thumbnail
-                         
-                        /> */}
+
                         <div>
                           <Title
                             text={title}

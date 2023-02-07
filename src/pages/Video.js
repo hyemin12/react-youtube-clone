@@ -33,6 +33,7 @@ const Video = () => {
     { title: "비슷한 영상", list: [] },
     { title: "같은 채널 다른 영상", list: [] },
   ]);
+  console.log(videoData);
 
   /** 해당 페이지에서 필요한 데이터 가져오기
    */
@@ -45,6 +46,7 @@ const Video = () => {
         },
       });
 
+      console.log("채널아이디", videoRes.data.items[0].snippet.channelId);
       if (videoRes.status === 200) {
         const channelId = videoRes.data.items[0].snippet.channelId;
         const channelRes = await requestChannel(channelId);

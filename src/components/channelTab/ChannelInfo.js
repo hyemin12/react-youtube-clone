@@ -7,6 +7,7 @@ import Description from "../Description";
 import { FaChartLine, FaInfoCircle, FaMapMarker } from "react-icons/fa";
 
 const ChannelInfo = (channelData) => {
+  const { description, publishedAt, viewCount } = channelData;
   const convertCountry = () => {
     const countriesArr = Object.entries(countries);
     const countryCode = countriesArr.filter(
@@ -20,8 +21,8 @@ const ChannelInfo = (channelData) => {
       <Row align={"start"} gap={30}>
         <div style={{ width: "69vw" }}>
           <H4>설명</H4>
-          {channelData.description ? (
-            <Description des={channelData.description} />
+          {description ? (
+            <Description des={description} />
           ) : (
             <p>등록된 설명이 없습니다.</p>
           )}
@@ -31,12 +32,12 @@ const ChannelInfo = (channelData) => {
           <H4>추가정보</H4>
           <Row align={"center"} gap={16}>
             <FaInfoCircle />
-            <P>가입일: {channelData.publishedAt.slice(0, 10)}</P>
+            <P>가입일: {publishedAt.slice(0, 10)}</P>
           </Row>
 
           <Row align={"center"} gap={16}>
             <FaChartLine />
-            <P>조회수: {Number(channelData.viewCount).toLocaleString()}회</P>
+            <P>조회수: {parseInt(viewCount).toLocaleString()}회</P>
           </Row>
 
           <Row align={"center"} gap={16}>

@@ -8,7 +8,7 @@ const LinkButton = ({ pathname, query, id, children }) => {
       localStorage.removeItem("YT_ID");
       return;
     }
-    localStorage.setItem("YT_ID", id);
+    return localStorage.setItem("YT_ID", id);
   };
   return (
     <Link to={{ pathname: pathname, search: `${query}` }} onClick={onClick}>
