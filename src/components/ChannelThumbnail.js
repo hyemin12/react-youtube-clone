@@ -20,7 +20,11 @@ const ChannelThumbnail = ({ customUrl, channelId, title, url, size, type }) => {
       />
     );
   return (
-    <LinkButton pathname={"/channel"} query={customUrl} id={channelId}>
+    <LinkButton
+      pathname={"/channel"}
+      query={customUrl ? customUrl : `@${title}`}
+      id={channelId}
+    >
       <Img
         src={url ? url : unknownImg}
         onError={handleImgError}

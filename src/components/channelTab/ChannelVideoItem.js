@@ -31,7 +31,7 @@ const ChannelVideoItem = (item) => {
   return (
     <>
       {!loading && (
-        <ItemContainer width={"245"}>
+        <ItemContainer width={"240"}>
           <VideoThumbnail
             width={"240px"}
             height={"135px"}

@@ -8,7 +8,11 @@ const ChannelTitle = ({ customUrl, channelId, text, color, size }) => {
   if (location.pathname === "/channel") return <P>{text}</P>;
   console.log(channelId);
   return (
-    <LinkButton pathname={"/channel"} query={customUrl} id={channelId}>
+    <LinkButton
+      pathname={"/channel"}
+      query={customUrl ? customUrl : `${text}`}
+      id={channelId}
+    >
       <P color={color} size={size}>
         {text}
       </P>

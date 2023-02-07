@@ -30,7 +30,7 @@ const Channel = () => {
   const [playlists, setPlaylists] = useState();
 
   const [currentTab, setCurrentTab] = useState(0);
-  console.log(channelId);
+
   const tabs = [
     {
       tabTitle: "홈",
