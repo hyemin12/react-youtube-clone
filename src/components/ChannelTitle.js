@@ -6,7 +6,7 @@ import LinkButton from "./Button/LinkButton";
 const ChannelTitle = ({ customUrl, channelId, text, color, size }) => {
   const location = useLocation();
   if (location.pathname === "/channel") return <P>{text}</P>;
-  console.log(channelId);
+
   return (
     <LinkButton
       pathname={"/channel"}

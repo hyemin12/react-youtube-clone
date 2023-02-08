@@ -23,8 +23,6 @@ const VideoDetail = (data) => {
   const { title, channelId, channelTitle, publishedAt, description } =
     data.snippet;
   const { viewCount, likeCount } = data.statistics;
-  console.log(data);
-  console.log("detail페이지 채널아이디", channelId);
 
   const [commentList, setCommentList] = useState([]);
   const [currentValue, setCurrentValue] = useState("relevance");
