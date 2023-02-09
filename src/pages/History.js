@@ -51,7 +51,7 @@ const HistoryPage = () => {
     setVideos(searchData.length > 0 ? searchData : null);
     setLoading(false);
   };
-
+  console.log(videos);
   // 시청 기록 지우기
   const removeHistory = () => {
     localStorage.removeItem("YT_History");
@@ -77,11 +77,15 @@ const HistoryPage = () => {
       ) : (
         <Row gap={20}>
           <Container height={"100%"}>
-            {storageData.map(({ date }) => (
-              <p>{date}</p>
-            ))}
-            {videos.map((item) => (
-              <VideoItemRow {...item} key={item.id} />
+            {storageData.map((item) => (
+              <>
+                <p>{item.date}</p>
+                {videos
+                  .filter((video) => video.id === item.id)
+                  .map((video) => (
+                    <VideoItemRow {...video} key={video.id} />
+                  ))}
+              </>
             ))}
           </Container>
           <div>

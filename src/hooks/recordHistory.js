@@ -12,16 +12,15 @@ export const recordHistory = (videoId) => {
   )}-${String(today.getDate()).padStart(2, "0")}`;
 
   let newHistoryArr = storageHistory.concat({ date: now, id: videoId });
-
+  console.log(newHistoryArr);
   newHistoryArr =
     newHistoryArr.length > 1
       ? newHistoryArr.filter(
           (element, i) =>
-            storageHistory.findIndex(
-              (element2) => element.id === element2.id
-            ) !== i
+            console.log(
+              storageHistory.findIndex((element2) => element.id === element2.id)
+            ) === i
         )
       : newHistoryArr;
-
   localStorage.setItem("YT_History", JSON.stringify(newHistoryArr));
 };
