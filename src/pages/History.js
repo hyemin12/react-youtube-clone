@@ -13,7 +13,6 @@ import { FaTrashAlt, FaSearch } from "react-icons/fa";
 
 const HistoryPage = () => {
   const storageData = JSON.parse(localStorage.getItem("YT_History")) || null;
-
   const [loading, setLoading] = useState(true);
   const [videos, setVideos] = useState();
 
@@ -23,6 +22,7 @@ const HistoryPage = () => {
     setQuery(e.target.value);
   };
 
+  // console.log(storageData, videos);
   // id를 바탕으로 영상 정보 가져오기
   const getData = async () => {
     let arr = [];
@@ -33,7 +33,7 @@ const HistoryPage = () => {
       });
       arr.push(res.data.items[0]);
     }
-    arr !== [] ? setVideos(null) : setVideos([...new Set(arr)]);
+    arr === [] ? setVideos(null) : setVideos([...new Set(arr)]);
     setLoading(false);
   };
   useEffect(() => {
@@ -77,6 +77,9 @@ const HistoryPage = () => {
       ) : (
         <Row gap={20}>
           <Container height={"100%"}>
+            {storageData.map(({ date }) => (
+              <p>{date}</p>
+            ))}
             {videos.map((item) => (
               <VideoItemRow {...item} key={item.id} />
             ))}
