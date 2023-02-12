@@ -12,6 +12,7 @@ import Loading from "../components/Loading";
 import VideoList from "../components/VideoList";
 
 import { FaAngleRight } from "react-icons/fa";
+import SkeletonVideo from "../components/SkeletonVideo";
 
 const Home = () => {
   const keywordRef = useRef(null);
@@ -89,6 +90,7 @@ const Home = () => {
         <Layout aside={true}>
           <div id="main">
             <KeywordContainer style={{ display: "flex" }}>
+              <SkeletonVideo />
               <Row ref={keywordRef}>
                 {keywords.map(({ keyword }, idx) => (
                   <Keyword
