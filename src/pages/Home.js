@@ -8,10 +8,7 @@ import {
 } from "../hooks/requestAxios";
 
 import Layout from "../components/structure/Layout";
-import Loading from "../components/Loading";
 import VideoList from "../components/VideoList";
-
-import { FaAngleRight } from "react-icons/fa";
 
 const Home = () => {
   const keywordRef = useRef(null);
@@ -68,52 +65,43 @@ const Home = () => {
    * keywordWidth: 키워드 컨테이너(고정값)
    * fullWidth: 키워드 컨테이너 전체 width값
    */
-  const [isOverflow, setIsOverflow] = useState(false);
+  // const [isOverflow, setIsOverflow] = useState(false);
 
-  useEffect(() => {
-    if (keywordRef.current) {
-      const keywordWidth = keywordRef.current.clientWidth;
+  // useEffect(() => {
+  //   if (keywordRef.current) {
+  //     const keywordWidth = keywordRef.current.clientWidth;
 
-      const keywordSectionWidth =
-        document.documentElement.clientWidth - 60 - 140 - 20;
+  //     const keywordSectionWidth =
+  //       document.documentElement.clientWidth - 60 - 140 - 20;
 
-      keywordSectionWidth < keywordWidth && setIsOverflow(true);
-    }
-  }, [isOverflow]);
+  //     keywordSectionWidth < keywordWidth && setIsOverflow(true);
+  //   }
+  // }, [isOverflow]);
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Layout aside={true}>
-          <div id="main">
-            <KeywordContainer style={{ display: "flex" }}>
-              <Row ref={keywordRef}>
-                {keywords.map(({ keyword }, idx) => (
-                  <Keyword
-                    key={keyword}
-                    onClick={() => {
-                      setCurrentTabIndex(idx);
-                      setLoading(true);
-                    }}
-                    className={idx === currentTabIndex ? "isActive" : ""}
-                  >
-                    <p># {keyword}</p>
-                  </Keyword>
-                ))}
-              </Row>
+      <Layout aside={true}>
+        <div id="main">
+          <KeywordContainer style={{ display: "flex" }}>
+            <Row ref={keywordRef}>
+              {keywords.map(({ keyword }, idx) => (
+                <Keyword
+                  key={keyword}
+                  onClick={() => {
+                    setCurrentTabIndex(idx);
+                    setLoading(true);
+                  }}
+                  className={idx === currentTabIndex ? "isActive" : ""}
+                >
+                  <p># {keyword}</p>
+                </Keyword>
+              ))}
+            </Row>
+          </KeywordContainer>
 
-              {isOverflow && (
-                <NextBtn>
-                  <FaAngleRight />
-                </NextBtn>
-              )}
-            </KeywordContainer>
-            <VideoList videos={videos} />
-          </div>
-        </Layout>
-      )}
+          <VideoList videos={videos} loading={loading} />
+        </div>
+      </Layout>
     </>
   );
 };

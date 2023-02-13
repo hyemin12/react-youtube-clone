@@ -7,7 +7,6 @@ import {
 } from "../hooks/requestAxios";
 import { convertCount } from "../hooks/convertCount";
 
-import Loading from "./Loading";
 import VideoTitle from "./VideoTitle";
 import ChannelThumbnail from "./ChannelThumbnail";
 import ChannelTitle from "./ChannelTitle";
@@ -16,8 +15,6 @@ import VideoThumbnail from "./VideoThumbnail";
 
 // 영상 아이템 - 세로
 const VideoItemCol = (item) => {
-  const [loading, setLoading] = useState(true);
-
   const videoId = typeof item.id === "object" ? item.id.videoId : item.id;
 
   const { thumbnails, title, channelTitle, channelId, publishedAt } =
@@ -45,7 +42,7 @@ const VideoItemCol = (item) => {
           duration: res.data.items[0].contentDetails.duration,
         });
       }
-      setLoading(false);
+      // setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -72,9 +69,7 @@ const VideoItemCol = (item) => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
+      {channel && (
         <ItemContainer width={itemWidth}>
           <VideoThumbnail
             width={"100%"}
