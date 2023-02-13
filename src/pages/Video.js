@@ -16,6 +16,8 @@ import Iframe from "../components/Iframe";
 
 import VideoDetail from "../components/VideoDetail";
 import RecommendTabs from "../components/RecommendTabs";
+import SkeletonUi from "../components/skeletonUI/SkeletonUi";
+import Row from "../components/FlexRow";
 
 /** 비디오 페이지 */
 const Video = () => {
@@ -80,25 +82,42 @@ const Video = () => {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        videoData && (
-          <Layout Layout aside={false}>
-            <Container>
-              <div>
-                <Iframe id={videoId} width={920} height={517.5} />
-                <VideoDetail {...videoData} {...channelData} />
-              </div>
+      <Layout Layout aside={false}>
+        <Container>
+          <div>
+            {loading ? (
+              <SkeletonUi width={920} height={517.5} marginBottom={8} />
+            ) : (
+              <Iframe id={videoId} width={920} height={517.5} />
+            )}
 
-              {/* 추천 동영상 */}
-              {recommendList && (
-                <RecommendTabs recommendList={recommendList} id={videoId} />
-              )}
-            </Container>
-          </Layout>
-        )
-      )}
+            {loading ? (
+              <>
+                <SkeletonUi width={920} height={38} marginBottom={8} />
+                <Row gap={16}>
+                  <SkeletonUi width={38} height={38} borderRadius={"50%"} />
+                  <div>
+                    <SkeletonUi width={50} height={18} />
+                    <SkeletonUi width={80} height={18} marginBottom={20} />
+                  </div>
+                </Row>
+                <SkeletonUi width={920} height={160} />
+              </>
+            ) : (
+              <>
+                {videoData && <VideoDetail {...videoData} {...channelData} />}
+              </>
+            )}
+          </div>
+
+          {/* 추천 동영상 */}
+          <RecommendTabs
+            recommendList={recommendList}
+            id={videoId}
+            loading={loading}
+          />
+        </Container>
+      </Layout>
     </>
   );
 };
