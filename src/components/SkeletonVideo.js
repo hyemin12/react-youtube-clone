@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Row from "./FlexRow";
 
 const SkeletonVideo = () => {
   return (
     <div>
-      <Thumbnail></Thumbnail>
+      <Thumbnail />
       <Row gap={14}>
         <Circle />
         <div>
@@ -16,30 +16,42 @@ const SkeletonVideo = () => {
     </div>
   );
 };
-
-const Thumbnail = styled.div`
+const skeletonLoading = keyframes`
+0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+`;
+export const SkeletionUi = styled.div`
+  color: rgba(0, 0, 0, 0);
+  background-image: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.3)
+  );
+  background-size: 400% 100%;
+  animation: ${skeletonLoading} 8s ease infinite;
+`;
+const Thumbnail = styled(SkeletionUi)`
   width: 310px;
   height: 174px;
-  background-color: #ccc;
   border-radius: 10px;
   margin-bottom: 8px;
 `;
-const Circle = styled.div`
+const Circle = styled(SkeletionUi)`
   width: 36px;
   height: 36px;
-  background-color: #ccc;
   border-radius: 50%;
 `;
-const Title = styled.div`
+const Title = styled(SkeletionUi)`
   width: 252px;
   height: 40px;
-  background-color: #ccc;
   margin-bottom: 4px;
 `;
-const TextLine = styled.div`
+const TextLine = styled(SkeletionUi)`
   width: 200px;
   height: 20px;
-  background-color: #ccc;
   margin-bottom: 2px;
 `;
 export default SkeletonVideo;

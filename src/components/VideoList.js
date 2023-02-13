@@ -1,14 +1,23 @@
 import styled from "styled-components";
 
+import SkeletonVideo from "./SkeletonVideo";
 import VideoItem from "./VideoItemCol";
 
 // 영상 목록 (리스트)
-const VideoList = ({ videos }) => {
+const VideoList = ({ videos, loading }) => {
   return (
     <ListContainer>
-      {videos.map((item) => (
-        <VideoItem {...item} key={item.etag} />
-      ))}
+      {loading ? (
+        Array(32)
+          .fill()
+          .map(() => <SkeletonVideo />)
+      ) : (
+        <>
+          {videos.map((item) => (
+            <VideoItem {...item} key={item.etag} loading={loading} />
+          ))}
+        </>
+      )}
     </ListContainer>
   );
 };
