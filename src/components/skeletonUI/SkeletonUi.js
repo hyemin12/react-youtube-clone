@@ -1,8 +1,8 @@
 import styled, { keyframes } from "styled-components";
 
-const SkeletionUi = ({ width, height, borderRadius, marginBottom }) => {
+const SkeletonUi = ({ width, height, borderRadius, marginBottom }) => {
   return (
-    <Skeletion
+    <Skeleton
       width={width}
       height={height}
       borderRadius={borderRadius}
@@ -15,11 +15,12 @@ const skeletonLoading = keyframes`
     50%{background-position:100% 50%}
     100%{background-position:0% 50%}
 `;
-export const Skeletion = styled.div`
+export const Skeleton = styled.div`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-  borderradius: ${(props) => props.borderRadius};
-  marginbottom: ${(props) => props.marginBottom}px;
+  border-radius: ${(props) =>
+    props.borderRadius ? props.borderRadius : "10px"};
+  margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom : 4)}px;
   background-image: linear-gradient(
     270deg,
     rgba(0, 0, 0, 0.3),
@@ -30,4 +31,4 @@ export const Skeletion = styled.div`
   background-size: 400% 100%;
   animation: ${skeletonLoading} 8s ease infinite;
 `;
-export default SkeletionUi;
+export default SkeletonUi;
