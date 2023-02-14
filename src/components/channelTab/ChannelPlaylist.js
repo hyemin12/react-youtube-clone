@@ -73,7 +73,7 @@ const Thumbnail = styled.img`
   height: 135px;
 `;
 
-const Icon = styled.p`
+const Icon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

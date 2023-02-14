@@ -21,6 +21,7 @@ const HistoryPage = () => {
   const onChange = (e) => {
     setQuery(e.target.value);
   };
+  console.log(videos);
 
   // console.log(storageData, videos);
   // id를 바탕으로 영상 정보 가져오기
