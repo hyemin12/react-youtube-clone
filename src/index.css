@@ -7,7 +7,7 @@
   font-display: swap;
 }
 * {
-  font-family: "Pretendard-Regular", "Noto Sans KR", sans-serif;
+  font-family: "Pretendard-Regular", "Noto Sans KR", "roboto", sans-serif;
   box-sizing: border-box;
   margin: 0;
 }

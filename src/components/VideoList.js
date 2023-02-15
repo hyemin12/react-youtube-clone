@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import SkeletonVideo from "./SkeletonVideo";
+import SkeletonVideo from "./skeletonUI/SkeletonVideo";
 import VideoItem from "./VideoItemCol";
 
 // 영상 목록 (리스트)
