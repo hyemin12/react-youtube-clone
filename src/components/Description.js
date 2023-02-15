@@ -12,13 +12,18 @@ const Description = ({ des }) => {
         if (sentence.match(urlRegex))
           return sentence.split(urlRegex).map((word) =>
             word.match(urlRegex) ? (
-              <Link href={word} target="_blank" rel="noreferrer">
+              <Link
+                href={word}
+                target="_blank"
+                rel="noreferrer"
+                key={`${word}+${idx}`}
+              >
                 {word}
               </Link>
             ) : word === "" ? (
-              <br />
+              <br key={`${word}+${idx}`} />
             ) : (
-              <span>{word}</span>
+              <span key={`${word}+${idx}`}>{word}</span>
             )
           );
         return <p key={`${sentence}${idx}`}>{sentence}</p>;

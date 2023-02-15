@@ -13,7 +13,7 @@ const RecommendTabs = ({ recommendList, id, loading }) => {
       {/* 탭 메뉴 */}
       {recommendList.map(({ title, list }, idx) => (
         <>
-          {recommendList.length > 0 && (
+          {list.length > 0 && (
             <TabTitle
               key={title}
               className={currentIndex === idx ? "active" : ""}

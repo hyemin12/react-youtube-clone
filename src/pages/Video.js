@@ -46,27 +46,37 @@ const Video = () => {
           id: videoId,
         },
       });
+
+      setVideoData(videoRes.data.items[0]);
+
       if (videoRes.status === 200) {
         const channelId = videoRes.data.items[0].snippet.channelId;
         const channelRes = await requestChannel(channelId);
 
+        setChannelData({
+          subscribe: channelRes.data.items[0].statistics.subscriberCount,
+          thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
+          customUrl: channelRes.data.items[0].snippet.customUrl,
+        });
+
         // 같은 채널 영상 목록
         const sameChannel = await requestVideos(channelId, null, 15);
+
+        const sameChannelList =
+          sameChannel.status === 200 ? sameChannel.data.items : [];
 
         // 같은 카테고리 영상 목록
         const sameCategory = await requestPopularVideos(
           videoRes.data.items[0].snippet.categoryId,
           15
         );
-        setVideoData(videoRes.data.items[0]);
-        setChannelData({
-          subscribe: channelRes.data.items[0].statistics.subscriberCount,
-          thumbnail: channelRes.data.items[0].snippet.thumbnails.default.url,
-          customUrl: channelRes.data.items[0].snippet.customUrl,
-        });
+
+        const sameCategorylList =
+          sameCategory.status === 200 ? sameCategory.data.items : [];
+
         setRecommendList([
-          { ...recommendList[0], list: sameCategory.data.items },
-          { ...recommendList[1], list: sameChannel.data.items },
+          { ...recommendList[0], list: sameCategorylList },
+          { ...recommendList[1], list: sameChannelList },
         ]);
       }
       setLoading(false);
