@@ -24,6 +24,5 @@ export const recordHistory = (videoId) => {
       : newHistoryArr;
 
   newHistoryArr = [...new Set(newHistoryArr)];
-  console.log("newSet History", newHistoryArr);
   localStorage.setItem("YT_History", JSON.stringify(newHistoryArr));
 };

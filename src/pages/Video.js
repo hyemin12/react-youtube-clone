@@ -10,14 +10,12 @@ import {
 } from "../hooks/requestAxios";
 import { recordHistory } from "../hooks/recordHistory";
 
-import Loading from "../components/Loading";
 import Layout from "../components/structure/Layout";
 import Iframe from "../components/Iframe";
-
 import VideoDetail from "../components/VideoDetail";
 import RecommendTabs from "../components/RecommendTabs";
-import SkeletonUi from "../components/skeletonUI/SkeletonUi";
 import Row from "../components/FlexRow";
+import SkeletonUi from "../components/skeletonUI/SkeletonUi";
 
 /** 비디오 페이지 */
 const Video = () => {
