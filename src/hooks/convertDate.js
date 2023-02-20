@@ -2,34 +2,31 @@
 export const today = new Date();
 
 export const calcDate = (d) => {
-  const upload = new Date(d);
+  const release = new Date(d);
+  const formatting = new Intl.RelativeTimeFormat("ko", { numeric: "auto" });
 
-  const todayT = today.getTime();
-  const uploadT = upload.getTime();
-  const timeGap = todayT - uploadT;
+  const gap = release - today;
 
-  const minUnit = 1000 * 60;
-  const hourUnit = minUnit * 60;
-  const dayUnit = hourUnit * 24;
-  const monthUnit = dayUnit * 30;
-  const yearUnit = dayUnit * 365;
+  const unitMin = 1000 * 60;
+  const unitHour = 1000 * 60 * 60;
+  const unitDay = 1000 * 60 * 60 * 24;
+  const unitMonth = 1000 * 60 * 60 * 24 * 30;
+  const unitYear = 1000 * 60 * 60 * 24 * 30 * 365;
 
   const mathFloor = (num) => {
     return Math.floor(num);
   };
 
-  const minGap = mathFloor(timeGap / minUnit);
-  const hourGap = mathFloor(timeGap / hourUnit);
-  const dayGap = mathFloor(timeGap / dayUnit);
-  const monthGap = mathFloor(timeGap / monthUnit);
-  const yearGap = mathFloor(timeGap / yearUnit);
-
-  if (yearGap > 0) return `${yearGap}년전`;
-  if (monthGap > 0) return `${monthGap}달전`;
-  if (dayGap > 0) return `${dayGap}일전`;
-  if (hourGap > 0) return `${hourGap}시간전`;
-  if (minGap > 0) return `${minGap}분전`;
-  return `${timeGap / 1000}초전`;
+  if (gap / unitYear <= -1)
+    return formatting.format(mathFloor(gap / unitYear), "year");
+  if (gap / unitMonth <= -1)
+    return formatting.format(mathFloor(gap / unitMonth), "month");
+  if (gap / unitDay <= -1)
+    return formatting.format(mathFloor(gap / unitDay), "day");
+  if (gap / unitHour <= -1)
+    return formatting.format(mathFloor(gap / unitHour), "hour");
+  if (gap / unitMin <= -1)
+    return formatting.format(mathFloor(gap / unitMin), "minute");
 
   // 초 : 1000
   // 분 : 1000 * 60
