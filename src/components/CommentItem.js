@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { calcDate } from "../hooks/convertDate";
+import { formattingDate } from "../hooks/formattingDate";
 
 import LikeButton from "./Button/LikeButton";
 import Row from "./FlexRow";
@@ -30,7 +30,7 @@ const CommentItem = (comment) => {
             <div>
               <Row gap={10}>
                 <p>{authorDisplayName}</p>
-                <SubTitle text={calcDate(publishedAt)} />
+                <SubTitle text={formattingDate(publishedAt)} />
               </Row>
               <MoreToggle>
                 {textOriginal

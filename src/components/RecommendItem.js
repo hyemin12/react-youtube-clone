@@ -25,11 +25,7 @@ const RecommendItem = ({ item, channelTitle, loading }) => {
     videoId = item.id;
   }
 
-  // const [loading, setLoading] = useState(true);
-
-  const { viewCount, duration } = useGetStatistics(
-    typeof videoId === "object" ? videoId.videoId : videoId
-  );
+  const { viewCount, duration } = useGetStatistics(videoId);
 
   return (
     <>
@@ -55,7 +51,7 @@ const RecommendItem = ({ item, channelTitle, loading }) => {
 
                 <ViewUpload
                   view={convertCount(viewCount)}
-                  date={publishedAt.slice(0, 19)}
+                  date={publishedAt}
                   convert={true}
                 />
               </ContentText>

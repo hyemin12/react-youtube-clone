@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import RecommendItem from "./RecommendItem";
-import SkeletonRecommendItem from "./skeletonUI/SkeletonRecommendItem";
 
 // 추천 영상 목록 (리스트)
 const RecommendTabs = ({ recommendList, id, loading }) => {
@@ -28,7 +27,6 @@ const RecommendTabs = ({ recommendList, id, loading }) => {
       ))}
 
       {/* 영상목록 */}
-
       <>
         {recommendList &&
           recommendList[currentIndex].list

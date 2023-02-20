@@ -23,10 +23,7 @@ const ChannelVideoItem = (item) => {
 
   const [loading, setLoading] = useState(true);
 
-  const { viewCount, duration } = useGetStatistics(
-    typeof videoId === "object" ? videoId.videoId : videoId,
-    setLoading
-  );
+  const { viewCount, duration } = useGetStatistics(videoId, setLoading);
 
   return (
     <>
@@ -43,7 +40,7 @@ const ChannelVideoItem = (item) => {
 
           <ViewUpload
             view={convertCount(viewCount)}
-            date={publishedAt.slice(0, 19)}
+            date={publishedAt}
             convert={true}
           />
         </ItemContainer>

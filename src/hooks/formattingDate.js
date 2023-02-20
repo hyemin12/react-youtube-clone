@@ -1,7 +1,6 @@
-// 업로드 날짜 변환
 export const today = new Date();
-
-export const calcDate = (d) => {
+// 업로드 날짜 변환
+export const formattingDate = (d) => {
   const release = new Date(d);
   const formatting = new Intl.RelativeTimeFormat("ko", { numeric: "auto" });
 
