@@ -10,7 +10,7 @@ const VideoList = ({ videos, loading }) => {
       {loading ? (
         Array(32)
           .fill()
-          .map(() => <SkeletonVideo />)
+          .map((item, idx) => <SkeletonVideo key={idx} />)
       ) : (
         <>
           {videos.map((item) => (

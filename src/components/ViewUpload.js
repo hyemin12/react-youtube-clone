@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { calcDate } from "../hooks/convertDate";
+import { formattingDate } from "../hooks/formattingDate";
 
 import Row from "./FlexRow";
 import SubTitle from "./SubTitle";
@@ -11,7 +11,9 @@ const ViewUpload = ({ view, date, convert }) => {
   return (
     <Row gap={14}>
       <SubTitle text={`조회수 ${view}`} />
-      <DateTitle>{convert ? calcDate(date) : date}</DateTitle>
+      <DateTitle>
+        {convert ? formattingDate(date) : date.slice(0, 16)}
+      </DateTitle>
     </Row>
   );
 };

@@ -105,7 +105,7 @@ const VideoItemCol = (item) => {
                     ? statisticsData.viewCount
                     : item.statistics.viewCount
                 )}
-                date={publishedAt.slice(0, 19)}
+                date={publishedAt}
                 convert={true}
               />
             </div>

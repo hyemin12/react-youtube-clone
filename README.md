@@ -95,7 +95,7 @@ export const convertCount = (num) => {
 
 ---
 
-### @ convertDate
+### @ formattingDate
 
 업로드 영상을 현재 날짜 기준으로 언제 업로드 되었는지 변환해주는 훅<br>
 년 월 일 시간 분 초 순으로 조건에 맞는 값을 반환하도록 설정<Br>

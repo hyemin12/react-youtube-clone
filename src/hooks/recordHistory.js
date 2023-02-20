@@ -1,4 +1,4 @@
-import { today } from "./convertDate";
+import { today } from "./formattingDate";
 
 // 시청기록 로컬스토지에 저장하는 함수
 export const recordHistory = (videoId) => {
@@ -24,6 +24,5 @@ export const recordHistory = (videoId) => {
       : newHistoryArr;
 
   newHistoryArr = [...new Set(newHistoryArr)];
-  console.log("newSet History", newHistoryArr);
   localStorage.setItem("YT_History", JSON.stringify(newHistoryArr));
 };
