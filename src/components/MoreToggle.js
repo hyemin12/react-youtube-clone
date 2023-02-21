@@ -10,10 +10,10 @@ const MoreToggle = ({ children }) => {
   const textRef = useRef(null);
   const [isOverflow, setIsOverflow] = useState(false);
 
+  // 댓글 더보기 버튼 커밋하기
   useEffect(() => {
     if (textRef.current) {
-      const containerHeight = textRef.current.clientHeight;
-      if (containerHeight > 64) setIsOverflow(true);
+      textRef.current.scrollHeight > 60.5 && setIsOverflow(true);
     }
   }, []);
   return (

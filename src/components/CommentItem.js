@@ -60,7 +60,7 @@ const TextContainer = styled.div`
   flex-grow: 1;
 `;
 const P = styled.p`
-  padding-top: 4px;
+  // padding-top: 4px;
   padding-right: 40px;
   color: #555;
   font-size: 0.9em;
