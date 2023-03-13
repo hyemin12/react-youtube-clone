@@ -26,11 +26,4 @@ export const formattingDate = (d) => {
     return formatting.format(mathFloor(gap / unitHour), "hour");
   if (gap / unitMin <= -1)
     return formatting.format(mathFloor(gap / unitMin), "minute");
-
-  // 초 : 1000
-  // 분 : 1000 * 60
-  // 시 : 1000 * 60 * 60
-  // 일 : 1000 * 60 * 60 * 24
-  // 월 : 1000 * 60 * 60 * 24 * 30
-  // 년 : 1000 * 60 * 60 * 24 * 365
 };

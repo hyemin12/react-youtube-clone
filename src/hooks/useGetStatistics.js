@@ -9,11 +9,9 @@ const useGetStatistics = (videoId, setLoading) => {
   const [viewCount, setViewCount] = useState("");
   const [duration, setDuration] = useState("");
 
-  const id = typeof videoId === "object" ? videoId.videoId : videoId;
-
   const getViewCountDuration = async () => {
     try {
-      const res = await requestContentDetails(id);
+      const res = await requestContentDetails(videoId);
 
       setViewCount(res.data.items[0].statistics.viewCount);
       setDuration(res.data.items[0].contentDetails.duration);

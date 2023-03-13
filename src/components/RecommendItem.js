@@ -11,18 +11,21 @@ import ViewUpload from "./ViewUpload";
 import SkeletonRecommendItem from "./skeletonUI/SkeletonRecommendItem";
 
 // 추천 영상 (아이템)
-const RecommendItem = ({ item, channelTitle, loading }) => {
+const RecommendItem = ({ item, channelTitle, loading, mainVideoId }) => {
   const { title, publishedAt, thumbnails } = item.snippet;
 
   let videoId;
-  if (item.contentDetails.upload) {
-    videoId = item.contentDetails.upload;
-  } else if (item.contentDetails.playlistItem) {
-    videoId = item.contentDetails.playlistItem.resourceId.videoId;
-  } else if (item.contentDetails.videoId) {
-    videoId = item.contentDetails.videoId;
-  } else {
-    videoId = item.id;
+  switch (item.snippet.type) {
+    case "upload":
+      videoId = item.contentDetails.upload.videoId;
+      break;
+    case "playlistItem":
+      videoId = item.contentDetails.playlistItem.resourceId
+        ? item.contentDetails.playlistItem.resourceId.videoId
+        : item.contentDetails.videoId;
+      break;
+    default:
+      videoId = item.id;
   }
 
   const { viewCount, duration } = useGetStatistics(videoId);

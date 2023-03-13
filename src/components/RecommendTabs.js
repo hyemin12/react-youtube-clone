@@ -42,6 +42,7 @@ const RecommendTabs = ({ recommendList, id, loading }) => {
                 item={item}
                 channelTitle={item.snippet.channelTitle}
                 loading={loading}
+                mainVideoId={id}
               />
             ))}
       </>

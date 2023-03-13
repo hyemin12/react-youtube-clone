@@ -12,7 +12,7 @@ import ViewUpload from "../ViewUpload";
 const ChannelVideoItem = (item) => {
   let videoId;
   if (item.contentDetails.upload) {
-    videoId = item.contentDetails.upload;
+    videoId = item.contentDetails.upload.videoId;
   } else if (item.contentDetails.playlistItem) {
     videoId = item.contentDetails.playlistItem.resourceId.videoId;
   } else {
