@@ -11,12 +11,17 @@ import ViewUpload from "../ViewUpload";
 // 채널페이지 동영상 아이템
 const ChannelVideoItem = (item) => {
   let videoId;
-  if (item.contentDetails.upload) {
-    videoId = item.contentDetails.upload.videoId;
-  } else if (item.contentDetails.playlistItem) {
-    videoId = item.contentDetails.playlistItem.resourceId.videoId;
-  } else {
-    videoId = item.contentDetails.videoId;
+  switch (item.snippet.type) {
+    case "upload":
+      videoId = item.contentDetails.upload.videoId;
+      break;
+    case "playlistItem":
+      videoId = item.contentDetails.playlistItem.resourceId
+        ? item.contentDetails.playlistItem.resourceId.videoId
+        : item.contentDetails.videoId;
+      break;
+    default:
+      videoId = item.id;
   }
 
   const { thumbnails, title, publishedAt } = item.snippet;

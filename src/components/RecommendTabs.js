@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import RecommendItem from "./RecommendItem";
+import SkeletonRecommendItem from "./skeletonUI/SkeletonRecommendItem";
 
 // 추천 영상 목록 (리스트)
 const RecommendTabs = ({ recommendList, id, loading }) => {
@@ -27,25 +28,31 @@ const RecommendTabs = ({ recommendList, id, loading }) => {
       ))}
 
       {/* 영상목록 */}
-      <>
-        {recommendList &&
-          recommendList[currentIndex].list
-            .filter(
-              (item) =>
-                (item.contentDetails.upload
-                  ? item.contentDetails.upload.videoId
-                  : item.id) !== id
-            )
-            .map((item) => (
-              <RecommendItem
-                key={item.etag}
-                item={item}
-                channelTitle={item.snippet.channelTitle}
-                loading={loading}
-                mainVideoId={id}
-              />
-            ))}
-      </>
+      {loading ? (
+        Array(5)
+          .fill()
+          .map((item, idx) => <SkeletonRecommendItem key={idx} />)
+      ) : (
+        <>
+          {recommendList &&
+            recommendList[currentIndex].list
+              .filter(
+                (item) =>
+                  (item.contentDetails.upload
+                    ? item.contentDetails.upload.videoId
+                    : item.id) !== id
+              )
+              .map((item) => (
+                <RecommendItem
+                  key={item.etag}
+                  item={item}
+                  channelTitle={item.snippet.channelTitle}
+                  loading={loading}
+                  mainVideoId={id}
+                />
+              ))}
+        </>
+      )}
     </div>
   );
 };

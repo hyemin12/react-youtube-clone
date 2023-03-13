@@ -11,9 +11,15 @@ const SkeletonUi = ({ width, height, borderRadius, marginBottom }) => {
   );
 };
 const skeletonLoading = keyframes`
-0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+  0%{ 
+    background-position:0% 50%
+  }
+  50
+    background-position:100% 50%
+  }
+  100%{ 
+    background-position:0% 50%
+  }
 `;
 export const Skeleton = styled.div`
   width: ${(props) => props.width}px;
@@ -22,7 +28,7 @@ export const Skeleton = styled.div`
     props.borderRadius ? props.borderRadius : "10px"};
   margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom : 4)}px;
   background-image: linear-gradient(
-    270deg,
+    45deg,
     rgba(0, 0, 0, 0.3),
     rgba(0, 0, 0, 0.05),
     rgba(0, 0, 0, 0.05),
